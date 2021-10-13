@@ -1,0 +1,713 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SliderSetInfo version="1">
+    <SliderSet name="SLUTS_ThermalHarness">
+        <DataFolder>SLUTS_ThermalHarness</DataFolder>
+        <SourceFile>ThermalHarness.nif</SourceFile>
+        <OutputPath>meshes\devious\sluts</OutputPath>
+        <OutputFile GenWeights="true">thermalHarness</OutputFile>
+        <Shape target="3BA" DataFolder="SE 3BBB Amazing">3BA</Shape>
+        <Shape target="Harness">Harness</Shape>
+        <Shape target="HarnessCollar002:1">HarnessCollar002:1</Shape>
+        <Shape target="HarnessCollar002:2">HarnessCollar002:2</Shape>
+        <Shape target="Metal">Metal</Shape>
+        <Slider name="Breasts" invert="true" small="20" big="100">
+            <Data name="3BABreasts" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreasts</Data>
+            <Data name="HarnessBreasts" target="Harness" local="true">ThermalHarness.osd\HarnessBreasts</Data>
+            <Data name="MetalBreasts" target="Metal" local="true">ThermalHarness.osd\MetalBreasts</Data>
+            <Data name="HarnessCollar002:1Breasts" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1Breasts</Data>
+        </Slider>
+        <Slider name="BreastsSmall" invert="true" small="100" big="100">
+            <Data name="3BABreastsSmall" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsSmall</Data>
+            <Data name="HarnessBreastsSmall" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsSmall</Data>
+            <Data name="MetalBreastsSmall" target="Metal" local="true">ThermalHarness.osd\MetalBreastsSmall</Data>
+            <Data name="HarnessCollar002:2BreastsSmall" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastsSmall</Data>
+            <Data name="HarnessCollar002:1BreastsSmall" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsSmall</Data>
+        </Slider>
+        <Slider name="BreastsSH" invert="false" small="0" big="0">
+            <Data name="HarnessBreastsSH" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsSH</Data>
+            <Data name="MetalBreastsSH" target="Metal" local="true">ThermalHarness.osd\MetalBreastsSH</Data>
+            <Data name="HarnessCollar002:1BreastsSH" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsSH</Data>
+        </Slider>
+        <Slider name="BreastsSSH" invert="false" small="0" big="0">
+            <Data name="HarnessBreastsSSH" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsSSH</Data>
+            <Data name="MetalBreastsSSH" target="Metal" local="true">ThermalHarness.osd\MetalBreastsSSH</Data>
+            <Data name="HarnessCollar002:2BreastsSSH" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastsSSH</Data>
+            <Data name="HarnessCollar002:1BreastsSSH" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsSSH</Data>
+        </Slider>
+        <Slider name="BreastsFantasy" invert="false" small="0" big="0">
+            <Data name="3BABreastsFantasy" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsFantasy</Data>
+            <Data name="HarnessBreastsFantasy" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsFantasy</Data>
+            <Data name="MetalBreastsFantasy" target="Metal" local="true">ThermalHarness.osd\MetalBreastsFantasy</Data>
+            <Data name="HarnessCollar002:1BreastsFantasy" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsFantasy</Data>
+        </Slider>
+        <Slider name="DoubleMelon" invert="false" small="0" big="0">
+            <Data name="3BADoubleMelon" target="3BA">SE 3BBB Body Amazing v2.osd\3BADoubleMelon</Data>
+            <Data name="HarnessDoubleMelon" target="Harness" local="true">ThermalHarness.osd\HarnessDoubleMelon</Data>
+            <Data name="MetalDoubleMelon" target="Metal" local="true">ThermalHarness.osd\MetalDoubleMelon</Data>
+            <Data name="HarnessCollar002:1DoubleMelon" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1DoubleMelon</Data>
+        </Slider>
+        <Slider name="BreastCleavage" invert="false" small="0" big="0">
+            <Data name="3BABreastCleavage" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastCleavage</Data>
+            <Data name="HarnessBreastCleavage" target="Harness" local="true">ThermalHarness.osd\HarnessBreastCleavage</Data>
+            <Data name="MetalBreastCleavage" target="Metal" local="true">ThermalHarness.osd\MetalBreastCleavage</Data>
+        </Slider>
+        <Slider name="BreastFlatness" invert="false" small="0" big="0">
+            <Data name="3BABreastFlatness" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastFlatness</Data>
+            <Data name="HarnessBreastFlatness" target="Harness" local="true">ThermalHarness.osd\HarnessBreastFlatness</Data>
+            <Data name="MetalBreastFlatness" target="Metal" local="true">ThermalHarness.osd\MetalBreastFlatness</Data>
+            <Data name="HarnessCollar002:2BreastFlatness" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastFlatness</Data>
+            <Data name="HarnessCollar002:1BreastFlatness" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastFlatness</Data>
+        </Slider>
+        <Slider name="BreastGravity" invert="false" small="0" big="0">
+            <Data name="HarnessBreastGravity" target="Harness" local="true">ThermalHarness.osd\HarnessBreastGravity</Data>
+            <Data name="MetalBreastGravity" target="Metal" local="true">ThermalHarness.osd\MetalBreastGravity</Data>
+            <Data name="HarnessCollar002:1BreastGravity" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastGravity</Data>
+        </Slider>
+        <Slider name="PushUp" invert="false" small="0" big="0">
+            <Data name="3BAPushUp" target="3BA">SE 3BBB Body Amazing v2.osd\3BAPushUp</Data>
+            <Data name="HarnessPushUp" target="Harness" local="true">ThermalHarness.osd\HarnessPushUp</Data>
+            <Data name="MetalPushUp" target="Metal" local="true">ThermalHarness.osd\MetalPushUp</Data>
+            <Data name="HarnessCollar002:1PushUp" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1PushUp</Data>
+        </Slider>
+        <Slider name="BreastHeight" invert="false" small="0" big="0">
+            <Data name="3BABreastHeight" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastHeight</Data>
+            <Data name="HarnessBreastHeight" target="Harness" local="true">ThermalHarness.osd\HarnessBreastHeight</Data>
+            <Data name="MetalBreastHeight" target="Metal" local="true">ThermalHarness.osd\MetalBreastHeight</Data>
+            <Data name="HarnessCollar002:2BreastHeight" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastHeight</Data>
+            <Data name="HarnessCollar002:1BreastHeight" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastHeight</Data>
+        </Slider>
+        <Slider name="BreastPerkiness" invert="false" small="0" big="0">
+            <Data name="3BABreastPerkiness" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastPerkiness</Data>
+            <Data name="HarnessBreastPerkiness" target="Harness" local="true">ThermalHarness.osd\HarnessBreastPerkiness</Data>
+            <Data name="MetalBreastPerkiness" target="Metal" local="true">ThermalHarness.osd\MetalBreastPerkiness</Data>
+        </Slider>
+        <Slider name="BreastWidth" invert="false" small="0" big="0">
+            <Data name="3BABreastWidth" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastWidth</Data>
+            <Data name="HarnessBreastWidth" target="Harness" local="true">ThermalHarness.osd\HarnessBreastWidth</Data>
+            <Data name="MetalBreastWidth" target="Metal" local="true">ThermalHarness.osd\MetalBreastWidth</Data>
+            <Data name="HarnessCollar002:2BreastWidth" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastWidth</Data>
+            <Data name="HarnessCollar002:1BreastWidth" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastWidth</Data>
+        </Slider>
+        <Slider name="NippleDistance" invert="true" small="100" big="100">
+            <Data name="3BANippleDistance" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleDistance</Data>
+            <Data name="HarnessNippleDistance" target="Harness" local="true">ThermalHarness.osd\HarnessNippleDistance</Data>
+            <Data name="MetalNippleDistance" target="Metal" local="true">ThermalHarness.osd\MetalNippleDistance</Data>
+        </Slider>
+        <Slider name="NippleLength" invert="false" small="0" big="0">
+            <Data name="3BANippleLength" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleLength</Data>
+            <Data name="HarnessNippleLength" target="Harness" local="true">ThermalHarness.osd\HarnessNippleLength</Data>
+            <Data name="MetalNippleLength" target="Metal" local="true">ThermalHarness.osd\MetalNippleLength</Data>
+            <Data name="HarnessCollar002:2NippleLength" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2NippleLength</Data>
+            <Data name="HarnessCollar002:1NippleLength" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1NippleLength</Data>
+        </Slider>
+        <Slider name="NippleAreola" invert="false" small="0" big="0">
+            <Data name="HarnessNippleAreola" target="Harness" local="true">ThermalHarness.osd\HarnessNippleAreola</Data>
+            <Data name="MetalNippleAreola" target="Metal" local="true">ThermalHarness.osd\MetalNippleAreola</Data>
+        </Slider>
+        <Slider name="NippleUp" invert="false" small="0" big="0">
+            <Data name="3BANippleUp" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleUp</Data>
+            <Data name="HarnessNippleUp" target="Harness" local="true">ThermalHarness.osd\HarnessNippleUp</Data>
+            <Data name="MetalNippleUp" target="Metal" local="true">ThermalHarness.osd\MetalNippleUp</Data>
+        </Slider>
+        <Slider name="NippleDown" invert="false" small="0" big="0">
+            <Data name="3BANippleDown" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleDown</Data>
+            <Data name="HarnessNippleDown" target="Harness" local="true">ThermalHarness.osd\HarnessNippleDown</Data>
+            <Data name="MetalNippleDown" target="Metal" local="true">ThermalHarness.osd\MetalNippleDown</Data>
+        </Slider>
+        <Slider name="Arms" invert="true" small="0" big="100">
+            <Data name="3BAArms" target="3BA">SE 3BBB Body Amazing v2.osd\3BAArms</Data>
+            <Data name="HarnessArms" target="Harness" local="true">ThermalHarness.osd\HarnessArms</Data>
+            <Data name="MetalArms" target="Metal" local="true">ThermalHarness.osd\MetalArms</Data>
+        </Slider>
+        <Slider name="ChubbyArms" invert="false" small="0" big="0">
+            <Data name="3BAChubbyArms" target="3BA">SE 3BBB Body Amazing v2.osd\3BAChubbyArms</Data>
+            <Data name="HarnessChubbyArms" target="Harness" local="true">ThermalHarness.osd\HarnessChubbyArms</Data>
+            <Data name="MetalChubbyArms" target="Metal" local="true">ThermalHarness.osd\MetalChubbyArms</Data>
+        </Slider>
+        <Slider name="ShoulderSmooth" invert="false" small="0" big="0">
+            <Data name="3BAShoulderSmooth" target="3BA">SE 3BBB Body Amazing v2.osd\3BAShoulderSmooth</Data>
+            <Data name="HarnessShoulderSmooth" target="Harness" local="true">ThermalHarness.osd\HarnessShoulderSmooth</Data>
+            <Data name="MetalShoulderSmooth" target="Metal" local="true">ThermalHarness.osd\MetalShoulderSmooth</Data>
+            <Data name="HarnessCollar002:2ShoulderSmooth" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2ShoulderSmooth</Data>
+            <Data name="HarnessCollar002:1ShoulderSmooth" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1ShoulderSmooth</Data>
+        </Slider>
+        <Slider name="ShoulderWidth" invert="true" small="100" big="100">
+            <Data name="3BAShoulderWidth" target="3BA">SE 3BBB Body Amazing v2.osd\3BAShoulderWidth</Data>
+            <Data name="HarnessShoulderWidth" target="Harness" local="true">ThermalHarness.osd\HarnessShoulderWidth</Data>
+            <Data name="MetalShoulderWidth" target="Metal" local="true">ThermalHarness.osd\MetalShoulderWidth</Data>
+            <Data name="HarnessCollar002:2ShoulderWidth" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2ShoulderWidth</Data>
+            <Data name="HarnessCollar002:1ShoulderWidth" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1ShoulderWidth</Data>
+        </Slider>
+        <Slider name="BigTorso" invert="false" small="0" big="0">
+            <Data name="3BABigTorso" target="3BA">SE 3BBB Body Amazing v2.osd\3BABigTorso</Data>
+            <Data name="HarnessBigTorso" target="Harness" local="true">ThermalHarness.osd\HarnessBigTorso</Data>
+            <Data name="MetalBigTorso" target="Metal" local="true">ThermalHarness.osd\MetalBigTorso</Data>
+            <Data name="HarnessCollar002:2BigTorso" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BigTorso</Data>
+            <Data name="HarnessCollar002:1BigTorso" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BigTorso</Data>
+        </Slider>
+        <Slider name="Waist" invert="false" small="0" big="100">
+            <Data name="3BAWaist" target="3BA">SE 3BBB Body Amazing v2.osd\3BAWaist</Data>
+            <Data name="HarnessWaist" target="Harness" local="true">ThermalHarness.osd\HarnessWaist</Data>
+            <Data name="MetalWaist" target="Metal" local="true">ThermalHarness.osd\MetalWaist</Data>
+        </Slider>
+        <Slider name="WideWaistLine" invert="false" small="0" big="0">
+            <Data name="3BAWideWaistLine" target="3BA">SE 3BBB Body Amazing v2.osd\3BAWideWaistLine</Data>
+            <Data name="HarnessWideWaistLine" target="Harness" local="true">ThermalHarness.osd\HarnessWideWaistLine</Data>
+            <Data name="MetalWideWaistLine" target="Metal" local="true">ThermalHarness.osd\MetalWideWaistLine</Data>
+        </Slider>
+        <Slider name="ChubbyWaist" invert="false" small="0" big="0">
+            <Data name="3BAChubbyWaist" target="3BA">SE 3BBB Body Amazing v2.osd\3BAChubbyWaist</Data>
+            <Data name="HarnessChubbyWaist" target="Harness" local="true">ThermalHarness.osd\HarnessChubbyWaist</Data>
+            <Data name="MetalChubbyWaist" target="Metal" local="true">ThermalHarness.osd\MetalChubbyWaist</Data>
+        </Slider>
+        <Slider name="Belly" invert="false" small="0" big="0">
+            <Data name="3BABelly" target="3BA">SE 3BBB Body Amazing v2.osd\3BABelly</Data>
+            <Data name="HarnessBelly" target="Harness" local="true">ThermalHarness.osd\HarnessBelly</Data>
+            <Data name="MetalBelly" target="Metal" local="true">ThermalHarness.osd\MetalBelly</Data>
+        </Slider>
+        <Slider name="BigBelly" invert="false" small="0" big="0">
+            <Data name="3BABigBelly" target="3BA">SE 3BBB Body Amazing v2.osd\3BABigBelly</Data>
+            <Data name="HarnessBigBelly" target="Harness" local="true">ThermalHarness.osd\HarnessBigBelly</Data>
+            <Data name="MetalBigBelly" target="Metal" local="true">ThermalHarness.osd\MetalBigBelly</Data>
+        </Slider>
+        <Slider name="PregnancyBelly" invert="false" small="0" big="0">
+            <Data name="3BAPregnancyBelly" target="3BA">SE 3BBB Body Amazing v2.osd\3BAPregnancyBelly</Data>
+            <Data name="HarnessPregnancyBelly" target="Harness" local="true">ThermalHarness.osd\HarnessPregnancyBelly</Data>
+            <Data name="MetalPregnancyBelly" target="Metal" local="true">ThermalHarness.osd\MetalPregnancyBelly</Data>
+        </Slider>
+        <Slider name="TummyTuck" invert="false" small="0" big="0">
+            <Data name="3BATummyTuck" target="3BA">SE 3BBB Body Amazing v2.osd\3BATummyTuck</Data>
+            <Data name="HarnessTummyTuck" target="Harness" local="true">ThermalHarness.osd\HarnessTummyTuck</Data>
+            <Data name="MetalTummyTuck" target="Metal" local="true">ThermalHarness.osd\MetalTummyTuck</Data>
+        </Slider>
+        <Slider name="Back" invert="false" small="0" big="0">
+            <Data name="3BABack" target="3BA">SE 3BBB Body Amazing v2.osd\3BABack</Data>
+            <Data name="HarnessBack" target="Harness" local="true">ThermalHarness.osd\HarnessBack</Data>
+            <Data name="MetalBack" target="Metal" local="true">ThermalHarness.osd\MetalBack</Data>
+            <Data name="HarnessCollar002:1Back" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1Back</Data>
+        </Slider>
+        <Slider name="Hipbone" invert="false" small="0" big="0">
+            <Data name="HarnessHipbone" target="Harness" local="true">ThermalHarness.osd\HarnessHipbone</Data>
+            <Data name="MetalHipbone" target="Metal" local="true">ThermalHarness.osd\MetalHipbone</Data>
+        </Slider>
+        <Slider name="Hips" invert="false" small="0" big="0">
+            <Data name="3BAHips" target="3BA">SE 3BBB Body Amazing v2.osd\3BAHips</Data>
+            <Data name="HarnessHips" target="Harness" local="true">ThermalHarness.osd\HarnessHips</Data>
+            <Data name="MetalHips" target="Metal" local="true">ThermalHarness.osd\MetalHips</Data>
+        </Slider>
+        <Slider name="ButtCrack" invert="true" small="100" big="100">
+            <Data name="3BAButtCrack" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtCrack</Data>
+            <Data name="HarnessButtCrack" target="Harness" local="true">ThermalHarness.osd\HarnessButtCrack</Data>
+            <Data name="MetalButtCrack" target="Metal" local="true">ThermalHarness.osd\MetalButtCrack</Data>
+        </Slider>
+        <Slider name="Butt" invert="true" small="0" big="100">
+            <Data name="3BAButt" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButt</Data>
+            <Data name="HarnessButt" target="Harness" local="true">ThermalHarness.osd\HarnessButt</Data>
+            <Data name="MetalButt" target="Metal" local="true">ThermalHarness.osd\MetalButt</Data>
+        </Slider>
+        <Slider name="ButtSmall" invert="true" small="100" big="100">
+            <Data name="3BAButtSmall" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtSmall</Data>
+            <Data name="HarnessButtSmall" target="Harness" local="true">ThermalHarness.osd\HarnessButtSmall</Data>
+            <Data name="MetalButtSmall" target="Metal" local="true">ThermalHarness.osd\MetalButtSmall</Data>
+        </Slider>
+        <Slider name="ButtShape2" invert="false" small="0" big="0">
+            <Data name="3BAButtShape2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtShape2</Data>
+            <Data name="HarnessButtShape2" target="Harness" local="true">ThermalHarness.osd\HarnessButtShape2</Data>
+            <Data name="MetalButtShape2" target="Metal" local="true">ThermalHarness.osd\MetalButtShape2</Data>
+        </Slider>
+        <Slider name="BigButt" invert="false" small="0" big="0">
+            <Data name="3BABigButt" target="3BA">SE 3BBB Body Amazing v2.osd\3BABigButt</Data>
+            <Data name="HarnessBigButt" target="Harness" local="true">ThermalHarness.osd\HarnessBigButt</Data>
+            <Data name="MetalBigButt" target="Metal" local="true">ThermalHarness.osd\MetalBigButt</Data>
+        </Slider>
+        <Slider name="ChubbyButt" invert="false" small="0" big="0">
+            <Data name="3BAChubbyButt" target="3BA">SE 3BBB Body Amazing v2.osd\3BAChubbyButt</Data>
+            <Data name="HarnessChubbyButt" target="Harness" local="true">ThermalHarness.osd\HarnessChubbyButt</Data>
+            <Data name="MetalChubbyButt" target="Metal" local="true">ThermalHarness.osd\MetalChubbyButt</Data>
+        </Slider>
+        <Slider name="AppleCheeks" invert="false" small="0" big="0">
+            <Data name="3BAAppleCheeks" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAppleCheeks</Data>
+            <Data name="HarnessAppleCheeks" target="Harness" local="true">ThermalHarness.osd\HarnessAppleCheeks</Data>
+            <Data name="MetalAppleCheeks" target="Metal" local="true">ThermalHarness.osd\MetalAppleCheeks</Data>
+        </Slider>
+        <Slider name="RoundAss" invert="false" small="0" big="0">
+            <Data name="3BARoundAss" target="3BA">SE 3BBB Body Amazing v2.osd\3BARoundAss</Data>
+            <Data name="HarnessRoundAss" target="Harness" local="true">ThermalHarness.osd\HarnessRoundAss</Data>
+            <Data name="MetalRoundAss" target="Metal" local="true">ThermalHarness.osd\MetalRoundAss</Data>
+        </Slider>
+        <Slider name="Groin" invert="false" small="0" big="0">
+            <Data name="3BAGroin" target="3BA">SE 3BBB Body Amazing v2.osd\3BAGroin</Data>
+            <Data name="HarnessGroin" target="Harness" local="true">ThermalHarness.osd\HarnessGroin</Data>
+            <Data name="MetalGroin" target="Metal" local="true">ThermalHarness.osd\MetalGroin</Data>
+        </Slider>
+        <Slider name="SlimThighs" invert="false" small="0" big="0">
+            <Data name="3BASlimThighs" target="3BA">SE 3BBB Body Amazing v2.osd\3BASlimThighs</Data>
+            <Data name="HarnessSlimThighs" target="Harness" local="true">ThermalHarness.osd\HarnessSlimThighs</Data>
+            <Data name="MetalSlimThighs" target="Metal" local="true">ThermalHarness.osd\MetalSlimThighs</Data>
+        </Slider>
+        <Slider name="Thighs" invert="false" small="0" big="0">
+            <Data name="3BAThighs" target="3BA">SE 3BBB Body Amazing v2.osd\3BAThighs</Data>
+            <Data name="HarnessThighs" target="Harness" local="true">ThermalHarness.osd\HarnessThighs</Data>
+            <Data name="MetalThighs" target="Metal" local="true">ThermalHarness.osd\MetalThighs</Data>
+        </Slider>
+        <Slider name="ChubbyLegs" invert="false" small="0" big="0">
+            <Data name="3BAChubbyLegs" target="3BA">SE 3BBB Body Amazing v2.osd\3BAChubbyLegs</Data>
+            <Data name="HarnessChubbyLegs" target="Harness" local="true">ThermalHarness.osd\HarnessChubbyLegs</Data>
+            <Data name="MetalChubbyLegs" target="Metal" local="true">ThermalHarness.osd\MetalChubbyLegs</Data>
+        </Slider>
+        <Slider name="Legs" invert="true" small="0" big="100">
+            <Data name="HarnessLegs" target="Harness" local="true">ThermalHarness.osd\HarnessLegs</Data>
+            <Data name="MetalLegs" target="Metal" local="true">ThermalHarness.osd\MetalLegs</Data>
+        </Slider>
+        <Slider name="SmallSeam" invert="false" small="100" big="0" hidden="true">
+            <Data name="HarnessCollar002:2SmallSeam" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2SmallSeam</Data>
+            <Data name="HarnessCollar002:1SmallSeam" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1SmallSeam</Data>
+        </Slider>
+        <Slider name="ShoulderTweak" invert="false" small="100" big="100" hidden="true">
+            <Data name="3BAShoulderTweak" target="3BA">SE 3BBB Body Amazing v2.osd\3BAShoulderTweak</Data>
+            <Data name="HarnessCollar002:2ShoulderTweak" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2ShoulderTweak</Data>
+            <Data name="HarnessCollar002:1ShoulderTweak" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1ShoulderTweak</Data>
+        </Slider>
+        <Slider name="BackArch" invert="false" small="0" big="0">
+            <Data name="3BABackArch" target="3BA">SE 3BBB Body Amazing v2.osd\3BABackArch</Data>
+            <Data name="HarnessBackArch" target="Harness" local="true">ThermalHarness.osd\HarnessBackArch</Data>
+            <Data name="MetalBackArch" target="Metal" local="true">ThermalHarness.osd\MetalBackArch</Data>
+        </Slider>
+        <Slider name="BreastCenter" invert="false" small="0" big="0">
+            <Data name="3BABreastCenter" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastCenter</Data>
+            <Data name="HarnessBreastCenter" target="Harness" local="true">ThermalHarness.osd\HarnessBreastCenter</Data>
+            <Data name="MetalBreastCenter" target="Metal" local="true">ThermalHarness.osd\MetalBreastCenter</Data>
+            <Data name="HarnessCollar002:1BreastCenter" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastCenter</Data>
+        </Slider>
+        <Slider name="BreastCenterBig" invert="false" small="0" big="0">
+            <Data name="3BABreastCenterBig" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastCenterBig</Data>
+            <Data name="HarnessBreastCenterBig" target="Harness" local="true">ThermalHarness.osd\HarnessBreastCenterBig</Data>
+            <Data name="MetalBreastCenterBig" target="Metal" local="true">ThermalHarness.osd\MetalBreastCenterBig</Data>
+        </Slider>
+        <Slider name="BreastFlatness2" invert="false" small="0" big="0">
+            <Data name="3BABreastFlatness2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastFlatness2</Data>
+            <Data name="HarnessBreastFlatness2" target="Harness" local="true">ThermalHarness.osd\HarnessBreastFlatness2</Data>
+            <Data name="MetalBreastFlatness2" target="Metal" local="true">ThermalHarness.osd\MetalBreastFlatness2</Data>
+            <Data name="HarnessCollar002:1BreastFlatness2" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastFlatness2</Data>
+        </Slider>
+        <Slider name="BreastGravity2" invert="false" small="0" big="0">
+            <Data name="3BABreastGravity2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastGravity2</Data>
+            <Data name="HarnessBreastGravity2" target="Harness" local="true">ThermalHarness.osd\HarnessBreastGravity2</Data>
+            <Data name="MetalBreastGravity2" target="Metal" local="true">ThermalHarness.osd\MetalBreastGravity2</Data>
+            <Data name="HarnessCollar002:1BreastGravity2" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastGravity2</Data>
+        </Slider>
+        <Slider name="BreastsGone" invert="false" small="0" big="0">
+            <Data name="3BABreastsGone" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsGone</Data>
+            <Data name="HarnessBreastsGone" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsGone</Data>
+            <Data name="MetalBreastsGone" target="Metal" local="true">ThermalHarness.osd\MetalBreastsGone</Data>
+            <Data name="HarnessCollar002:2BreastsGone" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastsGone</Data>
+            <Data name="HarnessCollar002:1BreastsGone" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsGone</Data>
+        </Slider>
+        <Slider name="BreastsNewSH" invert="false" small="0" big="0">
+            <Data name="3BABreastsNewSH" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsNewSH</Data>
+            <Data name="HarnessBreastsNewSH" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsNewSH</Data>
+            <Data name="MetalBreastsNewSH" target="Metal" local="true">ThermalHarness.osd\MetalBreastsNewSH</Data>
+            <Data name="HarnessCollar002:1BreastsNewSH" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsNewSH</Data>
+        </Slider>
+        <Slider name="BreastsNewSHSymmetry" invert="false" small="0" big="0">
+            <Data name="3BABreastsNewSHSymmetry" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsNewSHSymmetry</Data>
+            <Data name="HarnessBreastsNewSHSymmetry" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsNewSHSymmetry</Data>
+            <Data name="MetalBreastsNewSHSymmetry" target="Metal" local="true">ThermalHarness.osd\MetalBreastsNewSHSymmetry</Data>
+        </Slider>
+        <Slider name="BreastsSmall2" invert="false" small="0" big="0">
+            <Data name="3BABreastsSmall2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsSmall2</Data>
+            <Data name="HarnessBreastsSmall2" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsSmall2</Data>
+            <Data name="MetalBreastsSmall2" target="Metal" local="true">ThermalHarness.osd\MetalBreastsSmall2</Data>
+            <Data name="HarnessCollar002:2BreastsSmall2" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2BreastsSmall2</Data>
+            <Data name="HarnessCollar002:1BreastsSmall2" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsSmall2</Data>
+        </Slider>
+        <Slider name="BreastsTogether" invert="false" small="0" big="0">
+            <Data name="3BABreastsTogether" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsTogether</Data>
+            <Data name="HarnessBreastsTogether" target="Harness" local="true">ThermalHarness.osd\HarnessBreastsTogether</Data>
+            <Data name="MetalBreastsTogether" target="Metal" local="true">ThermalHarness.osd\MetalBreastsTogether</Data>
+            <Data name="HarnessCollar002:1BreastsTogether" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastsTogether</Data>
+        </Slider>
+        <Slider name="BreastTopSlope" invert="false" small="0" big="0">
+            <Data name="3BABreastTopSlope" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastTopSlope</Data>
+            <Data name="HarnessBreastTopSlope" target="Harness" local="true">ThermalHarness.osd\HarnessBreastTopSlope</Data>
+            <Data name="MetalBreastTopSlope" target="Metal" local="true">ThermalHarness.osd\MetalBreastTopSlope</Data>
+            <Data name="HarnessCollar002:1BreastTopSlope" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1BreastTopSlope</Data>
+        </Slider>
+        <Slider name="ButtClassic" invert="false" small="0" big="0">
+            <Data name="3BAButtClassic" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtClassic</Data>
+            <Data name="HarnessButtClassic" target="Harness" local="true">ThermalHarness.osd\HarnessButtClassic</Data>
+            <Data name="MetalButtClassic" target="Metal" local="true">ThermalHarness.osd\MetalButtClassic</Data>
+        </Slider>
+        <Slider name="ChestDepth" invert="false" small="0" big="0">
+            <Data name="3BAChestDepth" target="3BA">SE 3BBB Body Amazing v2.osd\3BAChestDepth</Data>
+            <Data name="HarnessChestDepth" target="Harness" local="true">ThermalHarness.osd\HarnessChestDepth</Data>
+            <Data name="MetalChestDepth" target="Metal" local="true">ThermalHarness.osd\MetalChestDepth</Data>
+            <Data name="HarnessCollar002:2ChestDepth" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2ChestDepth</Data>
+            <Data name="HarnessCollar002:1ChestDepth" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1ChestDepth</Data>
+        </Slider>
+        <Slider name="ChestWidth" invert="false" small="0" big="0">
+            <Data name="3BAChestWidth" target="3BA">SE 3BBB Body Amazing v2.osd\3BAChestWidth</Data>
+            <Data name="HarnessChestWidth" target="Harness" local="true">ThermalHarness.osd\HarnessChestWidth</Data>
+            <Data name="MetalChestWidth" target="Metal" local="true">ThermalHarness.osd\MetalChestWidth</Data>
+        </Slider>
+        <Slider name="CrotchBack" invert="false" small="0" big="0">
+            <Data name="3BACrotchBack" target="3BA">SE 3BBB Body Amazing v2.osd\3BACrotchBack</Data>
+            <Data name="HarnessCrotchBack" target="Harness" local="true">ThermalHarness.osd\HarnessCrotchBack</Data>
+            <Data name="MetalCrotchBack" target="Metal" local="true">ThermalHarness.osd\MetalCrotchBack</Data>
+        </Slider>
+        <Slider name="HipBone" invert="false" small="0" big="0">
+            <Data name="3BAHipBone" target="3BA">SE 3BBB Body Amazing v2.osd\3BAHipBone</Data>
+            <Data name="HarnessHipBone" target="Harness" local="true">ThermalHarness.osd\HarnessHipBone</Data>
+            <Data name="MetalHipBone" target="Metal" local="true">ThermalHarness.osd\MetalHipBone</Data>
+        </Slider>
+        <Slider name="HipForward" invert="false" small="0" big="0">
+            <Data name="3BAHipForward" target="3BA">SE 3BBB Body Amazing v2.osd\3BAHipForward</Data>
+            <Data name="HarnessHipForward" target="Harness" local="true">ThermalHarness.osd\HarnessHipForward</Data>
+            <Data name="MetalHipForward" target="Metal" local="true">ThermalHarness.osd\MetalHipForward</Data>
+        </Slider>
+        <Slider name="HipUpperWidth" invert="false" small="0" big="0">
+            <Data name="3BAHipUpperWidth" target="3BA">SE 3BBB Body Amazing v2.osd\3BAHipUpperWidth</Data>
+            <Data name="HarnessHipUpperWidth" target="Harness" local="true">ThermalHarness.osd\HarnessHipUpperWidth</Data>
+            <Data name="MetalHipUpperWidth" target="Metal" local="true">ThermalHarness.osd\MetalHipUpperWidth</Data>
+        </Slider>
+        <Slider name="LegsThin" invert="false" small="0" big="0">
+            <Data name="3BALegsThin" target="3BA">SE 3BBB Body Amazing v2.osd\3BALegsThin</Data>
+            <Data name="MetalLegsThin" target="Metal" local="true">ThermalHarness.osd\MetalLegsThin</Data>
+        </Slider>
+        <Slider name="MuscleAbs" invert="false" small="0" big="0">
+            <Data name="3BAMuscleAbs" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleAbs</Data>
+            <Data name="HarnessMuscleAbs" target="Harness" local="true">ThermalHarness.osd\HarnessMuscleAbs</Data>
+            <Data name="MetalMuscleAbs" target="Metal" local="true">ThermalHarness.osd\MetalMuscleAbs</Data>
+        </Slider>
+        <Slider name="MuscleArms" invert="false" small="0" big="0">
+            <Data name="3BAMuscleArms" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleArms</Data>
+            <Data name="HarnessMuscleArms" target="Harness" local="true">ThermalHarness.osd\HarnessMuscleArms</Data>
+            <Data name="MetalMuscleArms" target="Metal" local="true">ThermalHarness.osd\MetalMuscleArms</Data>
+        </Slider>
+        <Slider name="MuscleButt" invert="false" small="0" big="0">
+            <Data name="3BAMuscleButt" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleButt</Data>
+            <Data name="HarnessMuscleButt" target="Harness" local="true">ThermalHarness.osd\HarnessMuscleButt</Data>
+            <Data name="MetalMuscleButt" target="Metal" local="true">ThermalHarness.osd\MetalMuscleButt</Data>
+        </Slider>
+        <Slider name="MuscleLegs" invert="false" small="0" big="0">
+            <Data name="3BAMuscleLegs" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleLegs</Data>
+            <Data name="HarnessMuscleLegs" target="Harness" local="true">ThermalHarness.osd\HarnessMuscleLegs</Data>
+            <Data name="MetalMuscleLegs" target="Metal" local="true">ThermalHarness.osd\MetalMuscleLegs</Data>
+        </Slider>
+        <Slider name="MusclePecs" invert="false" small="0" big="0">
+            <Data name="3BAMusclePecs" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMusclePecs</Data>
+            <Data name="HarnessMusclePecs" target="Harness" local="true">ThermalHarness.osd\HarnessMusclePecs</Data>
+            <Data name="MetalMusclePecs" target="Metal" local="true">ThermalHarness.osd\MetalMusclePecs</Data>
+        </Slider>
+        <Slider name="NeckSeam" invert="false" small="100" big="0" hidden="true">
+            <Data name="3BANeckSeam" target="3BA">SE 3BBB Body Amazing v2.osd\3BANeckSeam</Data>
+            <Data name="HarnessCollar002:2NeckSeam" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2NeckSeam</Data>
+            <Data name="HarnessCollar002:1NeckSeam" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1NeckSeam</Data>
+        </Slider>
+        <Slider name="RibsProminance" invert="false" small="0" big="0">
+            <Data name="3BARibsProminance" target="3BA">SE 3BBB Body Amazing v2.osd\3BARibsProminance</Data>
+            <Data name="HarnessRibsProminance" target="Harness" local="true">ThermalHarness.osd\HarnessRibsProminance</Data>
+            <Data name="MetalRibsProminance" target="Metal" local="true">ThermalHarness.osd\MetalRibsProminance</Data>
+        </Slider>
+        <Slider name="SternumDepth" invert="false" small="0" big="0">
+            <Data name="3BASternumDepth" target="3BA">SE 3BBB Body Amazing v2.osd\3BASternumDepth</Data>
+            <Data name="HarnessSternumDepth" target="Harness" local="true">ThermalHarness.osd\HarnessSternumDepth</Data>
+            <Data name="MetalSternumDepth" target="Metal" local="true">ThermalHarness.osd\MetalSternumDepth</Data>
+            <Data name="HarnessCollar002:1SternumDepth" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1SternumDepth</Data>
+        </Slider>
+        <Slider name="SternumHeight" invert="false" small="0" big="0">
+            <Data name="3BASternumHeight" target="3BA">SE 3BBB Body Amazing v2.osd\3BASternumHeight</Data>
+            <Data name="HarnessSternumHeight" target="Harness" local="true">ThermalHarness.osd\HarnessSternumHeight</Data>
+            <Data name="MetalSternumHeight" target="Metal" local="true">ThermalHarness.osd\MetalSternumHeight</Data>
+            <Data name="HarnessCollar002:1SternumHeight" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1SternumHeight</Data>
+        </Slider>
+        <Slider name="WaistHeight" invert="false" small="0" big="0">
+            <Data name="3BAWaistHeight" target="3BA">SE 3BBB Body Amazing v2.osd\3BAWaistHeight</Data>
+            <Data name="HarnessWaistHeight" target="Harness" local="true">ThermalHarness.osd\HarnessWaistHeight</Data>
+            <Data name="MetalWaistHeight" target="Metal" local="true">ThermalHarness.osd\MetalWaistHeight</Data>
+        </Slider>
+        <Slider name="7B Lower" invert="false" small="0" big="0">
+            <Data name="3BA7B Lower" target="3BA">SE 3BBB Body Amazing v2.osd\3BA7B Lower</Data>
+            <Data name="Harness7B Lower" target="Harness" local="true">ThermalHarness.osd\Harness7B Lower</Data>
+            <Data name="Metal7B Lower" target="Metal" local="true">ThermalHarness.osd\Metal7B Lower</Data>
+        </Slider>
+        <Slider name="7B Upper" invert="false" small="0" big="0">
+            <Data name="3BA7B Upper" target="3BA">SE 3BBB Body Amazing v2.osd\3BA7B Upper</Data>
+            <Data name="Harness7B Upper" target="Harness" local="true">ThermalHarness.osd\Harness7B Upper</Data>
+            <Data name="Metal7B Upper" target="Metal" local="true">ThermalHarness.osd\Metal7B Upper</Data>
+            <Data name="HarnessCollar002:27B Upper" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:27B Upper</Data>
+            <Data name="HarnessCollar002:17B Upper" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:17B Upper</Data>
+        </Slider>
+        <Slider name="VanillaSSEHi" invert="false" small="0" big="0">
+            <Data name="3BAVanillaSSEHi" target="3BA">SE 3BBB Body Amazing v2.osd\3BAVanillaSSEHi</Data>
+            <Data name="HarnessVanillaSSEHi" target="Harness" local="true">ThermalHarness.osd\HarnessVanillaSSEHi</Data>
+            <Data name="MetalVanillaSSEHi" target="Metal" local="true">ThermalHarness.osd\MetalVanillaSSEHi</Data>
+            <Data name="HarnessCollar002:2VanillaSSEHi" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2VanillaSSEHi</Data>
+            <Data name="HarnessCollar002:1VanillaSSEHi" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1VanillaSSEHi</Data>
+        </Slider>
+        <Slider name="VanillaSSELo" invert="false" small="0" big="0">
+            <Data name="3BAVanillaSSELo" target="3BA">SE 3BBB Body Amazing v2.osd\3BAVanillaSSELo</Data>
+            <Data name="HarnessVanillaSSELo" target="Harness" local="true">ThermalHarness.osd\HarnessVanillaSSELo</Data>
+            <Data name="MetalVanillaSSELo" target="Metal" local="true">ThermalHarness.osd\MetalVanillaSSELo</Data>
+            <Data name="HarnessCollar002:2VanillaSSELo" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2VanillaSSELo</Data>
+            <Data name="HarnessCollar002:1VanillaSSELo" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1VanillaSSELo</Data>
+        </Slider>
+        <Slider name="OldBaseShape" invert="false" small="0" big="0">
+            <Data name="3BAOldBaseShape" target="3BA">SE 3BBB Body Amazing v2.osd\3BAOldBaseShape</Data>
+            <Data name="HarnessOldBaseShape" target="Harness" local="true">ThermalHarness.osd\HarnessOldBaseShape</Data>
+            <Data name="MetalOldBaseShape" target="Metal" local="true">ThermalHarness.osd\MetalOldBaseShape</Data>
+            <Data name="HarnessCollar002:2OldBaseShape" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2OldBaseShape</Data>
+            <Data name="HarnessCollar002:1OldBaseShape" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1OldBaseShape</Data>
+        </Slider>
+        <Slider name="CBPC" invert="false" small="100" big="100">
+            <Data name="3BACBPC" target="3BA">SE 3BBB Body Amazing v2.osd\3BACBPC</Data>
+            <Data name="HarnessCBPC" target="Harness" local="true">ThermalHarness.osd\HarnessCBPC</Data>
+            <Data name="MetalCBPC" target="Metal" local="true">ThermalHarness.osd\MetalCBPC</Data>
+            <Data name="HarnessCollar002:2CBPC" target="HarnessCollar002:2" local="true">ThermalHarness.osd\HarnessCollar002:2CBPC</Data>
+            <Data name="HarnessCollar002:1CBPC" target="HarnessCollar002:1" local="true">ThermalHarness.osd\HarnessCollar002:1CBPC</Data>
+        </Slider>
+        <Slider name="ArmpitShape_v2" invert="false" small="0" big="0">
+            <Data name="3BAArmpitShape_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAArmpitShape_v2</Data>
+        </Slider>
+        <Slider name="AnkleSize" invert="false" small="100" big="0">
+            <Data name="3BAAnkleSize" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAnkleSize</Data>
+        </Slider>
+        <Slider name="AreolaSize" invert="false" small="0" big="0" uv="true">
+            <Data name="3BAAreolaSize" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAreolaSize</Data>
+        </Slider>
+        <Slider name="AreolaPull_v2" invert="false" small="0" big="0">
+            <Data name="3BAAreolaPull_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAreolaPull_v2</Data>
+        </Slider>
+        <Slider name="BackValley_v2" invert="false" small="0" big="0">
+            <Data name="3BABackValley_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABackValley_v2</Data>
+        </Slider>
+        <Slider name="BackWing_v2" invert="false" small="0" big="0">
+            <Data name="3BABackWing_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABackWing_v2</Data>
+        </Slider>
+        <Slider name="BellyFrontUpFat_v2" invert="false" small="0" big="0">
+            <Data name="3BABellyFrontUpFat_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABellyFrontUpFat_v2</Data>
+        </Slider>
+        <Slider name="BellyFrontDownFat_v2" invert="false" small="0" big="0">
+            <Data name="3BABellyFrontDownFat_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABellyFrontDownFat_v2</Data>
+        </Slider>
+        <Slider name="BellySideUpFat_v2" invert="false" small="0" big="0">
+            <Data name="3BABellySideUpFat_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABellySideUpFat_v2</Data>
+        </Slider>
+        <Slider name="BellySideDownFat_v2" invert="false" small="0" big="0">
+            <Data name="3BABellySideDownFat_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABellySideDownFat_v2</Data>
+        </Slider>
+        <Slider name="BellyUnder_v2" invert="false" small="0" big="0">
+            <Data name="3BABellyUnder_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABellyUnder_v2</Data>
+        </Slider>
+        <Slider name="BreastsConverage_v2" invert="false" small="0" big="0">
+            <Data name="3BABreastsConverage_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsConverage_v2</Data>
+        </Slider>
+        <Slider name="BreastSideShape" invert="false" small="0" big="0">
+            <Data name="3BABreastSideShape" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastSideShape</Data>
+        </Slider>
+        <Slider name="BreastUnderDepth" invert="false" small="0" big="0">
+            <Data name="3BABreastUnderDepth" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastUnderDepth</Data>
+        </Slider>
+        <Slider name="BreastsPressed_v2" invert="false" small="0" big="0">
+            <Data name="3BABreastsPressed_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BABreastsPressed_v2</Data>
+        </Slider>
+        <Slider name="ButtSaggy_v2" invert="false" small="0" big="0">
+            <Data name="3BAButtSaggy_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtSaggy_v2</Data>
+        </Slider>
+        <Slider name="ButtDimples" invert="false" small="0" big="0">
+            <Data name="3BAButtDimples" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtDimples</Data>
+        </Slider>
+        <Slider name="ButtUnderFold" invert="false" small="0" big="0">
+            <Data name="3BAButtUnderFold" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtUnderFold</Data>
+        </Slider>
+        <Slider name="ButtPressed_v2" invert="false" small="0" big="0">
+            <Data name="3BAButtPressed_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtPressed_v2</Data>
+        </Slider>
+        <Slider name="ButtNarrow_v2" invert="false" small="0" big="0">
+            <Data name="3BAButtNarrow_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAButtNarrow_v2</Data>
+        </Slider>
+        <Slider name="CalfSize" invert="false" small="0" big="0">
+            <Data name="3BACalfSize" target="3BA">SE 3BBB Body Amazing v2.osd\3BACalfSize</Data>
+        </Slider>
+        <Slider name="CalfSmooth" invert="false" small="0" big="0">
+            <Data name="3BACalfSmooth" target="3BA">SE 3BBB Body Amazing v2.osd\3BACalfSmooth</Data>
+        </Slider>
+        <Slider name="CalfFBThicc_v2" invert="false" small="0" big="0">
+            <Data name="3BACalfFBThicc_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BACalfFBThicc_v2</Data>
+        </Slider>
+        <Slider name="Clavicle_v2" invert="false" small="0" big="0">
+            <Data name="3BAClavicle_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAClavicle_v2</Data>
+        </Slider>
+        <Slider name="ForearmSize" invert="false" small="0" big="0">
+            <Data name="3BAForearmSize" target="3BA">SE 3BBB Body Amazing v2.osd\3BAForearmSize</Data>
+        </Slider>
+        <Slider name="HipCarved" invert="false" small="0" big="0">
+            <Data name="3BAHipCarved" target="3BA">SE 3BBB Body Amazing v2.osd\3BAHipCarved</Data>
+        </Slider>
+        <Slider name="HipNarrow_v2" invert="false" small="0" big="0">
+            <Data name="3BAHipNarrow_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAHipNarrow_v2</Data>
+        </Slider>
+        <Slider name="KneeHeight" invert="false" small="0" big="0">
+            <Data name="3BAKneeHeight" target="3BA">SE 3BBB Body Amazing v2.osd\3BAKneeHeight</Data>
+        </Slider>
+        <Slider name="KneeShape" invert="false" small="0" big="0">
+            <Data name="3BAKneeShape" target="3BA">SE 3BBB Body Amazing v2.osd\3BAKneeShape</Data>
+        </Slider>
+        <Slider name="KneeTogether_v2" invert="false" small="0" big="0">
+            <Data name="3BAKneeTogether_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAKneeTogether_v2</Data>
+        </Slider>
+        <Slider name="LegShapeClassic" invert="false" small="0" big="0">
+            <Data name="3BALegShapeClassic" target="3BA">SE 3BBB Body Amazing v2.osd\3BALegShapeClassic</Data>
+        </Slider>
+        <Slider name="MuscleBack_v2" invert="false" small="0" big="0">
+            <Data name="3BAMuscleBack_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleBack_v2</Data>
+        </Slider>
+        <Slider name="MuscleMoreAbs_v2" invert="false" small="0" big="0">
+            <Data name="3BAMuscleMoreAbs_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleMoreAbs_v2</Data>
+        </Slider>
+        <Slider name="MuscleMoreArms_v2" invert="false" small="0" big="0">
+            <Data name="3BAMuscleMoreArms_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleMoreArms_v2</Data>
+        </Slider>
+        <Slider name="MuscleMoreLegs_v2" invert="false" small="0" big="0">
+            <Data name="3BAMuscleMoreLegs_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAMuscleMoreLegs_v2</Data>
+        </Slider>
+        <Slider name="NavelEven" invert="false" small="0" big="0">
+            <Data name="3BANavelEven" target="3BA">SE 3BBB Body Amazing v2.osd\3BANavelEven</Data>
+        </Slider>
+        <Slider name="NipBGone" invert="false" small="0" big="0">
+            <Data name="3BANipBGone" target="3BA">SE 3BBB Body Amazing v2.osd\3BANipBGone</Data>
+        </Slider>
+        <Slider name="NippleManga" invert="false" small="0" big="0">
+            <Data name="3BANippleManga" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleManga</Data>
+        </Slider>
+        <Slider name="NipplePerkiness" invert="false" small="0" big="0">
+            <Data name="3BANipplePerkiness" target="3BA">SE 3BBB Body Amazing v2.osd\3BANipplePerkiness</Data>
+        </Slider>
+        <Slider name="NipplePerkManga" invert="false" small="0" big="0">
+            <Data name="3BANipplePerkManga" target="3BA">SE 3BBB Body Amazing v2.osd\3BANipplePerkManga</Data>
+        </Slider>
+        <Slider name="NippleSize" invert="false" small="0" big="0">
+            <Data name="3BANippleSize" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleSize</Data>
+        </Slider>
+        <Slider name="NippleTip" invert="false" small="0" big="0">
+            <Data name="3BANippleTip" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleTip</Data>
+        </Slider>
+        <Slider name="NippleTipManga" invert="false" small="0" big="0">
+            <Data name="3BANippleTipManga" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleTipManga</Data>
+        </Slider>
+        <Slider name="NippleDip" invert="false" small="0" big="0">
+            <Data name="3BANippleDip" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleDip</Data>
+        </Slider>
+        <Slider name="NippleCrease_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleCrease_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleCrease_v2</Data>
+        </Slider>
+        <Slider name="NipplePuffy_v2" invert="false" small="0" big="0">
+            <Data name="3BANipplePuffy_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANipplePuffy_v2</Data>
+        </Slider>
+        <Slider name="NippleShy_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleShy_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleShy_v2</Data>
+        </Slider>
+        <Slider name="NippleThicc_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleThicc_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleThicc_v2</Data>
+        </Slider>
+        <Slider name="NippleInvert_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleInvert_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleInvert_v2</Data>
+        </Slider>
+        <Slider name="NippleSquash1_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleSquash1_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleSquash1_v2</Data>
+        </Slider>
+        <Slider name="NippleSquash2_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleSquash2_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleSquash2_v2</Data>
+        </Slider>
+        <Slider name="NippleBump_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleBump_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleBump_v2</Data>
+        </Slider>
+        <Slider name="NippleCrumpled_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleCrumpled_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleCrumpled_v2</Data>
+        </Slider>
+        <Slider name="NippleTube_v2" invert="false" small="0" big="0">
+            <Data name="3BANippleTube_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BANippleTube_v2</Data>
+        </Slider>
+        <Slider name="RibsMore_v2" invert="false" small="0" big="0">
+            <Data name="3BARibsMore_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BARibsMore_v2</Data>
+        </Slider>
+        <Slider name="ThighOutsideThicc_v2" invert="false" small="0" big="0">
+            <Data name="3BAThighOutsideThicc_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAThighOutsideThicc_v2</Data>
+        </Slider>
+        <Slider name="ThighInsideThicc_v2" invert="false" small="0" big="0">
+            <Data name="3BAThighInsideThicc_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAThighInsideThicc_v2</Data>
+        </Slider>
+        <Slider name="ThighFBThicc_v2" invert="false" small="0" big="0">
+            <Data name="3BAThighFBThicc_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAThighFBThicc_v2</Data>
+        </Slider>
+        <Slider name="LegSpread_v2" invert="false" small="0" big="0">
+            <Data name="3BALegSpread_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BALegSpread_v2</Data>
+        </Slider>
+        <Slider name="UNPHip_v2" invert="false" small="0" big="0">
+            <Data name="3BAUNPHip_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAUNPHip_v2</Data>
+        </Slider>
+        <Slider name="WristSize" invert="false" small="100" big="0">
+            <Data name="3BAWristSize" target="3BA">SE 3BBB Body Amazing v2.osd\3BAWristSize</Data>
+        </Slider>
+        <Slider name="7BLeg_v2" invert="false" small="0" big="0">
+            <Data name="3BA7BLeg_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BA7BLeg_v2</Data>
+        </Slider>
+        <Slider name="Innieoutie" invert="false" small="0" big="0">
+            <Data name="3BAInnieoutie" target="3BA">SE 3BBB Body Amazing v2.osd\3BAInnieoutie</Data>
+        </Slider>
+        <Slider name="LabiaTightUp" invert="false" small="0" big="0">
+            <Data name="3BALabiaTightUp" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaTightUp</Data>
+        </Slider>
+        <Slider name="Labiapuffyness" invert="false" small="0" big="0">
+            <Data name="3BALabiapuffyness" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiapuffyness</Data>
+        </Slider>
+        <Slider name="LabiaMorePuffyness_v2" invert="false" small="0" big="0">
+            <Data name="3BALabiaMorePuffyness_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaMorePuffyness_v2</Data>
+        </Slider>
+        <Slider name="Labiaprotrude" invert="false" small="0" big="0">
+            <Data name="3BALabiaprotrude" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaprotrude</Data>
+        </Slider>
+        <Slider name="Labiaprotrude2" invert="false" small="0" big="0">
+            <Data name="3BALabiaprotrude2" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaprotrude2</Data>
+        </Slider>
+        <Slider name="Labiaspread" invert="false" small="0" big="0">
+            <Data name="3BALabiaspread" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaspread</Data>
+        </Slider>
+        <Slider name="LabiaCrumpled_v2" invert="false" small="0" big="0">
+            <Data name="3BALabiaCrumpled_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaCrumpled_v2</Data>
+        </Slider>
+        <Slider name="LabiaNeat_v2" invert="false" small="0" big="0">
+            <Data name="3BALabiaNeat_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaNeat_v2</Data>
+        </Slider>
+        <Slider name="LabiaBulgogi_v2" invert="false" small="0" big="0">
+            <Data name="3BALabiaBulgogi_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BALabiaBulgogi_v2</Data>
+        </Slider>
+        <Slider name="VaginaHole" invert="false" small="0" big="0">
+            <Data name="3BAVaginaHole" target="3BA">SE 3BBB Body Amazing v2.osd\3BAVaginaHole</Data>
+        </Slider>
+        <Slider name="Clit" invert="false" small="0" big="0">
+            <Data name="3BAClit" target="3BA">SE 3BBB Body Amazing v2.osd\3BAClit</Data>
+        </Slider>
+        <Slider name="ClitSwell_v2" invert="false" small="0" big="0">
+            <Data name="3BAClitSwell_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAClitSwell_v2</Data>
+        </Slider>
+        <Slider name="Cutepuffyness" invert="false" small="0" big="0">
+            <Data name="3BACutepuffyness" target="3BA">SE 3BBB Body Amazing v2.osd\3BACutepuffyness</Data>
+        </Slider>
+        <Slider name="CrotchGap" invert="false" small="0" big="0">
+            <Data name="3BACrotchGap" target="3BA">SE 3BBB Body Amazing v2.osd\3BACrotchGap</Data>
+        </Slider>
+        <Slider name="AnalLoose_v2" invert="false" small="0" big="0">
+            <Data name="3BAAnalLoose_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAnalLoose_v2</Data>
+        </Slider>
+        <Slider name="AnalPosition_v2" invert="false" small="0" big="0">
+            <Data name="3BAAnalPosition_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAnalPosition_v2</Data>
+        </Slider>
+        <Slider name="AnalTexPos_v2" invert="false" small="0" big="0" uv="true">
+            <Data name="3BAAnalTexPos_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAnalTexPos_v2</Data>
+        </Slider>
+        <Slider name="AnalTexPosRe_v2" invert="false" small="0" big="0" uv="true">
+            <Data name="3BAAnalTexPosRe_v2" target="3BA">SE 3BBB Body Amazing v2.osd\3BAAnalTexPosRe_v2</Data>
+        </Slider>
+    </SliderSet>
+</SliderSetInfo>

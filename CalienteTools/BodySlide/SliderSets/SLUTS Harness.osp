@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SliderSetInfo version="1">
+    <SliderSet name="SLUTS Harness">
+        <DataFolder>SLUTS Harness</DataFolder>
+        <SourceFile>SLUTS Harness.nif</SourceFile>
+        <OutputPath>meshes\devious\sluts</OutputPath>
+        <OutputFile GenWeights="true">slutsHarness</OutputFile>
+        <Shape target="HarnessBody:1">HarnessBody:1</Shape>
+        <Shape target="HarnessBody:2">HarnessBody:2</Shape>
+        <Slider name="AppleCheeks" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2AppleCheeks" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2AppleCheeks</Data>
+            <Data name="HarnessBody:1AppleCheeks" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1AppleCheeks</Data>
+        </Slider>
+        <Slider name="Arms" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Arms" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Arms</Data>
+            <Data name="HarnessBody:1Arms" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Arms</Data>
+        </Slider>
+        <Slider name="Back" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Back" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Back</Data>
+            <Data name="HarnessBody:1Back" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Back</Data>
+        </Slider>
+        <Slider name="BackArch" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BackArch" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BackArch</Data>
+            <Data name="HarnessBody:1BackArch" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BackArch</Data>
+        </Slider>
+        <Slider name="Belly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Belly" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Belly</Data>
+            <Data name="HarnessBody:1Belly" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Belly</Data>
+        </Slider>
+        <Slider name="BigBelly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BigBelly" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BigBelly</Data>
+            <Data name="HarnessBody:1BigBelly" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BigBelly</Data>
+        </Slider>
+        <Slider name="BigButt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BigButt" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BigButt</Data>
+            <Data name="HarnessBody:1BigButt" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BigButt</Data>
+        </Slider>
+        <Slider name="BigTorso" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BigTorso" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BigTorso</Data>
+            <Data name="HarnessBody:1BigTorso" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BigTorso</Data>
+        </Slider>
+        <Slider name="BreastCenter" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastCenter" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastCenter</Data>
+            <Data name="HarnessBody:1BreastCenter" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastCenter</Data>
+        </Slider>
+        <Slider name="BreastCenterBig" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastCenterBig" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastCenterBig</Data>
+            <Data name="HarnessBody:1BreastCenterBig" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastCenterBig</Data>
+        </Slider>
+        <Slider name="BreastCleavage" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastCleavage" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastCleavage</Data>
+            <Data name="HarnessBody:1BreastCleavage" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastCleavage</Data>
+        </Slider>
+        <Slider name="BreastFlatness2" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastFlatness2" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastFlatness2</Data>
+            <Data name="HarnessBody:1BreastFlatness2" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastFlatness2</Data>
+        </Slider>
+        <Slider name="BreastFlatness" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastFlatness" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastFlatness</Data>
+            <Data name="HarnessBody:1BreastFlatness" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastFlatness</Data>
+        </Slider>
+        <Slider name="BreastGravity2" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastGravity2" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastGravity2</Data>
+            <Data name="HarnessBody:1BreastGravity2" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastGravity2</Data>
+        </Slider>
+        <Slider name="BreastHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastHeight" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastHeight</Data>
+            <Data name="HarnessBody:1BreastHeight" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastHeight</Data>
+        </Slider>
+        <Slider name="BreastPerkiness" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastPerkiness" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastPerkiness</Data>
+            <Data name="HarnessBody:1BreastPerkiness" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastPerkiness</Data>
+        </Slider>
+        <Slider name="Breasts" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Breasts" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Breasts</Data>
+            <Data name="HarnessBody:1Breasts" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Breasts</Data>
+        </Slider>
+        <Slider name="BreastsFantasy" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsFantasy" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsFantasy</Data>
+            <Data name="HarnessBody:1BreastsFantasy" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsFantasy</Data>
+        </Slider>
+        <Slider name="BreastsGone" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsGone" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsGone</Data>
+            <Data name="HarnessBody:1BreastsGone" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsGone</Data>
+        </Slider>
+        <Slider name="BreastsNewSH" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsNewSH" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsNewSH</Data>
+            <Data name="HarnessBody:1BreastsNewSH" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsNewSH</Data>
+        </Slider>
+        <Slider name="BreastsNewSHSymmetry" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsNewSHSymmetry" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsNewSHSymmetry</Data>
+            <Data name="HarnessBody:1BreastsNewSHSymmetry" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsNewSHSymmetry</Data>
+        </Slider>
+        <Slider name="BreastsSmall" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsSmall" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsSmall</Data>
+            <Data name="HarnessBody:1BreastsSmall" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsSmall</Data>
+        </Slider>
+        <Slider name="BreastsSmall2" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsSmall2" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsSmall2</Data>
+            <Data name="HarnessBody:1BreastsSmall2" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsSmall2</Data>
+        </Slider>
+        <Slider name="BreastsTogether" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsTogether" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastsTogether</Data>
+            <Data name="HarnessBody:1BreastsTogether" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastsTogether</Data>
+        </Slider>
+        <Slider name="BreastTopSlope" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastTopSlope" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastTopSlope</Data>
+            <Data name="HarnessBody:1BreastTopSlope" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastTopSlope</Data>
+        </Slider>
+        <Slider name="BreastWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastWidth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastWidth</Data>
+            <Data name="HarnessBody:1BreastWidth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastWidth</Data>
+        </Slider>
+        <Slider name="BreastSideShape" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastSideShape" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastSideShape</Data>
+            <Data name="HarnessBody:1BreastSideShape" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastSideShape</Data>
+        </Slider>
+        <Slider name="BreastUnderDepth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastUnderDepth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2BreastUnderDepth</Data>
+            <Data name="HarnessBody:1BreastUnderDepth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1BreastUnderDepth</Data>
+        </Slider>
+        <Slider name="Butt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Butt" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Butt</Data>
+            <Data name="HarnessBody:1Butt" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Butt</Data>
+        </Slider>
+        <Slider name="ButtClassic" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtClassic" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ButtClassic</Data>
+            <Data name="HarnessBody:1ButtClassic" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ButtClassic</Data>
+        </Slider>
+        <Slider name="ButtCrack" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtCrack" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ButtCrack</Data>
+            <Data name="HarnessBody:1ButtCrack" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ButtCrack</Data>
+        </Slider>
+        <Slider name="ButtShape2" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtShape2" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ButtShape2</Data>
+            <Data name="HarnessBody:1ButtShape2" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ButtShape2</Data>
+        </Slider>
+        <Slider name="ButtSmall" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtSmall" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ButtSmall</Data>
+            <Data name="HarnessBody:1ButtSmall" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ButtSmall</Data>
+        </Slider>
+        <Slider name="ButtDimples" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtDimples" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ButtDimples</Data>
+            <Data name="HarnessBody:1ButtDimples" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ButtDimples</Data>
+        </Slider>
+        <Slider name="ButtUnderFold" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtUnderFold" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ButtUnderFold</Data>
+            <Data name="HarnessBody:1ButtUnderFold" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ButtUnderFold</Data>
+        </Slider>
+        <Slider name="ChestDepth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChestDepth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ChestDepth</Data>
+            <Data name="HarnessBody:1ChestDepth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ChestDepth</Data>
+        </Slider>
+        <Slider name="ChestWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChestWidth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ChestWidth</Data>
+            <Data name="HarnessBody:1ChestWidth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ChestWidth</Data>
+        </Slider>
+        <Slider name="ChubbyArms" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyArms" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ChubbyArms</Data>
+            <Data name="HarnessBody:1ChubbyArms" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ChubbyArms</Data>
+        </Slider>
+        <Slider name="ChubbyButt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyButt" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ChubbyButt</Data>
+            <Data name="HarnessBody:1ChubbyButt" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ChubbyButt</Data>
+        </Slider>
+        <Slider name="ChubbyLegs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyLegs" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ChubbyLegs</Data>
+            <Data name="HarnessBody:1ChubbyLegs" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ChubbyLegs</Data>
+        </Slider>
+        <Slider name="ChubbyWaist" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyWaist" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ChubbyWaist</Data>
+            <Data name="HarnessBody:1ChubbyWaist" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ChubbyWaist</Data>
+        </Slider>
+        <Slider name="CrotchBack" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CrotchBack" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2CrotchBack</Data>
+            <Data name="HarnessBody:1CrotchBack" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1CrotchBack</Data>
+        </Slider>
+        <Slider name="DoubleMelon" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2DoubleMelon" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2DoubleMelon</Data>
+            <Data name="HarnessBody:1DoubleMelon" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1DoubleMelon</Data>
+        </Slider>
+        <Slider name="Groin" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Groin" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Groin</Data>
+            <Data name="HarnessBody:1Groin" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Groin</Data>
+        </Slider>
+        <Slider name="HipBone" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipBone" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2HipBone</Data>
+            <Data name="HarnessBody:1HipBone" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1HipBone</Data>
+        </Slider>
+        <Slider name="HipForward" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipForward" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2HipForward</Data>
+            <Data name="HarnessBody:1HipForward" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1HipForward</Data>
+        </Slider>
+        <Slider name="Hips" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Hips" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Hips</Data>
+            <Data name="HarnessBody:1Hips" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Hips</Data>
+        </Slider>
+        <Slider name="HipUpperWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipUpperWidth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2HipUpperWidth</Data>
+            <Data name="HarnessBody:1HipUpperWidth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1HipUpperWidth</Data>
+        </Slider>
+        <Slider name="HipCarved" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipCarved" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2HipCarved</Data>
+            <Data name="HarnessBody:1HipCarved" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1HipCarved</Data>
+        </Slider>
+        <Slider name="KneeHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2KneeHeight" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2KneeHeight</Data>
+            <Data name="HarnessBody:1KneeHeight" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1KneeHeight</Data>
+        </Slider>
+        <Slider name="LegsThin" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2LegsThin" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2LegsThin</Data>
+            <Data name="HarnessBody:1LegsThin" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1LegsThin</Data>
+        </Slider>
+        <Slider name="MuscleAbs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleAbs" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2MuscleAbs</Data>
+            <Data name="HarnessBody:1MuscleAbs" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1MuscleAbs</Data>
+        </Slider>
+        <Slider name="MuscleArms" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleArms" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2MuscleArms</Data>
+            <Data name="HarnessBody:1MuscleArms" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1MuscleArms</Data>
+        </Slider>
+        <Slider name="MuscleButt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleButt" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2MuscleButt</Data>
+            <Data name="HarnessBody:1MuscleButt" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1MuscleButt</Data>
+        </Slider>
+        <Slider name="MuscleLegs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleLegs" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2MuscleLegs</Data>
+            <Data name="HarnessBody:1MuscleLegs" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1MuscleLegs</Data>
+        </Slider>
+        <Slider name="MusclePecs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MusclePecs" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2MusclePecs</Data>
+            <Data name="HarnessBody:1MusclePecs" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1MusclePecs</Data>
+        </Slider>
+        <Slider name="NavelEven" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NavelEven" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2NavelEven</Data>
+            <Data name="HarnessBody:1NavelEven" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1NavelEven</Data>
+        </Slider>
+        <Slider name="NippleDistance" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleDistance" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2NippleDistance</Data>
+            <Data name="HarnessBody:1NippleDistance" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1NippleDistance</Data>
+        </Slider>
+        <Slider name="NippleDown" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleDown" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2NippleDown</Data>
+            <Data name="HarnessBody:1NippleDown" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1NippleDown</Data>
+        </Slider>
+        <Slider name="NippleLength" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleLength" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2NippleLength</Data>
+            <Data name="HarnessBody:1NippleLength" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1NippleLength</Data>
+        </Slider>
+        <Slider name="NippleUp" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleUp" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2NippleUp</Data>
+            <Data name="HarnessBody:1NippleUp" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1NippleUp</Data>
+        </Slider>
+        <Slider name="PregnancyBelly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PregnancyBelly" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2PregnancyBelly</Data>
+            <Data name="HarnessBody:1PregnancyBelly" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1PregnancyBelly</Data>
+        </Slider>
+        <Slider name="PushUp" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PushUp" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2PushUp</Data>
+            <Data name="HarnessBody:1PushUp" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1PushUp</Data>
+        </Slider>
+        <Slider name="RibsProminance" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2RibsProminance" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2RibsProminance</Data>
+            <Data name="HarnessBody:1RibsProminance" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1RibsProminance</Data>
+        </Slider>
+        <Slider name="RoundAss" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2RoundAss" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2RoundAss</Data>
+            <Data name="HarnessBody:1RoundAss" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1RoundAss</Data>
+        </Slider>
+        <Slider name="ShoulderSmooth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ShoulderSmooth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ShoulderSmooth</Data>
+            <Data name="HarnessBody:1ShoulderSmooth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ShoulderSmooth</Data>
+        </Slider>
+        <Slider name="ShoulderWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ShoulderWidth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2ShoulderWidth</Data>
+            <Data name="HarnessBody:1ShoulderWidth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1ShoulderWidth</Data>
+        </Slider>
+        <Slider name="SlimThighs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2SlimThighs" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2SlimThighs</Data>
+            <Data name="HarnessBody:1SlimThighs" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1SlimThighs</Data>
+        </Slider>
+        <Slider name="SternumDepth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2SternumDepth" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2SternumDepth</Data>
+            <Data name="HarnessBody:1SternumDepth" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1SternumDepth</Data>
+        </Slider>
+        <Slider name="SternumHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2SternumHeight" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2SternumHeight</Data>
+            <Data name="HarnessBody:1SternumHeight" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1SternumHeight</Data>
+        </Slider>
+        <Slider name="Thighs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Thighs" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Thighs</Data>
+            <Data name="HarnessBody:1Thighs" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Thighs</Data>
+        </Slider>
+        <Slider name="TummyTuck" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2TummyTuck" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2TummyTuck</Data>
+            <Data name="HarnessBody:1TummyTuck" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1TummyTuck</Data>
+        </Slider>
+        <Slider name="Waist" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Waist" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2Waist</Data>
+            <Data name="HarnessBody:1Waist" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1Waist</Data>
+        </Slider>
+        <Slider name="WaistHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2WaistHeight" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2WaistHeight</Data>
+            <Data name="HarnessBody:1WaistHeight" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1WaistHeight</Data>
+        </Slider>
+        <Slider name="WideWaistLine" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2WideWaistLine" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2WideWaistLine</Data>
+            <Data name="HarnessBody:1WideWaistLine" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1WideWaistLine</Data>
+        </Slider>
+        <Slider name="7B Lower" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Lower" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:27B Lower</Data>
+            <Data name="HarnessBody:17B Lower" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:17B Lower</Data>
+        </Slider>
+        <Slider name="7B Upper" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Upper" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:27B Upper</Data>
+            <Data name="HarnessBody:17B Upper" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:17B Upper</Data>
+        </Slider>
+        <Slider name="VanillaSSEHi" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2VanillaSSEHi" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2VanillaSSEHi</Data>
+            <Data name="HarnessBody:1VanillaSSEHi" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1VanillaSSEHi</Data>
+        </Slider>
+        <Slider name="VanillaSSELo" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2VanillaSSELo" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2VanillaSSELo</Data>
+            <Data name="HarnessBody:1VanillaSSELo" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1VanillaSSELo</Data>
+        </Slider>
+        <Slider name="OldBaseShape" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2OldBaseShape" target="HarnessBody:2" local="true">SLUTS Harness.osd\HarnessBody:2OldBaseShape</Data>
+            <Data name="HarnessBody:1OldBaseShape" target="HarnessBody:1" local="true">SLUTS Harness.osd\HarnessBody:1OldBaseShape</Data>
+        </Slider>
+    </SliderSet>
+</SliderSetInfo>

@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SliderSetInfo version="1">
+    <SliderSet name="SLUTS Harness BHUNP">
+        <DataFolder>SLUTS Harness BHUNP</DataFolder>
+        <SourceFile>SLUTS Harness BHUNP.nif</SourceFile>
+        <OutputPath>meshes\devious\sluts</OutputPath>
+        <OutputFile GenWeights="true">slutsHarness</OutputFile>
+        <Shape target="HarnessBody:1">HarnessBody:1</Shape>
+        <Shape target="HarnessBody:2">HarnessBody:2</Shape>
+        <Slider name="7B Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Low</Data>
+            <Data name="HarnessBody:17B Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Low</Data>
+        </Slider>
+        <Slider name="7B High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B High</Data>
+            <Data name="HarnessBody:17B High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B High</Data>
+        </Slider>
+        <Slider name="7BUNP Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27BUNP Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27BUNP Low</Data>
+            <Data name="HarnessBody:17BUNP Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17BUNP Low</Data>
+        </Slider>
+        <Slider name="7BUNP High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27BUNP High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27BUNP High</Data>
+            <Data name="HarnessBody:17BUNP High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17BUNP High</Data>
+        </Slider>
+        <Slider name="7B Bombshell Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Bombshell Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Bombshell Low</Data>
+            <Data name="HarnessBody:17B Bombshell Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Bombshell Low</Data>
+        </Slider>
+        <Slider name="7B Bombshell High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Bombshell High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Bombshell High</Data>
+            <Data name="HarnessBody:17B Bombshell High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Bombshell High</Data>
+        </Slider>
+        <Slider name="7B Natural Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Natural Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Natural Low</Data>
+            <Data name="HarnessBody:17B Natural Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Natural Low</Data>
+        </Slider>
+        <Slider name="7B Natural High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Natural High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Natural High</Data>
+            <Data name="HarnessBody:17B Natural High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Natural High</Data>
+        </Slider>
+        <Slider name="7B Cleavage Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Cleavage Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Cleavage Low</Data>
+            <Data name="HarnessBody:17B Cleavage Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Cleavage Low</Data>
+        </Slider>
+        <Slider name="7B Cleavage High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Cleavage High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Cleavage High</Data>
+            <Data name="HarnessBody:17B Cleavage High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Cleavage High</Data>
+        </Slider>
+        <Slider name="7B BCup Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B BCup Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B BCup Low</Data>
+            <Data name="HarnessBody:17B BCup Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B BCup Low</Data>
+        </Slider>
+        <Slider name="7B BCup High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B BCup High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B BCup High</Data>
+            <Data name="HarnessBody:17B BCup High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B BCup High</Data>
+        </Slider>
+        <Slider name="7B Oppai Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Oppai Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Oppai Low</Data>
+            <Data name="HarnessBody:17B Oppai Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Oppai Low</Data>
+        </Slider>
+        <Slider name="7B Oppai High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B Oppai High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B Oppai High</Data>
+            <Data name="HarnessBody:17B Oppai High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B Oppai High</Data>
+        </Slider>
+        <Slider name="7B CH Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B CH Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B CH Low</Data>
+            <Data name="HarnessBody:17B CH Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B CH Low</Data>
+        </Slider>
+        <Slider name="7B CH High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:27B CH High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:27B CH High</Data>
+            <Data name="HarnessBody:17B CH High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:17B CH High</Data>
+        </Slider>
+        <Slider name="UNP Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Low</Data>
+            <Data name="HarnessBody:1UNP Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Low</Data>
+        </Slider>
+        <Slider name="UNP High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP High</Data>
+            <Data name="HarnessBody:1UNP High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP High</Data>
+        </Slider>
+        <Slider name="UNP Pushup Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Pushup Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Pushup Low</Data>
+            <Data name="HarnessBody:1UNP Pushup Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Pushup Low</Data>
+        </Slider>
+        <Slider name="UNP Pushup High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Pushup High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Pushup High</Data>
+            <Data name="HarnessBody:1UNP Pushup High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Pushup High</Data>
+        </Slider>
+        <Slider name="UNP Skinny Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Skinny Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Skinny Low</Data>
+            <Data name="HarnessBody:1UNP Skinny Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Skinny Low</Data>
+        </Slider>
+        <Slider name="UNP Skinny High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Skinny High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Skinny High</Data>
+            <Data name="HarnessBody:1UNP Skinny High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Skinny High</Data>
+        </Slider>
+        <Slider name="UNP Perky Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Perky Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Perky Low</Data>
+            <Data name="HarnessBody:1UNP Perky Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Perky Low</Data>
+        </Slider>
+        <Slider name="UNP Perky High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNP Perky High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNP Perky High</Data>
+            <Data name="HarnessBody:1UNP Perky High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNP Perky High</Data>
+        </Slider>
+        <Slider name="UNPB Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPB Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPB Low</Data>
+            <Data name="HarnessBody:1UNPB Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPB Low</Data>
+        </Slider>
+        <Slider name="UNPB High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPB High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPB High</Data>
+            <Data name="HarnessBody:1UNPB High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPB High</Data>
+        </Slider>
+        <Slider name="UNPB Chapi" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPB Chapi" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPB Chapi</Data>
+            <Data name="HarnessBody:1UNPB Chapi" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPB Chapi</Data>
+        </Slider>
+        <Slider name="UNPB Oppai v1" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPB Oppai v1" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPB Oppai v1</Data>
+            <Data name="HarnessBody:1UNPB Oppai v1" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPB Oppai v1</Data>
+        </Slider>
+        <Slider name="UNPB Oppai v3.2 Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPB Oppai v3.2 Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPB Oppai v3.2 Low</Data>
+            <Data name="HarnessBody:1UNPB Oppai v3.2 Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPB Oppai v3.2 Low</Data>
+        </Slider>
+        <Slider name="UNPB Oppai v3.2 High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPB Oppai v3.2 High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPB Oppai v3.2 High</Data>
+            <Data name="HarnessBody:1UNPB Oppai v3.2 High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPB Oppai v3.2 High</Data>
+        </Slider>
+        <Slider name="UNPetite Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPetite Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPetite Low</Data>
+            <Data name="HarnessBody:1UNPetite Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPetite Low</Data>
+        </Slider>
+        <Slider name="UNPetite High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPetite High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPetite High</Data>
+            <Data name="HarnessBody:1UNPetite High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPetite High</Data>
+        </Slider>
+        <Slider name="UNPC Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPC Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPC Low</Data>
+            <Data name="HarnessBody:1UNPC Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPC Low</Data>
+        </Slider>
+        <Slider name="UNPC High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPC High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPC High</Data>
+            <Data name="HarnessBody:1UNPC High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPC High</Data>
+        </Slider>
+        <Slider name="UNPCM Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPCM Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPCM Low</Data>
+            <Data name="HarnessBody:1UNPCM Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPCM Low</Data>
+        </Slider>
+        <Slider name="UNPCM High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPCM High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPCM High</Data>
+            <Data name="HarnessBody:1UNPCM High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPCM High</Data>
+        </Slider>
+        <Slider name="UNPSH Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPSH Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPSH Low</Data>
+            <Data name="HarnessBody:1UNPSH Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPSH Low</Data>
+        </Slider>
+        <Slider name="UNPSH High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPSH High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPSH High</Data>
+            <Data name="HarnessBody:1UNPSH High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPSH High</Data>
+        </Slider>
+        <Slider name="UNPK Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPK Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPK Low</Data>
+            <Data name="HarnessBody:1UNPK Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPK Low</Data>
+        </Slider>
+        <Slider name="UNPK High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPK High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPK High</Data>
+            <Data name="HarnessBody:1UNPK High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPK High</Data>
+        </Slider>
+        <Slider name="UNPK Bonus Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPK Bonus Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPK Bonus Low</Data>
+            <Data name="HarnessBody:1UNPK Bonus Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPK Bonus Low</Data>
+        </Slider>
+        <Slider name="UNPK Bonus High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPK Bonus High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPK Bonus High</Data>
+            <Data name="HarnessBody:1UNPK Bonus High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPK Bonus High</Data>
+        </Slider>
+        <Slider name="UN7B Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UN7B Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UN7B Low</Data>
+            <Data name="HarnessBody:1UN7B Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UN7B Low</Data>
+        </Slider>
+        <Slider name="UN7B High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UN7B High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UN7B High</Data>
+            <Data name="HarnessBody:1UN7B High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UN7B High</Data>
+        </Slider>
+        <Slider name="UNPBB Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPBB Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPBB Low</Data>
+            <Data name="HarnessBody:1UNPBB Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPBB Low</Data>
+        </Slider>
+        <Slider name="UNPBB High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPBB High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPBB High</Data>
+            <Data name="HarnessBody:1UNPBB High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPBB High</Data>
+        </Slider>
+        <Slider name="Seraphim Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Seraphim Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Seraphim Low</Data>
+            <Data name="HarnessBody:1Seraphim Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Seraphim Low</Data>
+        </Slider>
+        <Slider name="Seraphim High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Seraphim High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Seraphim High</Data>
+            <Data name="HarnessBody:1Seraphim High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Seraphim High</Data>
+        </Slider>
+        <Slider name="Demonfet Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Demonfet Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Demonfet Low</Data>
+            <Data name="HarnessBody:1Demonfet Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Demonfet Low</Data>
+        </Slider>
+        <Slider name="Demonfet High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Demonfet High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Demonfet High</Data>
+            <Data name="HarnessBody:1Demonfet High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Demonfet High</Data>
+        </Slider>
+        <Slider name="Dream Girl Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Dream Girl Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Dream Girl Low</Data>
+            <Data name="HarnessBody:1Dream Girl Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Dream Girl Low</Data>
+        </Slider>
+        <Slider name="Dream Girl High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Dream Girl High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Dream Girl High</Data>
+            <Data name="HarnessBody:1Dream Girl High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Dream Girl High</Data>
+        </Slider>
+        <Slider name="Top Model Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Top Model Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Top Model Low</Data>
+            <Data name="HarnessBody:1Top Model Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Top Model Low</Data>
+        </Slider>
+        <Slider name="Top Model High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Top Model High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Top Model High</Data>
+            <Data name="HarnessBody:1Top Model High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Top Model High</Data>
+        </Slider>
+        <Slider name="Leito Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Leito Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Leito Low</Data>
+            <Data name="HarnessBody:1Leito Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Leito Low</Data>
+        </Slider>
+        <Slider name="Leito High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Leito High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Leito High</Data>
+            <Data name="HarnessBody:1Leito High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Leito High</Data>
+        </Slider>
+        <Slider name="UNPF Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPF Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPF Low</Data>
+            <Data name="HarnessBody:1UNPF Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPF Low</Data>
+        </Slider>
+        <Slider name="UNPF High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPF High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPF High</Data>
+            <Data name="HarnessBody:1UNPF High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPF High</Data>
+        </Slider>
+        <Slider name="UNPFx Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPFx Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPFx Low</Data>
+            <Data name="HarnessBody:1UNPFx Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPFx Low</Data>
+        </Slider>
+        <Slider name="UNPFx High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2UNPFx High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2UNPFx High</Data>
+            <Data name="HarnessBody:1UNPFx High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1UNPFx High</Data>
+        </Slider>
+        <Slider name="MCBM Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MCBM Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MCBM Low</Data>
+            <Data name="HarnessBody:1MCBM Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MCBM Low</Data>
+        </Slider>
+        <Slider name="MCBM High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MCBM High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MCBM High</Data>
+            <Data name="HarnessBody:1MCBM High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MCBM High</Data>
+        </Slider>
+        <Slider name="Venus Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Venus Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Venus Low</Data>
+            <Data name="HarnessBody:1Venus Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Venus Low</Data>
+        </Slider>
+        <Slider name="Venus High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Venus High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Venus High</Data>
+            <Data name="HarnessBody:1Venus High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Venus High</Data>
+        </Slider>
+        <Slider name="Manga Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Manga Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Manga Low</Data>
+            <Data name="HarnessBody:1Manga Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Manga Low</Data>
+        </Slider>
+        <Slider name="Manga High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Manga High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Manga High</Data>
+            <Data name="HarnessBody:1Manga High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Manga High</Data>
+        </Slider>
+        <Slider name="CHSBHC Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CHSBHC Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CHSBHC Low</Data>
+            <Data name="HarnessBody:1CHSBHC Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CHSBHC Low</Data>
+        </Slider>
+        <Slider name="CHSBHC High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CHSBHC High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CHSBHC High</Data>
+            <Data name="HarnessBody:1CHSBHC High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CHSBHC High</Data>
+        </Slider>
+        <Slider name="CNHF Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CNHF Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CNHF Low</Data>
+            <Data name="HarnessBody:1CNHF Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CNHF Low</Data>
+        </Slider>
+        <Slider name="CNHF High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CNHF High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CNHF High</Data>
+            <Data name="HarnessBody:1CNHF High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CNHF High</Data>
+        </Slider>
+        <Slider name="CNHF Bonus Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CNHF Bonus Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CNHF Bonus Low</Data>
+            <Data name="HarnessBody:1CNHF Bonus Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CNHF Bonus Low</Data>
+        </Slider>
+        <Slider name="CNHF Bonus High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CNHF Bonus High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CNHF Bonus High</Data>
+            <Data name="HarnessBody:1CNHF Bonus High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CNHF Bonus High</Data>
+        </Slider>
+        <Slider name="ZGGB-R2 Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ZGGB-R2 Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ZGGB-R2 Low</Data>
+            <Data name="HarnessBody:1ZGGB-R2 Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ZGGB-R2 Low</Data>
+        </Slider>
+        <Slider name="ZGGB-R2 High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ZGGB-R2 High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ZGGB-R2 High</Data>
+            <Data name="HarnessBody:1ZGGB-R2 High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ZGGB-R2 High</Data>
+        </Slider>
+        <Slider name="Aruru6Duck Low" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Aruru6Duck Low" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Aruru6Duck Low</Data>
+            <Data name="HarnessBody:1Aruru6Duck Low" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Aruru6Duck Low</Data>
+        </Slider>
+        <Slider name="Aruru6Duck High" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Aruru6Duck High" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Aruru6Duck High</Data>
+            <Data name="HarnessBody:1Aruru6Duck High" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Aruru6Duck High</Data>
+        </Slider>
+        <Slider name="Arms" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2Arms" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Arms</Data>
+            <Data name="HarnessBody:1Arms" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Arms</Data>
+        </Slider>
+        <Slider name="AppleCheeks" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2AppleCheeks" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2AppleCheeks</Data>
+            <Data name="HarnessBody:1AppleCheeks" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1AppleCheeks</Data>
+        </Slider>
+        <Slider name="Back" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Back" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Back</Data>
+            <Data name="HarnessBody:1Back" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Back</Data>
+        </Slider>
+        <Slider name="BackArch" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BackArch" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BackArch</Data>
+            <Data name="HarnessBody:1BackArch" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BackArch</Data>
+        </Slider>
+        <Slider name="Belly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Belly" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Belly</Data>
+            <Data name="HarnessBody:1Belly" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Belly</Data>
+        </Slider>
+        <Slider name="BellyBalls" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyBalls" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyBalls</Data>
+            <Data name="HarnessBody:1BellyBalls" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyBalls</Data>
+        </Slider>
+        <Slider name="BellyCenterProtrude" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyCenterProtrude" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyCenterProtrude</Data>
+            <Data name="HarnessBody:1BellyCenterProtrude" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyCenterProtrude</Data>
+        </Slider>
+        <Slider name="BellyCenterUpperProtrude" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyCenterUpperProtrude" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyCenterUpperProtrude</Data>
+            <Data name="HarnessBody:1BellyCenterUpperProtrude" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyCenterUpperProtrude</Data>
+        </Slider>
+        <Slider name="BellyFatLower" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyFatLower" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyFatLower</Data>
+            <Data name="HarnessBody:1BellyFatLower" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyFatLower</Data>
+        </Slider>
+        <Slider name="BellyFatUpper" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyFatUpper" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyFatUpper</Data>
+            <Data name="HarnessBody:1BellyFatUpper" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyFatUpper</Data>
+        </Slider>
+        <Slider name="BellyPressed" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyPressed" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyPressed</Data>
+            <Data name="HarnessBody:1BellyPressed" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyPressed</Data>
+        </Slider>
+        <Slider name="BellyLowerSwell1" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyLowerSwell1" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyLowerSwell1</Data>
+            <Data name="HarnessBody:1BellyLowerSwell1" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyLowerSwell1</Data>
+        </Slider>
+        <Slider name="BellyLowerSwell2" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyLowerSwell2" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyLowerSwell2</Data>
+            <Data name="HarnessBody:1BellyLowerSwell2" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyLowerSwell2</Data>
+        </Slider>
+        <Slider name="BellyLowerSwell3" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyLowerSwell3" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyLowerSwell3</Data>
+            <Data name="HarnessBody:1BellyLowerSwell3" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyLowerSwell3</Data>
+        </Slider>
+        <Slider name="BellyObesity" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BellyObesity" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BellyObesity</Data>
+            <Data name="HarnessBody:1BellyObesity" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BellyObesity</Data>
+        </Slider>
+        <Slider name="BigTorso" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BigTorso" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BigTorso</Data>
+            <Data name="HarnessBody:1BigTorso" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BigTorso</Data>
+        </Slider>
+        <Slider name="Breasts" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2Breasts" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Breasts</Data>
+            <Data name="HarnessBody:1Breasts" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Breasts</Data>
+        </Slider>
+        <Slider name="BreastCenter" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastCenter" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastCenter</Data>
+            <Data name="HarnessBody:1BreastCenter" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastCenter</Data>
+        </Slider>
+        <Slider name="BreastCenterBig" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastCenterBig" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastCenterBig</Data>
+            <Data name="HarnessBody:1BreastCenterBig" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastCenterBig</Data>
+        </Slider>
+        <Slider name="BreastsSmall" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2BreastsSmall" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastsSmall</Data>
+            <Data name="HarnessBody:1BreastsSmall" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastsSmall</Data>
+        </Slider>
+        <Slider name="BreastsSH" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsSH" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastsSH</Data>
+            <Data name="HarnessBody:1BreastsSH" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastsSH</Data>
+        </Slider>
+        <Slider name="BreastsSSH" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsSSH" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastsSSH</Data>
+            <Data name="HarnessBody:1BreastsSSH" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastsSSH</Data>
+        </Slider>
+        <Slider name="BreastsFantasy" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsFantasy" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastsFantasy</Data>
+            <Data name="HarnessBody:1BreastsFantasy" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastsFantasy</Data>
+        </Slider>
+        <Slider name="BreastCleavage" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastCleavage" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastCleavage</Data>
+            <Data name="HarnessBody:1BreastCleavage" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastCleavage</Data>
+        </Slider>
+        <Slider name="BreastFlatness" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastFlatness" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastFlatness</Data>
+            <Data name="HarnessBody:1BreastFlatness" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastFlatness</Data>
+        </Slider>
+        <Slider name="BreastGravity" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastGravity" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastGravity</Data>
+            <Data name="HarnessBody:1BreastGravity" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastGravity</Data>
+        </Slider>
+        <Slider name="PushUp" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PushUp" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PushUp</Data>
+            <Data name="HarnessBody:1PushUp" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PushUp</Data>
+        </Slider>
+        <Slider name="BreastsGone" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsGone" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastsGone</Data>
+            <Data name="HarnessBody:1BreastsGone" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastsGone</Data>
+        </Slider>
+        <Slider name="BreastsPressed" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastsPressed" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastsPressed</Data>
+            <Data name="HarnessBody:1BreastsPressed" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastsPressed</Data>
+        </Slider>
+        <Slider name="BreastHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastHeight" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastHeight</Data>
+            <Data name="HarnessBody:1BreastHeight" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastHeight</Data>
+        </Slider>
+        <Slider name="BreastPerkiness" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastPerkiness" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastPerkiness</Data>
+            <Data name="HarnessBody:1BreastPerkiness" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastPerkiness</Data>
+        </Slider>
+        <Slider name="BreastWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastWidth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastWidth</Data>
+            <Data name="HarnessBody:1BreastWidth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastWidth</Data>
+        </Slider>
+        <Slider name="BreastConverge" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BreastConverge" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BreastConverge</Data>
+            <Data name="HarnessBody:1BreastConverge" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BreastConverge</Data>
+        </Slider>
+        <Slider name="ButtCrack" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2ButtCrack" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ButtCrack</Data>
+            <Data name="HarnessBody:1ButtCrack" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ButtCrack</Data>
+        </Slider>
+        <Slider name="Butt" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2Butt" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Butt</Data>
+            <Data name="HarnessBody:1Butt" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Butt</Data>
+        </Slider>
+        <Slider name="ButtSmall" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2ButtSmall" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ButtSmall</Data>
+            <Data name="HarnessBody:1ButtSmall" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ButtSmall</Data>
+        </Slider>
+        <Slider name="ButtShape2" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ButtShape2" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ButtShape2</Data>
+            <Data name="HarnessBody:1ButtShape2" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ButtShape2</Data>
+        </Slider>
+        <Slider name="BigButt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BigButt" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BigButt</Data>
+            <Data name="HarnessBody:1BigButt" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BigButt</Data>
+        </Slider>
+        <Slider name="BigBelly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BigBelly" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BigBelly</Data>
+            <Data name="HarnessBody:1BigBelly" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BigBelly</Data>
+        </Slider>
+        <Slider name="BotePregnancy" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2BotePregnancy" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2BotePregnancy</Data>
+            <Data name="HarnessBody:1BotePregnancy" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1BotePregnancy</Data>
+        </Slider>
+        <Slider name="ClitorisErection" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ClitorisErection" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ClitorisErection</Data>
+        </Slider>
+        <Slider name="ChubbyArms" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyArms" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ChubbyArms</Data>
+            <Data name="HarnessBody:1ChubbyArms" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ChubbyArms</Data>
+        </Slider>
+        <Slider name="ChubbyWaist" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyWaist" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ChubbyWaist</Data>
+            <Data name="HarnessBody:1ChubbyWaist" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ChubbyWaist</Data>
+        </Slider>
+        <Slider name="ChestDepth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChestDepth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ChestDepth</Data>
+            <Data name="HarnessBody:1ChestDepth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ChestDepth</Data>
+        </Slider>
+        <Slider name="ChestWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChestWidth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ChestWidth</Data>
+            <Data name="HarnessBody:1ChestWidth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ChestWidth</Data>
+        </Slider>
+        <Slider name="ChubbyLegs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyLegs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ChubbyLegs</Data>
+            <Data name="HarnessBody:1ChubbyLegs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ChubbyLegs</Data>
+        </Slider>
+        <Slider name="CrotchBack" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2CrotchBack" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2CrotchBack</Data>
+            <Data name="HarnessBody:1CrotchBack" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1CrotchBack</Data>
+        </Slider>
+        <Slider name="ChubbyButt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ChubbyButt" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ChubbyButt</Data>
+            <Data name="HarnessBody:1ChubbyButt" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ChubbyButt</Data>
+        </Slider>
+        <Slider name="DoubleMelon" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2DoubleMelon" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2DoubleMelon</Data>
+            <Data name="HarnessBody:1DoubleMelon" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1DoubleMelon</Data>
+        </Slider>
+        <Slider name="Groin" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Groin" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Groin</Data>
+            <Data name="HarnessBody:1Groin" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Groin</Data>
+        </Slider>
+        <Slider name="HipBone" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipBone" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2HipBone</Data>
+            <Data name="HarnessBody:1HipBone" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1HipBone</Data>
+        </Slider>
+        <Slider name="Hips" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Hips" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Hips</Data>
+            <Data name="HarnessBody:1Hips" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Hips</Data>
+        </Slider>
+        <Slider name="HipForward" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipForward" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2HipForward</Data>
+            <Data name="HarnessBody:1HipForward" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1HipForward</Data>
+        </Slider>
+        <Slider name="HipUpperWidth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2HipUpperWidth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2HipUpperWidth</Data>
+            <Data name="HarnessBody:1HipUpperWidth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1HipUpperWidth</Data>
+        </Slider>
+        <Slider name="KneeHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2KneeHeight" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2KneeHeight</Data>
+            <Data name="HarnessBody:1KneeHeight" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1KneeHeight</Data>
+        </Slider>
+        <Slider name="Legs" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2Legs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Legs</Data>
+            <Data name="HarnessBody:1Legs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Legs</Data>
+        </Slider>
+        <Slider name="LegsThin" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2LegsThin" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2LegsThin</Data>
+            <Data name="HarnessBody:1LegsThin" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1LegsThin</Data>
+        </Slider>
+        <Slider name="MuscleArms" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleArms" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MuscleArms</Data>
+            <Data name="HarnessBody:1MuscleArms" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MuscleArms</Data>
+        </Slider>
+        <Slider name="MuscleLegs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleLegs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MuscleLegs</Data>
+            <Data name="HarnessBody:1MuscleLegs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MuscleLegs</Data>
+        </Slider>
+        <Slider name="MuscleButt" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleButt" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MuscleButt</Data>
+            <Data name="HarnessBody:1MuscleButt" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MuscleButt</Data>
+        </Slider>
+        <Slider name="MusclePecs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MusclePecs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MusclePecs</Data>
+            <Data name="HarnessBody:1MusclePecs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MusclePecs</Data>
+        </Slider>
+        <Slider name="MuscleAbs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2MuscleAbs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2MuscleAbs</Data>
+            <Data name="HarnessBody:1MuscleAbs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1MuscleAbs</Data>
+        </Slider>
+        <Slider name="NippleDistance" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2NippleDistance" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2NippleDistance</Data>
+            <Data name="HarnessBody:1NippleDistance" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1NippleDistance</Data>
+        </Slider>
+        <Slider name="NippleAreola" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleAreola" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2NippleAreola</Data>
+            <Data name="HarnessBody:1NippleAreola" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1NippleAreola</Data>
+        </Slider>
+        <Slider name="NippleUp" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleUp" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2NippleUp</Data>
+            <Data name="HarnessBody:1NippleUp" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1NippleUp</Data>
+        </Slider>
+        <Slider name="NippleDown" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2NippleDown" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2NippleDown</Data>
+            <Data name="HarnessBody:1NippleDown" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1NippleDown</Data>
+        </Slider>
+        <Slider name="PussyClipFix" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PussyClipFix" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PussyClipFix</Data>
+            <Data name="HarnessBody:1PussyClipFix" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PussyClipFix</Data>
+        </Slider>
+        <Slider name="PussyCute" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PussyCute" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PussyCute</Data>
+            <Data name="HarnessBody:1PussyCute" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PussyCute</Data>
+        </Slider>
+        <Slider name="PussyMajora" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PussyMajora" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PussyMajora</Data>
+            <Data name="HarnessBody:1PussyMajora" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PussyMajora</Data>
+        </Slider>
+        <Slider name="PussyMajoraBig" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PussyMajoraBig" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PussyMajoraBig</Data>
+            <Data name="HarnessBody:1PussyMajoraBig" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PussyMajoraBig</Data>
+        </Slider>
+        <Slider name="PussyHilly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PussyHilly" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PussyHilly</Data>
+            <Data name="HarnessBody:1PussyHilly" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PussyHilly</Data>
+        </Slider>
+        <Slider name="PussyOpen" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PussyOpen" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PussyOpen</Data>
+            <Data name="HarnessBody:1PussyOpen" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PussyOpen</Data>
+        </Slider>
+        <Slider name="PregnancyBelly" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2PregnancyBelly" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2PregnancyBelly</Data>
+            <Data name="HarnessBody:1PregnancyBelly" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1PregnancyBelly</Data>
+        </Slider>
+        <Slider name="RibsProminance" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2RibsProminance" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2RibsProminance</Data>
+            <Data name="HarnessBody:1RibsProminance" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1RibsProminance</Data>
+        </Slider>
+        <Slider name="RoundAss" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2RoundAss" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2RoundAss</Data>
+            <Data name="HarnessBody:1RoundAss" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1RoundAss</Data>
+        </Slider>
+        <Slider name="ShoulderSmooth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2ShoulderSmooth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ShoulderSmooth</Data>
+            <Data name="HarnessBody:1ShoulderSmooth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ShoulderSmooth</Data>
+        </Slider>
+        <Slider name="ShoulderWidth" invert="true" small="100" big="100">
+            <Data name="HarnessBody:2ShoulderWidth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2ShoulderWidth</Data>
+            <Data name="HarnessBody:1ShoulderWidth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1ShoulderWidth</Data>
+        </Slider>
+        <Slider name="SternumDepth" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2SternumDepth" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2SternumDepth</Data>
+            <Data name="HarnessBody:1SternumDepth" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1SternumDepth</Data>
+        </Slider>
+        <Slider name="SternumHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2SternumHeight" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2SternumHeight</Data>
+            <Data name="HarnessBody:1SternumHeight" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1SternumHeight</Data>
+        </Slider>
+        <Slider name="SlimThighs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2SlimThighs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2SlimThighs</Data>
+            <Data name="HarnessBody:1SlimThighs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1SlimThighs</Data>
+        </Slider>
+        <Slider name="Top Slope" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Top Slope" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Top Slope</Data>
+            <Data name="HarnessBody:1Top Slope" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Top Slope</Data>
+        </Slider>
+        <Slider name="Thighs" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Thighs" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Thighs</Data>
+            <Data name="HarnessBody:1Thighs" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Thighs</Data>
+        </Slider>
+        <Slider name="TummyTuck" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2TummyTuck" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2TummyTuck</Data>
+            <Data name="HarnessBody:1TummyTuck" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1TummyTuck</Data>
+        </Slider>
+        <Slider name="Waist" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2Waist" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2Waist</Data>
+            <Data name="HarnessBody:1Waist" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1Waist</Data>
+        </Slider>
+        <Slider name="WideWaistLine" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2WideWaistLine" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2WideWaistLine</Data>
+            <Data name="HarnessBody:1WideWaistLine" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1WideWaistLine</Data>
+        </Slider>
+        <Slider name="WaistHeight" invert="false" small="0" big="0">
+            <Data name="HarnessBody:2WaistHeight" target="HarnessBody:2" local="true">SLUTS Harness BHUNP.osd\HarnessBody:2WaistHeight</Data>
+            <Data name="HarnessBody:1WaistHeight" target="HarnessBody:1" local="true">SLUTS Harness BHUNP.osd\HarnessBody:1WaistHeight</Data>
+        </Slider>
+    </SliderSet>
+</SliderSetInfo>
