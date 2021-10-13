@@ -1,0 +1,637 @@
+[
+    {
+        "subsystem": "livery",
+        "body": "CBBE",
+        "name": "Livery, Green (CBBE)",
+        "area": "Body",
+        "section": "SLUTS",
+        "texture": "sluts\\livery\\livery_cbbe_default.dds",
+        "credit": "DocClox",
+        "colorable": false
+    },
+    {
+        "subsystem": "livery",
+        "body": "CBBE",
+        "name": "Livery, Green (CBBE) (Advantage)",
+        "area": "Body",
+        "section": "SLUTS",
+        "texture": "sluts\\livery\\livery_cbbe_default_advantage.dds",
+        "credit": "DocClox",
+        "colorable": false
+    },
+    {
+        "subsystem": "livery",
+        "body": "CBBE",
+        "name": "Livery, Colorable (CBBE)",
+        "area": "Body",
+        "section": "SLUTS",
+        "texture": "sluts\\livery\\livery_cbbe_user.dds",
+        "credit": "DocClox",
+        "colorable": true
+    },
+    {
+        "subsystem": "livery",
+        "body": "UNP",
+        "name": "Livery, Green (UNP)",
+        "area": "Body",
+        "section": "SLUTS",
+        "texture": "sluts\\livery\\livery_unp_default.dds",
+        "credit": "DocClox",
+        "colorable": false
+    },
+    {
+        "subsystem": "livery",
+        "body": "UNP",
+        "name": "Livery, Colorable (UNP)",
+        "area": "Body",
+        "section": "SLUTS",
+        "texture": "sluts\\livery\\livery_unp_user.dds",
+        "credit": "DocClox",
+        "colorable": true
+    },
+    {
+        "credit": "DocClox",
+        "section": "SLUTS",
+        "name": "Whore",
+        "texture": "sluts\\misc\\treacherous_whore.dds",
+        "area": "Body"
+    },
+    {
+        "subsystem": "livery",
+        "credit": "DocClox",
+        "section": "SLUTS",
+        "name": "SLUTS Logo",
+        "texture": "sluts\\livery\\Face_BrandD.dds",
+        "area": "Face",
+        "colorable": false
+    },
+    {
+        "subsystem": "livery",
+        "credit": "DocClox",
+        "section": "SLUTS",
+        "name": "SLUTS Logo (Colorable)",
+        "texture": "sluts\\livery\\Face_Brand.dds",
+        "area": "Face",
+        "colorable": true
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 1",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 1,
+        "texture": "sluts\\dirty\\body\\body1.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 2",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 2,
+        "texture": "sluts\\dirty\\body\\body2.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 3",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 3,
+        "texture": "sluts\\dirty\\body\\body3.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 4",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 4,
+        "texture": "sluts\\dirty\\body\\body4.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 5",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 5,
+        "texture": "sluts\\dirty\\body\\body5.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 6",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 6,
+        "texture": "sluts\\dirty\\body\\body6.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 7",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 7,
+        "texture": "sluts\\dirty\\body\\body7.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 8",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 8,
+        "texture": "sluts\\dirty\\body\\body8.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 9",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 9,
+        "texture": "sluts\\dirty\\body\\body9.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Body Dirt 10",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 10,
+        "texture": "sluts\\dirty\\body\\body10.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 1",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 1,
+        "texture": "sluts\\dirty\\face\\face1.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 2",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 2,
+        "texture": "sluts\\dirty\\face\\face2.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 3",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 3,
+        "texture": "sluts\\dirty\\face\\face3.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 4",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 4,
+        "texture": "sluts\\dirty\\face\\face4.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 5",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 5,
+        "texture": "sluts\\dirty\\face\\face5.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 6",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 6,
+        "texture": "sluts\\dirty\\face\\face6.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 7",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 7,
+        "texture": "sluts\\dirty\\face\\face7.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 8",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 8,
+        "texture": "sluts\\dirty\\face\\face8.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 9",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 9,
+        "texture": "sluts\\dirty\\face\\face9.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Face Dirt 10",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 10,
+        "texture": "sluts\\dirty\\face\\face10.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 1",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 1,
+        "texture": "sluts\\dirty\\hands\\hands1.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 2",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 2,
+        "texture": "sluts\\dirty\\hands\\hands2.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 3",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 3,
+        "texture": "sluts\\dirty\\hands\\hands3.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 4",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 4,
+        "texture": "sluts\\dirty\\hands\\hands4.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 5",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 5,
+        "texture": "sluts\\dirty\\hands\\hands5.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 6",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 6,
+        "texture": "sluts\\dirty\\hands\\hands6.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 7",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 7,
+        "texture": "sluts\\dirty\\hands\\hands7.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 8",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 8,
+        "texture": "sluts\\dirty\\hands\\hands8.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 9",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 9,
+        "texture": "sluts\\dirty\\hands\\hands9.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Hands Dirt 10",
+        "area": "Hands",
+        "section": "Dirty SLUTS",
+        "level": 10,
+        "texture": "sluts\\dirty\\hands\\hands10.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 1",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 1,
+        "texture": "sluts\\dirty\\feet\\feet1.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 2",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 2,
+        "texture": "sluts\\dirty\\feet\\feet2.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 3",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 3,
+        "texture": "sluts\\dirty\\feet\\feet3.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 4",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 4,
+        "texture": "sluts\\dirty\\feet\\feet4.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 5",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 5,
+        "texture": "sluts\\dirty\\feet\\feet5.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 6",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 6,
+        "texture": "sluts\\dirty\\feet\\feet6.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 7",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 7,
+        "texture": "sluts\\dirty\\feet\\feet7.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 8",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 8,
+        "texture": "sluts\\dirty\\feet\\feet8.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 9",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 9,
+        "texture": "sluts\\dirty\\feet\\feet9.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "credit": "DocClox",
+        "name": "Foot Dirt 10",
+        "area": "Feet",
+        "section": "Dirty SLUTS",
+        "level": 10,
+        "texture": "sluts\\dirty\\feet\\feet10.dds"
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 1",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 1,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints1.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 2",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 2,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints2.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 3",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 3,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints3.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 4",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 4,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints4.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 5",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 5,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints5.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 6",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 6,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints6.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 7",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 7,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints7.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 8",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 8,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints8.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 9",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 9,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints9.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Body 10",
+        "area": "Body",
+        "section": "Dirty SLUTS",
+        "level": 10,
+        "texture": "sluts\\dirty\\handprints\\body\\handprints10.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 1",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 1,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints0.dds",
+        "credit": "DocClox",
+        "clear": true
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 2",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 2,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints0.dds",
+        "credit": "DocClox",
+        "clear": true
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 3",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 3,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints3.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 4",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 4,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints3.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 5",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 5,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints3.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 6",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 6,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints6.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 7",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 7,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints6.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 8",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 8,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints6.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 9",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 9,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints9.dds",
+        "credit": "DocClox",
+        "clear": false
+    },
+    {
+        "subsystem": "dirt",
+        "name": "Hand-Prints, Face 10",
+        "area": "Face",
+        "section": "Dirty SLUTS",
+        "level": 10,
+        "texture": "sluts\\dirty\\handprints\\face\\handprints10.dds",
+        "credit": "DocClox",
+        "clear": false
+    }
+]

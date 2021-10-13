@@ -1,0 +1,77 @@
+[
+        {
+                "subsystem": "livery",
+                "body": "CBBE",
+                "name": "Livery, Green (CBBE)",
+                "area": "Body",
+                "section": "SLUTS",
+                "texture": "sluts_livery\\livery_cbbe_default.dds",
+                "credit": "DocClox",
+                "colorable": false,
+                "domain": "Default"
+        },
+        {
+                "subsystem": "livery",
+                "body": "CBBE",
+                "name": "Livery, Green (CBBE) (Advantage)",
+                "area": "Body",
+                "section": "SLUTS",
+                "texture": "sluts_livery\\livery_cbbe_default_advantage.dds",
+                "credit": "DocClox",
+                "colorable": false,
+                "domain": "Default"
+        },
+        {
+                "subsystem": "livery",
+                "body": "CBBE",
+                "name": "Livery, Colorable (CBBE)",
+                "area": "Body",
+                "section": "SLUTS",
+                "texture": "sluts_livery\\livery_cbbe_user.dds",
+                "credit": "DocClox",
+                "colorable": true,
+                "domain": "Default"
+        },
+        {
+                "subsystem": "livery",
+                "body": "UNP",
+                "name": "Livery, Green (UNP)",
+                "area": "Body",
+                "section": "SLUTS",
+                "texture": "sluts_livery\\livery_unp_default.dds",
+                "credit": "DocClox",
+                "colorable": false,
+                "domain": "Default"
+        },
+        {
+                "subsystem": "livery",
+                "body": "UNP",
+                "name": "Livery, Colorable (UNP)",
+                "area": "Body",
+                "section": "SLUTS",
+                "texture": "sluts_livery\\livery_unp_user.dds",
+                "credit": "DocClox",
+                "colorable": true,
+                "domain": "Default"
+        },
+        {
+                "subsystem": "livery",
+                "credit": "DocClox",
+                "section": "SLUTS",
+                "name": "SLUTS Logo",
+                "texture": "sluts_livery\\Face_BrandD.dds",
+                "area": "Face",
+                "colorable": false,
+                "domain": "Default"
+        },
+        {
+                "subsystem": "livery",
+                "credit": "DocClox",
+                "section": "SLUTS",
+                "name": "SLUTS Logo (Colorable)",
+                "texture": "sluts_livery\\Face_Brand.dds",
+                "area": "Face",
+                "colorable": true,
+                "domain": "Default"
+        }
+]
