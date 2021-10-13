@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="description.xsd">
+
+    <per-triangle-shape name="VirtualGround">
+      <margin>0</margin>
+      <penetration>1</penetration>
+      <tag>ground</tag>
+		<can-collide-with-tag>chainr</can-collide-with-tag>
+		<can-collide-with-tag>chainl</can-collide-with-tag>
+		<no-collide-with-tag>ground</no-collide-with-tag>
+		<no-collide-with-tag>hand</no-collide-with-tag>
+		<no-collide-with-tag>vb</no-collide-with-tag>
+    </per-triangle-shape>
+	
+	<per-triangle-shape name="VirtualBody">
+		<margin>0.2</margin>
+		<prenetration>0.2</prenetration>
+		<shared>private</shared>
+		<tag>vb</tag>
+		<can-collide-with-tag>chainr</can-collide-with-tag>
+		<can-collide-with-tag>chainl</can-collide-with-tag>
+		<no-collide-with-tag>ground</no-collide-with-tag>
+		<no-collide-with-tag>hand</no-collide-with-tag>	 
+		<no-collide-with-tag>vb</no-collide-with-tag>	 
+	</per-triangle-shape>
+	
+	<per-triangle-shape name="hand">
+		<margin>0.1</margin>					
+		<penetration>1</penetration>
+		<shared>private</shared>
+		<tag>hand</tag>
+		<can-collide-with-tag>chainr</can-collide-with-tag>
+		<can-collide-with-tag>chainl</can-collide-with-tag>
+		<no-collide-with-tag>ground</no-collide-with-tag>	 
+		<no-collide-with-tag>hand</no-collide-with-tag>	
+		<no-collide-with-tag>vb</no-collide-with-tag>	 
+	</per-triangle-shape>
+
+	<bone name="Ring01R"/>
+	<bone name="NC_1R"/>
+	
+	<bone name="Ring01L"/>
+	<bone name="NC_1L"/>
+	
+	 <bone-default>
+		<mass>5</mass>
+		<inertia x="25" y="25" z="25"/>
+		<centerOfMassTransform>
+			<basis x="0" y="0" z="0" w="1"/>
+			<origin x="0" y="0" z="0"/>
+		</centerOfMassTransform>
+		<linearDamping>0.8</linearDamping>
+		<angularDamping>0.8</angularDamping>
+		<friction>0.1</friction>
+		<rollingFriction>0.2</rollingFriction>
+		<restitution>0.5</restitution>
+		<gravity-factor>5</gravity-factor>
+		<margin-multiplier>1</margin-multiplier>
+    </bone-default>
+	
+	<bone name="Ring02R"/>
+	<bone name="Ring02L"/>
+	
+	<bone name="NC_2R"/>
+	<bone name="NC_3R"/>
+	<bone name="NC_4R"/>
+	<bone name="NC_5R"/>
+	<bone name="NC_6R"/>
+	<bone name="NC_7R"/>
+	<bone name="NC_8R"/>
+	
+	<bone name="NC_2L"/>
+	<bone name="NC_3L"/>
+	<bone name="NC_4L"/>
+	<bone name="NC_5L"/>
+	<bone name="NC_6L"/>
+	<bone name="NC_7L"/>
+	<bone name="NC_8L"/>
+	
+	<per-vertex-shape name="ChainR">
+		<margin>0</margin>
+		<tag>chainr</tag>
+		<can-collide-with-tag>chainl</can-collide-with-tag>
+		<can-collide-with-tag>vb</can-collide-with-tag>
+		<can-collide-with-tag>hand</can-collide-with-tag>
+		<can-collide-with-tag>ground</can-collide-with-tag>
+	</per-vertex-shape>
+	
+	<per-vertex-shape name="ChainL">
+		<margin>0</margin>
+		<tag>chainl</tag>
+		<can-collide-with-tag>chainr</can-collide-with-tag>
+		<can-collide-with-tag>vb</can-collide-with-tag>
+		<can-collide-with-tag>hand</can-collide-with-tag>
+		<can-collide-with-tag>ground</can-collide-with-tag>
+	</per-vertex-shape>
+	
+	<per-vertex-shape name="RingMeshR">
+		<margin>0</margin>
+		<tag>ringmeshr</tag>
+	</per-vertex-shape>
+	
+	<per-vertex-shape name="RingMeshL">
+		<margin>0</margin>
+		<tag>ringmeshl</tag>
+	</per-vertex-shape>
+	
+	
+	<generic-constraint-default>
+		<frameInB>
+		  <basis x="0" y="0" z="0" w="1"/>
+		  <origin x="0" y="0" z="0"/>
+		</frameInB>
+		<useLinearReferenceFrameA>false</useLinearReferenceFrameA>
+		<linearLowerLimit x="0" y="0" z="0"/>
+		<linearUpperLimit x="0" y="0" z="0"/>
+		<angularLowerLimit x="-0.3" y="-0.3" z="-0.3" />
+		<angularUpperLimit x="0.3" y="0.3" z="0.3" />
+		<linearStiffness x="5" y="5" z="5" />
+		<angularStiffness x="5" y="5" z="5" />
+		<linearDamping x="0" y="0" z="0" />
+		<angularDamping x="0" y="0" z="0" />
+		<linearEquilibrium x="0" y="0" z="0" />
+		<angularEquilibrium x="0" y="0" z="0" />
+	</generic-constraint-default>
+
+
+	<constraint-group>
+		<generic-constraint bodyA="Ring02R" bodyB="Ring01R"></generic-constraint>
+		<generic-constraint bodyA="Ring02R" bodyB="NC_1R"></generic-constraint>
+		<generic-constraint bodyA="NC_2R" bodyB="NC_1R"></generic-constraint>
+		<generic-constraint bodyA="NC_3R" bodyB="NC_2R"></generic-constraint>
+		<generic-constraint bodyA="NC_4R" bodyB="NC_3R"></generic-constraint>
+		<generic-constraint bodyA="NC_5R" bodyB="NC_4R"></generic-constraint>
+		<generic-constraint bodyA="NC_6R" bodyB="NC_5R"></generic-constraint>
+		<generic-constraint bodyA="NC_7R" bodyB="NC_6R"></generic-constraint>
+		<generic-constraint bodyA="NC_8R" bodyB="NC_7R"></generic-constraint>
+		
+	</constraint-group>
+	<constraint-group>
+	
+		<generic-constraint bodyA="Ring02L" bodyB="Ring01L"></generic-constraint>
+		<generic-constraint bodyA="Ring02L" bodyB="NC_1L"></generic-constraint>
+		<generic-constraint bodyA="NC_2L" bodyB="NC_1L"></generic-constraint>
+		<generic-constraint bodyA="NC_3L" bodyB="NC_2L"></generic-constraint>
+		<generic-constraint bodyA="NC_4L" bodyB="NC_3L"></generic-constraint>
+		<generic-constraint bodyA="NC_5L" bodyB="NC_4L"></generic-constraint>
+		<generic-constraint bodyA="NC_6L" bodyB="NC_5L"></generic-constraint>
+		<generic-constraint bodyA="NC_7L" bodyB="NC_6L"></generic-constraint>
+		<generic-constraint bodyA="NC_8L" bodyB="NC_7L"></generic-constraint>
+	</constraint-group>
+
+</system>
+	
+	
+	
+	
+	
