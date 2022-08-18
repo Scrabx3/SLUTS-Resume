@@ -1,219 +1,194 @@
 Scriptname SlutsMain extends Quest
 
-; ---------------------------------- Property
 SlutsData property data auto
-SlutsMissionHaul property missionsc auto
 SlutsMCM Property MCM Auto
-actor property PlayerRef auto
+
+ObjectReference[] Property myRoots Auto
+Location[] Property myDestLocs Auto
 Actor[] Property myDrivers Auto
 {0 - Windhelm, 1 - Whiterun, 2 - Solitude, 3 - Markarth, 4 - Riften,
 5 - Morthal, 6 - Falkreath, 7 - Winterhold, 8 - Dawnstar, 9 - HQ}
-Location[] Property myDestLocs Auto
-faction property slut_drivers_fac auto ;Carriage Drivers
+
+Faction Property SlutsCrime Auto
+Faction Property slut_drivers_fac Auto
 Faction Property HQStaff Auto
-keyword property sluts_mission_Kw auto
-keyword property sluts_slavery_kw auto
-; ---------------------------------- Variables
-; ---------------------------------- Code
-; Hey, I know! Let's delete all the vanilla NPlayerRefS and replace them with clones!
-; That way no one else can work with the trasport system uin any way. Grrr....
-; Fixed :)
-Function Maintenance(bool OnInit = false)
-	If(OnInit)
-		int Count = myDrivers.Length
-		While(Count)
-			Count -= 1
-			myDrivers[Count].AddToFaction(slut_drivers_fac)
-			myDrivers[Count].SetFactionRank(HQStaff, 3)
-		EndWhile
-	EndIf
-	RegisterForModEvent("S.L.U.T.S. Enslavement", "On_Enslavement")
-	;	I reallly should change the name of this thing since patching for CFTO is about the least of what it does
-	; Done n dusted :)
-	If(MissionSc.IsRunning())
-		missionsc.OnLoadTether()
-	EndIf
-EndFunction
+Keyword Property sluts_mission_Kw Auto
+Keyword Property sluts_slavery_kw Auto
+Keyword Property rehab_kw Auto
 
-Function PatchCFTO()
-	If(Game.GetModByName("CTFO.esp") == 255)
-		return
-	EndIf
-	CFTO_Patch(0xbbf6e, 0)		; windhelm
-	CFTO_Patch(0xbbf6d, 1)		; whiterun
-	CFTO_Patch(0xbbf76, 2)		; solitude
-	CFTO_Patch(0x9d8bf, 3)		; markarth
-	CFTO_Patch(0xbbf7f, 4)		; riften
-	CFTO_Patch(0xBBF8E, 5)		; Morthal
-	CFTO_Patch(0xBBF90, 6)		; Falkreath
-	CFTO_Patch(0xBBF91, 8)		; Dawnstar
-EndFunction
-
-function CFTO_Patch(int formid, int slot)
-	Actor myDriver = Game.GetFormFromFile(formid, "CFTO.esp") as Actor
-	if myDriver == none
-		Debug.Trace("sluts: CFTO detected but can't load form at " + formid)
-		return
-	endif
-	myDrivers[slot] = myDriver
-	myDriver.AddToFaction(slut_drivers_fac)
-	myDriver.SetFactionRank(HQStaff, 3)
-endfunction
-
-; ---------------------------------- Start Haul
+; ---------------------------------- Hauls
 ;/If were already using SendStoryEvent, why not using it properly
 Going to shred this function and get all necessary data here to send it together with the Event. Should spare some Script work when filling Aliases in the actual Haul Quest and give me significantly more control over whats happening/;
-function StartHaul(actor Dispatcher, int RecipientID = -1, int forced = 0)
+Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 	int customLoc = 1
 	Actor Recipient
 	Location destLoc
-	If(RecipientID >= 0) ; Defined in Function Call
+	If(RecipientID >= 0)
 		Recipient = myDrivers[RecipientID]
 		destLoc = myDestLocs[RecipientID]
-	else ; Random
-		customLoc = 0
-		int id = myDrivers.Find(Dispatcher) ;GetDispatcherID(Dispatcher)
-		If(id < 0)
-			Debug.Trace("SLUTS: No valid Dispatcher ID, abandon")
-			Debug.MessageBox("Invalid Dispatcher, abandon")
-			return
-		EndIf
-		Debug.Trace("SLUTS: Dipatcher ID: " + id)
-		; Recipient = GetDestination(DispatcherID)
-		Actor[] posRecips = PapyrusUtil.RemoveActor(myDrivers, myDrivers[id])
-		Recipient = posRecips[Utility.RandomInt(0, (posRecips.Length - 1))]
+	else
+		Recipient = GetDestination(Dispatcher)
 		destLoc = myDestLocs[myDrivers.Find(Recipient)]
+		customLoc = 0
 	EndIf
-	;data.customLocation = myCustom
-	;location loc = PlayerRef.GetCurrentLocation()
 	If(!Recipient || !destLoc)
-		Debug.Trace("SLUTS: No valid Recipient or Destination, abandon; Recipient: " + Recipient.GetActorBase().GetName() + " Location: " + destLoc.GetName())
-		Debug.MessageBox("Invalid Recipient or Destination, abandon")
+		Debug.Trace("[SLUTS] No valid Recipient or Destination, abandon; Recipient: " + Recipient + " | Loc = " + destLoc)
+		Debug.MessageBox("[SLUTS] Unable to find a valid Recipient or Destination, abandon")
 		return
 	EndIf
-	Debug.Trace("SLUTS: sending story event with " + Dispatcher.GetActorBase().GetName() + " to " + Recipient.GetActorBase().GetName() + " to " + destLoc.GetName())
+	Debug.Trace("[SLUTS] Sending story event with " + Dispatcher + " to " + Recipient + " | Loc = " + destLoc)
 	;Loc => Destination
 	;Ref1 => Dispatcher (Starting Hold)
 	;Ref2 => Recipent (Destination Hold)
 	;aiValue1 => Desination: 1 => Custom, 0 => random
 	;aiValue2 => Forced: 1 => True, 0 => False
 	sluts_mission_Kw.SendStoryEvent(destLoc, Dispatcher, Recipient, customLoc, forced)
-endfunction
+EndFunction
 
-int Function GetDispatcherID(Actor Dispatcher)
-	int Count = 0
-	int PossibleLocs = myDrivers.Length
-	While(Count < PossibleLocs)
-		If(myDrivers[Count] == Dispatcher)
-			return Count
-		EndIf
-		Count += 1
+Actor Function GetDestination(Actor akExclude, Actor akExclude2 = none)
+	Actor[] potentials = StrippedCopyCat(myDrivers, akExclude)
+	If(akExclude2)
+		potentials = StrippedCopyCat(potentials, akExclude2)
+	EndIf
+	return potentials[Utility.RandomInt(0, (potentials.Length - 1))]
+EndFunction
+Actor Function GetDestinationEx(Actor[] akExclude)
+	Actor[] potentials = StrippedCopyCat(myDrivers, akExclude[0])
+	int i = 1
+	While(i < akExclude.Length)
+		potentials = StrippedCopyCat(potentials, akExclude[i])
+		i += 1
 	EndWhile
-	return 777
-endFunction
-
-Actor Function GetDestination(int DispatcherID, int TimeOut = 0)
-	int PossibleLocs = myDrivers.Length
-	;If we dont get a random Location, falling back to forcing a Neighbour inside the Array as Destination
-	If(TimeOut > 30)
-		int Count = 0
-		While(Count < PossibleLocs)
-			If(DispatcherID != Count)
-				return myDrivers[Count]
-			EndIf
-			Count += 1
-		EndWhile
+	return potentials[Utility.RandomInt(0, (potentials.Length - 1))]
+EndFunction
+Actor[] Function StrippedCopyCat(Actor[] arr, Actor akExclude)
+	int i = myDrivers.find(akExclude)
+	If(i < 0)
+		return arr
 	EndIf
-	;Get a random Location that isnt the Dispatcher Location
-	int myDest = Utility.RandomInt(0, (PossibleLocs - 1))
-	If(myDest != DispatcherID)
-		return myDrivers[myDest]
-	else
-		GetDestination(DispatcherID, TimeOut + 1)
-	EndIf
-endFunction
+	return PapyrusUtil.RemoveActor(arr, arr[i])
+EndFunction
 
-;0 - Random, 1 - Haul
-int chainMode
-int chainForce
-Actor chainDispatch
-int chainRecipID
-Function ChainMission(actor Dispatcher, int recipientID = -1, int forced = 1)
-	StartHaul(Dispatcher, recipientID, forced)
-	; chainDispatch = Dispatcher
-	; chainRecipID = recipientID
-	; chainForce = forced
-	; RegisterForSingleUpdate(3)
-endFunction
-
-Event OnUpdate()
-	If(chainMode == 1)
-		StartHaul(chainDispatch, chainRecipID, chainForce)
-	EndIf
-endEvent
 ; ---------------------------------- SS Integration
-; use the driver as the sender
-Event On_Enslavement(string eventName, string arg_s, float argNum, form sender)
+Event On_Enslavement(string asEventName, string asStringArg, float afNumArg, form akSender)
+	Debug.Trace("[SLUTS] Main: Simple Slavery Event Call")
 	;Skipping the Intro
 	If(GetStage() != 30)
-		Debug.Trace("SLUTS SS: Skipping Intro")
+		Debug.Trace("[SLUTS] SimpleSlavery: Skipping Intro")
 		SetStage(30)
 	EndIf
-	Debug.Trace("SLUTS Main: Simple Slavery Event Call")
-	;/In case CFTO is installed, sending the Riften Driver stored by this
-	Script. If CFTO isnt installed, this just sends the Riften Carriage
-	Driver and nothing changes to the way Redux did this. However if CFTO IS
-	installed, will send CFTO's Riften Driver, making this Event compatible
-	with CFTO. Yes./;
-	If(!sluts_slavery_kw.SendStoryEventAndWait(none, myDrivers[4]))
-		Debug.MessageBox("SLUTS SS: Call failed")
+	; Get players current hold and send them to the specific Driver..
+	Keyword LocTypeHold = Keyword.GetKeyword("LocTypeHold")
+	Location pLoc = Game.GetPlayer().GetCurrentLocation()
+	int i = 0
+	While(i < myDestLocs.Length)
+		If(pLoc.HasCommonParent(myDestLocs[i], LocTypeHold))
+			If(sluts_slavery_kw.SendStoryEventAndWait(none, myDrivers[i]))
+				Debug.Trace("[SLUTS] Created Enslavement Call in Location with ID = " + i)
+				return
+			EndIf
+		EndIf
+		i += 1
+	EndWhile
+	; If none of the valid common Locations is loaded send the Player to Riften..
+	If(sluts_slavery_kw.SendStoryEventAndWait(none, myDrivers[4]))
+		Debug.Trace("[SLUTS] Created default Enslavement Call in Riften")
+	Else
+		Debug.TraceStack("[SLUTS] Failed to create Enslavement")
+		Debug.MessageBox("[SLUTS]\nFailed to create Enslavement")
 	EndIf
 EndEvent
 
-;/ --------------- Redundant
-Moved all of this into the QF Script
-ReferenceAlias property JobFlyer auto
-function Give_Flyer()
-	PlayerRef.AddItem(JobFlyer.GetReference())
-	SetStage(10)
-	SetObjectiveDisplayed(10)
-endfunction
+; ---------------------------------- Startup
+Event On_Rehab(string asEventName, string asStringArg, float afNumArg, form akSender)
+	If(akSender as Faction)
+		StartRehabImpl(akSender as Faction, none)
+	ElseIf(akSender as Actor)
+		StartRehab(akSender as Actor)
+	Else
+		Debug.TraceStack("[SLUTS] On_Rehab received invalid Sender Parameter. Sender must be of Type Actor or Faction", 2)
+		Debug.Messagebox("[SLUTS]\nFailed to start Rehab")
+	EndIf
+EndEvent
 
-function join_fac()
-	PlayerRef.RemoveItem(JobFlyer.GetReference())
-	;PlayerRef.addtofaction(SLUTS_JobFaction)
-	CompleteAllObjectives()
-	SetStage(30)
-	CompleteQuest()
-endfunction
+Function StartRehab(Actor akInitiator)
+	Faction crime = akInitiator.GetCrimeFaction()
+	If(!crime)
+		Debug.TraceStack("[SLUTS] Given Actor = " + akInitiator + " has no associated Crime Faction")
+		Debug.MessageBox("[SLUTS]\nFailed to create Rehabilitation Event\nMissing an associated Crime Faction")
+		return
+	EndIf
+	StartRehabImpl(akInitiator.GetCrimeFaction(), akInitiator)
+EndFunction
+Function StartRehabImpl(Faction akCrimeFaction, Actor akInitiator)
+	int crime = akCrimeFaction.GetCrimeGoldViolent() + akCrimeFaction.GetCrimeGoldNonviolent()
+	akCrimeFaction.SetCrimeGold(0)
+	akCrimeFaction.SetCrimeGoldViolent(0)
+	SlutsCrime.ModCrimeGold(SlutsData.GetCoinFromGold(crime))
 
-;Unused? Renamed from slutfac to sluts_JobFaction
-;faction property sluts_JobFaction auto
-=> Now used in Mission Quests to identify that the Player is on a Mission
-;formlist property drivers auto
-sluts_dlog_sc property dlog auto
+	If(!rehab_kw.SendStoryEventAndWait(akRef1 = akInitiator))
+		Debug.Trace("[SLUTS] Failed to start Rehab Quest")
+		Debug.MessageBox("[SLUTS]\nFailed to create Rehabilitation Event")
+	EndIf
+EndFunction
 
-Quests dont close themselves for no reason. If the User thinks its funny force stopping Quests, shame on them! Mwahaha
-this gets called when loading a save as well
-so let's make sure the dialogue quest is running
-if !dlog.isRunning()
-	dlog.start()
-endif
-if !monitor.isRunning()
-	monitor.start()
-endif
+; ---------------------------------- Startup
+; Copy of the vanilla drivers so they dont get lost when the player uninstalls CTFO zzz
+; srsly curse this mod though
+Actor[] myDrivers_og
 
-Moving Code into OnInit. Registering for the Event is more reliable if done after each Gameload anyway. Safe the User from their own Stupidity!
-function stage_00()
-	debug.Debug.Trace("S.L.U.T.S: Wide Open For Business!")
+; Hey, I know! Let's delete all the vanilla NPlayerRefS and replace them with clones!
+; That way no one else can work with the trasport system in any way. Grrr....
+Event OnInit()
+	If(!IsRunning())
+		return
+	EndIf
+	myDrivers_og = PapyrusUtil.RemoveActor(myDrivers, none)
+	Maintenance()
+EndEvent
+
+; Called OnInit() and every game load
+Function Maintenance()
+	If(Game.GetModByName("CTFO.esp") != 255)
+		int i = 0
+		While(i < myDrivers.Length)
+			myDrivers_og[i].DisableNoWait()
+			i += 1
+		EndWhile
+		PatchCFTO()
+	Else
+		myDrivers = myDrivers_og
+	EndIf
+	int i = 0
+	While(i < myDrivers.Length)
+		myDrivers[i].EnableNoWait()
+		RegisterDriver(myDrivers[i], myRoots[i])
+		i += 1
+	EndWhile
 	RegisterForModEvent("S.L.U.T.S. Enslavement", "On_Enslavement")
-	cfto_patch()
-	setstage(10)
-endfunction
+	RegisterForModEvent("S.L.U.T.S. Rehab", "On_Rehab")
+EndFunction
 
-Integrated into start_rq
-Prbly doesnt really change a lot but I dont trust OnUpdate!
-event onupdate()
-	cooldown = false
-endevent
-/;
+Function PatchCFTO()
+	CFTO_Patch(0xbbf6e, 0)	; windhelm
+	CFTO_Patch(0xbbf6d, 1)	; whiterun
+	CFTO_Patch(0xbbf76, 2)	; solitude
+	CFTO_Patch(0x9d8bf, 3)	; markarth
+	CFTO_Patch(0xbbf7f, 4)	; riften
+	CFTO_Patch(0xBBF8E, 5)	; Morthal
+	CFTO_Patch(0xBBF90, 6)	; Falkreath
+	CFTO_Patch(0xBBF91, 8)	; Dawnstar
+EndFunction
+function CFTO_Patch(int formid, int slot)
+	Actor myDriver = Game.GetFormFromFile(formid, "CFTO.esp") as Actor
+	if myDriver == none
+		Debug.Trace("[SLUTS] CFTO | Can't load form = " + formid)
+		return
+	endif
+	myDrivers[slot] = myDriver
+endfunction
+Function RegisterDriver(Actor akDriver, ObjectReference akRootForm)
+	StorageUtil.SetFormValue(akDriver, "SLUTS_ROOT", akRootForm)
+	akDriver.AddToFaction(slut_drivers_fac)
+	akDriver.SetFactionRank(HQStaff, 3)
+EndFunction

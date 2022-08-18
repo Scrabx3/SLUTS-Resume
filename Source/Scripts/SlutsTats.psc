@@ -133,7 +133,6 @@ int function get_applied_livery_items(actor whom)
 	return tmpl_clear
 endfunction
 
-;Plastic latency
 bool function scrub(actor whom)
 	int template = JValue.addToPool(JMap.object(), pool)
 	JMap.setStr(template, "section", "SLUTS")

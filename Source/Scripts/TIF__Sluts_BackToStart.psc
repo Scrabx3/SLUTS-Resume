@@ -6,7 +6,7 @@ Scriptname TIF__Sluts_BackToStart Extends TopicInfo Hidden
 Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-(GetOwningQuest() as SlutsMissionHaul).ChainMission(0, true)
+; (GetOwningQuest() as SlutsMissionHaul).ChainMission(0, true)
 ;END CODE
 EndFunction
 ;END FRAGMENT

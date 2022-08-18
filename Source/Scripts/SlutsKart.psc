@@ -12,11 +12,6 @@ event onactivate(objectreference akActionRef)
 		return
 	EndIf
 	Actor myActor = akActionRef as Actor
-	;/	if slut.WornHasKeyword(zlib.zad_deviousYoke) || slut.WornHasKeyword(zbf.zbfWornYoke) || slut.WornHasKeyword(zlib.zad_deviousYokeBB)
-	if myActor.WornHasKeyword(slut_yoke)
-		mission.Tether(self, myActor)
-		return
-	endif/;
 	if myActor != PlayerRef
 		Debug.Notification(myActor.GetLeveledActorBase().GetName() + " examines the Cart")
 		return

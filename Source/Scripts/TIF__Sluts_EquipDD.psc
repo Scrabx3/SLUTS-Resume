@@ -6,6 +6,7 @@ Scriptname TIF__Sluts_EquipDD Extends TopicInfo Hidden
 Function Fragment_1(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
+Utility.Wait(10)
 SlutsMissionHaul mission = (GetOwningQuest() as SlutsMissionHaul)
 mission.Bd.DDModel(mission.HumilPick)
 ;END CODE

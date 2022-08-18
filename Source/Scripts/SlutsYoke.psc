@@ -5,7 +5,7 @@ SlutsMissionHaul Property Mission Auto
 
 Function DeviceMenu(int MsgChoice = 0)
   If(mission.bIsThethered)
-    Mission.Unhitch(Game.GetPlayer())
+    Mission.Unhitch()
   EndIf
   return Parent.DeviceMenu(MsgChoice)
 endFunction

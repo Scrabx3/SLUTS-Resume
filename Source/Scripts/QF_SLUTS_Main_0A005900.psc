@@ -2,14 +2,9 @@
 ;NEXT FRAGMENT INDEX 4
 Scriptname QF_SLUTS_Main_0A005900 Extends Quest Hidden
 
-;BEGIN ALIAS PROPERTY RehabGuard
+;BEGIN ALIAS PROPERTY Player
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RehabGuard Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY RehabDriver
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RehabDriver Auto
+ReferenceAlias Property Alias_Player Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Vaslaco
@@ -17,20 +12,15 @@ ReferenceAlias Property Alias_RehabDriver Auto
 ReferenceAlias Property Alias_Vaslaco Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Player
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SceneLocation
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_SceneLocation Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY ScenePlayer
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_ScenePlayer Auto
-;END ALIAS PROPERTY
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN CODE
+;Player read Flyer, talk to the Driver (again)
+SetObjectiveCompleted(10)
+SetObjectiveDisplayed(20)
+;END CODE
+EndFunction
+;END FRAGMENT
 
 ;BEGIN FRAGMENT Fragment_3
 Function Fragment_3()
@@ -40,16 +30,6 @@ SetObjectiveCompleted(20)
 Actor pl = Game.GetPLayer()
 pl.AddToFaction(SlutFac)
 pl.AddItem(memberKey)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN CODE
-;Player read Flyer, talk to the Driver (again)
-SetObjectiveCompleted(10)
-SetObjectiveDisplayed(20)
 ;END CODE
 EndFunction
 ;END FRAGMENT

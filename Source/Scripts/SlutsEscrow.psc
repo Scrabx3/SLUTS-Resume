@@ -9,22 +9,21 @@ MagicEffect Property AdSpell Auto
 Activator Property summonFX Auto
 ObjectReference myMarker ; Where we are currently standing & facing
 ; ---------------------------------- Code
-Function moveEscrow(ObjectReference newPos)
-  If(myMarker == newPos)
+Function MoveTo(ObjectReference akTarget, float afXOffset = 0.0, float afYOffset = 0.0, float afZOffset = 0.0, bool abMatchRotation = true)
+  If(myMarker == akTarget)
     ; Dont move when were already here
     return
   EndIf
-  newPos.PlaceAtMe(summonFX)
-  Self.MoveTo(newPos)
+  akTarget.PlaceAtMe(summonFX)
+  Parent.MoveTo(akTarget, afXOffset, afYOffset, afZOffset, abMatchRotation)
   Self.Enable()
-  myMarker = newPos
+  myMarker = akTarget
 EndFunction
 
-Function lockEscrow()
+Function LockEscrow()
   Lock()
   SetLockLevel(255)
 EndFunction
-
 
 Event OnActivate(ObjectReference akActionRef)
   If(Haul.GetStage() < 40)
@@ -45,12 +44,12 @@ Event OnActivate(ObjectReference akActionRef)
   SetLockLevel(255)
   Haul.SetStage(500)
   Utility.Wait(15)
-  Self.PlaceAtMe(summonFX)
+  PlaceAtMe(summonFX)
   Disable()
 EndEvent
 
 Event OnCellAttach()
-  Self.MoveTo(myMarker)
+  Parent.MoveTo(myMarker)
 EndEvent
 
 ; event OnMenuClose(String menu)

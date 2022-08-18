@@ -27,15 +27,20 @@ bool Property useChastity = false Auto Hidden Conditional
 ; ======================================================
 ; =============================== HAUL STATISTICS
 ; ======================================================
+ReferenceAlias Property StatisticsPlace Auto
+ReferenceAlias Property StatisticsBook Auto
+Book Property StatisticsBook_Form Auto
 ; ---------------------------------- Progression Data
 GlobalVariable Property RunsCompleted Auto
 {Times the Player completed a Series (opened Escrow Chest)}
 GlobalVariable Property HaulsCompleted Auto
 {Amout of single Hauls the Player completed}
-GlobalVariable Property HaulsCompletedStreak Auto
-{Highest amount of Hauls completed in a single Streak, forced and voluntary}
 GlobalVariable Property HaulsPerfect Auto
 {Amount of perfect Hauls the Player completed total}
+
+; BELOW GLOBALS ARE UNUSED AS OF YET
+GlobalVariable Property HaulsCompletedStreak Auto
+{Highest amount of Hauls completed in a single Streak, forced and voluntary}
 GlobalVariable Property HaulsPerfectStreak Auto
 {Highest amount of perfect Hauls in a row}
 GlobalVariable Property HaulsPerfectStreakAllTime Auto
@@ -48,95 +53,48 @@ GlobalVariable Property ForcedHaulsCompleted Auto
 {Amountfs of forced Hauls the Player completed}
 GlobalVariable Property ForcedHaulsCompletedStreak Auto
 {Highest amount of forced Hauls the Player has completed in a row}
-int Property streak = 0 Auto Hidden Conditional
-{The current Haul-Streak, positive = voluntary - negative = forced}
-int Property streakTotal = 0 Auto Hidden Conditional
-{The current Haul Streak, forced and voluntary combined}
-int Property streakPerfect = 0 Auto Hidden Conditional
-{The current perfect haul streak. Missionhaul stacks this for every haul it considers "perfect"}
+GlobalVariable Property CargoLost Auto
+{The amount of times the Player failed to get the Cargo to the Recipient}
 
-; Called at the end of each Haul
-Function UpdateStatistics(bool forced)
+; int Property streak = 0 Auto Hidden Conditional
+; {The current Haul-Streak, positive = voluntary - negative = forced}
+; int Property streakTotal = 0 Auto Hidden Conditional
+; {The current Haul Streak, forced and voluntary combined}
+; int Property streakPerfect = 0 Auto Hidden Conditional
+; {The current perfect haul streak. Missionhaul stacks this for every haul it considers "perfect"}
+
+Function UpdateGlobals()
+  UpdateCurrentInstanceGlobal(RunsCompleted)
+  UpdateCurrentInstanceGlobal(HaulsCompleted)
+  UpdateCurrentInstanceGlobal(HaulsPerfect)
+EndFunction
+
+Function NewBook()
+  StatisticsBook.ForceRefTo(StatisticsPlace.GetReference().PlaceAtMe(StatisticsBook_Form))
+EndFunction
+
+Function RunCompleted(bool abPerfect)
   HaulsCompleted.Value += 1
-  streakTotal += 1
-  If(HaulsCompletedStreak.Value < streakTotal)
-    HaulsCompletedStreak.Value = streakTotal
-  EndIf
-
-  If(forced)
-    ForcedHaulsCompleted.Value += 1
-    If(streak >= 0)
-      streak = -1
-    else
-      streak -= 1
-      If(ForcedHaulsCompletedStreak.Value < -streak)
-        ForcedHaulsCompletedStreak.Value = -streak
-      EndIf
-    EndIf
-  else
-    voluntaryHaulsCompleted.Value += 1
-    If(streak <= 0)
-      streak = 1
-    else
-      streak += 1
-      If(voluntaryHaulsCompletedStreak.Value < streak)
-        voluntaryHaulsCompletedStreak.Value = streak
-      EndIf
-    EndIf
+  If(abPerfect)
+    HaulsPerfect.Value += 1
   EndIf
 EndFunction
 
-; Called on payOut
-Function endRun()
-  RunsCompleted.value += 1
-  streak = 0
-  streakTotal = 0
-  streakPerfect = 0
+Function SeriesCompleted()
+  RunsCompleted.Value += 1
 EndFunction
 
-; Called at the end of a perfect Haul
-Function addStreakPerfect()
-  streakPerfect += 1
-  HaulsPerfect.Value += 1
-  HaulsPerfectStreakAllTime.Value += 1
-  If(HaulsPerfectStreak.Value < streakPerfect)
-    HaulsPerfectStreak.Value = streakPerfect
-  EndIf
-EndFunction
-
-; Called at the end of a non-purrfect haul
-Function clearStreakPerfect()
-  If(HaulsPerfectStreak.Value < streakPerfect)
-    HaulsPerfectStreak.Value = streakPerfect
-  EndIf
-  streakPerfect = 0
-  HaulsPerfectStreakAllTime.Value = 0
-EndFunction
-; ======================================================
-; =============================== OVERTIME
-; ======================================================
-float Function getOvertimebonus()
-  If(SlutsCrimeFaction.GetCrimeGold() > 0 || streakPerfect == 1)
-    ; last haul wasnt perfect or indepted, no bonus
-    return 1.0
-  else
-    float toRet
-    int hauls = streakPerfect - 1
-    If(hauls > 15)
-      toRet = Math.Floor(MCM.fOvertimeGrowth * 5)
-    else
-      toRet = (MCM.fOvertimeGrowth * (Math.pow(1.4, (0.3 * hauls))) - (MCM.fOvertimeGrowth) + 1)
-    EndIf
-    ;Setvalue(data.overtimeBonus.getvalue() + 1)
-    int bonusPerCent = Math.Ceiling(toRet * 100)
-    ; notify("Having agreed to " + streakPerfect + " hauls in a row your overtime bonus is now " + bonusPerCent + "%")
-    Debug.Trace("Overtime Bonus: " + bonusPerCent + "%")
-    return toRet
-  EndIf
-EndFunction
 ; ======================================================
 ; =============================== UTILITY
 ; ======================================================
+int Function GetCoinFromGold(int coins) global
+  return coins * 50
+EndFunction
+
+int Function GetGoldFromCoin(int gold) global
+  return gold / 50
+EndFunction
+
 Function notify(string msg)
   If(MCM.bLargeMsg)
     Debug.MessageBox(msg)
@@ -145,21 +103,21 @@ Function notify(string msg)
   EndIf
 EndFunction
 
-Function RemoveAllNonDDItems(Actor me, ObjectReference chest)
-  int numItems = me.GetNumItems()
-  Keyword SLSLicense = Keyword.GetKeyword("_SLS_LicenceDocument")
-  bool SLS = SLSLicense != none
-  While(numItems)
-    numItems -= 1
-    Form item = PlayerRef.GetNthForm(numItems)
-    bool skip = false
-    If(SLS)
-      skip = !item.HasKeyword(SLSLicense)
-    EndIf
-    If(!item.HasKeyword(MCM.bd.SlutsRestraints) && !skip)
-      PlayerRef.RemoveItem(item, PlayerRef.GetItemCount(item), true, chest)
-    EndIf
+int Function Distribute(int[] weights) global
+  int all = 0
+  int i = 0
+  While(i < weights.length)
+    all += weights[i]
+    i += 1
   EndWhile
+  int this = Utility.RandomInt(1, all)
+  int limit = 0
+  int n = 0
+  While(limit < this)
+    limit += weights[n]
+    n += 1
+  EndWhile
+  return n
 EndFunction
 
 

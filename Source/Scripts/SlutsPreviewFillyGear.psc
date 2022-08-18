@@ -18,7 +18,7 @@ Event OnActivate(ObjectReference akActionRef)
       If(zadc_DeviceMsgPlayerNotLocked.Show() == 0)
         Game.ForceThirdPerson()
         parent.LockActor(act)
-        bd.DressUpPony(false)
+        bd.DressUpPony(Game.GetPlayer(), false)
         bd.equipIdx(bd.gagIDX, true)
       else
         return

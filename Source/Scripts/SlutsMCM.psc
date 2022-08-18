@@ -15,6 +15,15 @@ int Property iHaulType01 = 50 Auto Hidden
 {Default Haul, with the buggy cart}
 int Property iHaulType02 = 0 Auto Hidden
 {Premium Haul, special Delivery to a random NPC}
+int[] Property HaulWeights
+	{All Haul Types wrapped together in a single array}
+	int[] Function Get()
+		int[] ret = new int[2]
+		ret[0] = iHaulType01
+		ret[1] = iHaulType02
+		return ret
+	EndFunction
+EndProperty
 bool Property bNoTalking = true Auto Hidden Conditional
 {Custom Gag Talk during Hauls}
 int Property iSpontFail = 0 Auto Hidden
@@ -58,7 +67,7 @@ string sTatRemove = "Click"
 string sUnponify = "Click"
 string sReturnCart = "Click"
 string sReinitMod = "Click"
-bool property bSetEssential = false auto Hidden
+; bool property bSetEssential = false auto Hidden
 bool Property bShowDist = false Auto Hidden
 
 bool property bUseUNPLivery = false auto Hidden Conditional ; Unused
@@ -157,9 +166,8 @@ Event OnPageReset(string Page)
 		AddTextOptionST("EmergencyTatRemove", "$SLUTS_dEmergencyTatRemove", sTatRemove)
 		AddTextOptionST("RemoveDD", "$SLUTS_removeDD", sUnponify)
 		AddTextOptionST("ReturnCart", "$SLUTS_dReturnCart", sReturnCart)
-		AddToggleOptionST("SetEssential", "$SLUTS_dSetEssential", bSetEssential)
+		; AddToggleOptionST("SetEssential", "$SLUTS_dSetEssential", bSetEssential)
 		AddEmptyOption()
-		AddTextOptionST("ReinitializeMod", "$SLUTS_dReinitializeMod", sReinitMod)
 		; AddToggleOptionST("ShowDistance", "$SLUTS_dShowDistance", bShowDist)
 		SetCursorPosition(1)
 		AddHeaderOption("$SLUTS_dhHOTKEYS")
@@ -180,18 +188,13 @@ Event OnConfigClose()
 	If(sUnponify == "Working")
 		Debug.Notification("Removing DD Items..")
 		sUnponify = "Click"
-		Bd.undressPlayerPony(true)
+		Bd.UndressPony(PlayerRef, true)
 		SetOptionFlagsST(OPTION_FLAG_NONE, false, "RemoveDD")
 	EndIf
 	If(sReturnCart == "Working")
-		missionSc.ForceTether(missionSc.Kart, PlayerRef)
+		missionSc.Tether()
 		sReturnCart = "Click"
 		SetOptionFlagsST(OPTION_FLAG_NONE, false, "ReturnCart")
-	EndIf
-	If(sReinitMod == "Working")
-		main.PatchCFTO()
-		sReinitMod = "Click"
-		SetOptionFlagsST(OPTION_FLAG_NONE, false, "ReinitializeMod")
 	EndIf
 
 EndEvent
@@ -730,31 +733,19 @@ state ReturnCart
 	endevent
 endstate
 
-state SetEssential
-	event onselectst()
-		bSetEssential = !bSetEssential
-		SetToggleOptionValueST(bSetEssential)
-	endevent
-	event ondefaultst()
-		bSetEssential = false
-		SetToggleOptionValueST(bSetEssential)
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_SetEssential_Info")
-	endevent
-endstate
-
-State ReinitializeMod
-	Event OnSelectST()
-		sReinitMod = "Working"
-		SetOptionFlagsST(OPTION_FLAG_DISABLED)
-		SetTextoptionValueST(sReinitMod)
-		Debug.MessageBox("Reinitializing the Mod now. \nPlease exit the MCM")
-	endEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_ReinitializeMod_Info")
-	EndEvent
-EndState
+; state SetEssential
+; 	event onselectst()
+; 		bSetEssential = !bSetEssential
+; 		SetToggleOptionValueST(bSetEssential)
+; 	endevent
+; 	event ondefaultst()
+; 		bSetEssential = false
+; 		SetToggleOptionValueST(bSetEssential)
+; 	endevent
+; 	event onhighlightst()
+; 		SetInfoText("$SLUTS_SetEssential_Info")
+; 	endevent
+; endstate
 
 ; State ShowDistance
 ; 	Event OnSelectST()
@@ -792,29 +783,3 @@ int Function getFlag(bool option)
 		return OPTION_FLAG_DISABLED
 	EndIf
 endFunction
-
-;/ ---------------------------------- Old Code till new Menu :^)
-bool property safeguard = false auto
-bool property emergency = false auto
-
-faction[] property band_fact auto
-; ==================================
-; 							MENU
-; ==================================
-
-Event OnPageReset(string page)
-	AddHeaderOption("HOTKEYS:")
-	AddTextOption("CTRL + E = Detether/Recover Cart","")
-	AddTextOption("CTRL + SPACE = Toggle Cart Physics","")
-	AddTextOption("CTRL + SHIFT + 8 = Hard Reset Tether Physics","")
-	AddEmptyOption()
-	AddTextOption("WARNING!: QUICKSAVE BEFORE PERFORMING","")
-	AddTextOption("HARD RESET!","")
-endEvent
-
-AddEmptyOption()
-AddHeaderOption("OTHER NOTES:")
-AddEmptyOption()
-AddTextOption("-It is not recommend to perform a haul while","")
-AddTextOption("wearing a quest based Yoke/Armbinder/cuffs.","")
-/;

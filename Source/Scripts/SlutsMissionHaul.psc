@@ -1,59 +1,63 @@
 Scriptname SlutsMissionHaul extends Quest Conditional
 {Main Script for Hauling Quests}
 
-;/ V2.5 - I redo majority of this Script to support more than a Single Haul, this Script will store most/all of the Utility Required for any Haul. I will shred this Script from previous iterations to avoid the confusion with the incredible amount of commented code, with this, Sluts Redux will be forgotten by Resume entirely. Goodbye dear predacasor
+;/
+V3 Plan
+- Use Script States to split the individual missions apart
+- Each Script State with the OnBeginState() should do all of its necessary swappero
+- The beginning of a Quest is mostly unchanged, the actual setup is moved into the OnBeginState() of the respectable State Mission
+- After the Quest Started the Quest behaves as it normally does. Individual States may use or not use new Aliases, idfc
+- At the end of the haul, after the Dispatcher ending Scene - which is individualy chosen for each individual State I guess, do all Payment in a single func
+- The dispatcher will forcegreet with "Looks like your jobs done. Ill remove your uniform then" upon which the player can choose different options, including adding another on top
+- If the haul is chained update the mission specific data, blackscreen to potentially roll a new hauling type and set everything ready again
+- Repoeat until the player is done
+- Unequip all items and make way for the post-haul dialogue
 
-Escrow will be only 1 Chest going forward and have all of its Logic stored in its own Script
-
-Payment will be managed properly in a centralized Area rather than splitted across this Script
+- Keep track of the previous dispatcher & recipient
 /;
+
 ; ---------------------------------- Generic Properties
+SlutsMain Property Main Auto
 SlutsMCM Property MCM Auto
 SlutsData Property data Auto
 SlutsBondage Property Bd Auto
 SexLabFramework Property SL Auto
-SlutsMain Property Main Auto
 SlutsEscrow Property Escrow Auto
 
 Actor Property PlayerRef Auto
 ; Picked by Story Manager:
 ReferenceAlias Property DispatcherREF Auto
 ReferenceAlias property RecipientREF Auto
+LocationAlias Property RecipientLOC Auto
+LocationAlias Property RecipientLOCHold Auto
 ReferenceAlias Property Manifest Auto
 ; Through Script:
 ReferenceAlias Property ScenePlayer Auto ; Where the Player stands in Intro
-ReferenceAlias Property SceneKart Auto ; Where the cart Spawns in Intro
 ReferenceAlias Property SceneSpell Auto ; From where the Carter casts his Spell
 ReferenceAlias Property SceneRecipient Auto ; Where the Recipient Waits
 
-Keyword Property RootLink Auto ; Driver to Root
+Keyword Property RootLink Auto ; Driver to Rootnt
 Keyword Property EscrowLink Auto ; Root to Escrow
 Keyword Property PlayerWaitLoc Auto ; Root to Player Marker
 Keyword Property KartSpawnLoc Auto ; Root to Kart Marker
 Keyword Property SpellCastLoc Auto ; Root to Spellcast Marker
-Keyword Property CarriageDriver Auto ; Root to Escrow
+Keyword Property CarriageDriver Auto ; Root to Driver Wait Marker
 ; ===
 ReferenceAlias Property KartREF Auto ; Used for Dialogue Conditions
 Activator Property Kart_Form Auto ; Carts Base Object
 
-ObjectReference Property escrowSpawn Auto Hidden
-{The Escrows Default Position for the current Haul}
-
-GlobalVariable Property pay Auto
+GlobalVariable Property MissionType Auto
+{Current Mission Type}
+GlobalVariable Property Payment Auto
 {Payment for this Haul only, stored in a Global cause Manifest Text}
-GlobalVariable Property totalPay Auto
-{Stores Payment for the entire Hauling Session}
 MiscObject Property FillyCoin Auto
 MiscObject Property Gold001 Auto
-Message Property continue Auto
-Book Property HandBook Auto
+Message Property DetachKartSureMsg Auto
 Keyword Property ActorTypeNPC Auto
-Spell Property debtCollectSpell Auto ; While active, picked up gold pays Crimegold
 
-; Quest[] Property haulingTypes Auto
 Scene Property moveChestScene Auto ; Post Humiliation reward
 
-Faction Property crimeFaction Auto ; Sluts Crime Faction
+Faction Property SlutsCrime Auto ; Sluts Crime Faction
 Faction Property DriverFaction Auto ; All Drivers
 Faction Property DirtyFaction Auto ; For Dirt Tats
 Faction Property PlayerFollowerFaction Auto
@@ -61,49 +65,41 @@ Faction Property BanditFaction Auto
 Faction property ForswornFaction Auto
 Faction[] Property FriendFactions Auto
 
-; Faction Property PredatorFriendFaction Auto
-; Faction Property CreatureFriendFaction Auto
-; Faction Property BanditFriendFaction Auto
-
 ; Worldspaces
 Worldspace Property Tamriel Auto
 Worldspace Property Solstheim Auto
 ObjectReference Property windhelmPort Auto
 ObjectReference Property ravenRockPort Auto
 ; Holds
-location property EastmarchHoldLocation auto
-location property HaafingarHoldLocation auto
-location property ReachHoldLocation auto
-location property RiftHoldLocation auto
-location property WhiterunHoldLocation auto
-location property FalkreathHoldLocation auto
-location property PaleHoldLocation auto
-location property HjaalmarchHoldLocation auto
-location property WinterholdHoldLocation auto
-; Capitals
-location property WindhelmLocation auto
-location property SolitudeLocation auto
-location property MarkarthLocation auto
-location property RiftenLocation auto
-location property WhiterunLocation auto
-location property FalkreathLocation auto
-location property DawnstarLocation auto
-location property MorthalLocation auto
-location property WinterholdLocation auto
+Location Property EastmarchHoldLocation auto
+Location Property HaafingarHoldLocation auto
+Location Property ReachHoldLocation auto
+Location Property RiftHoldLocation auto
+Location Property WhiterunHoldLocation auto
+Location Property FalkreathHoldLocation auto
+Location Property PaleHoldLocation auto
+Location Property HjaalmarchHoldLocation auto
+Location Property WinterholdHoldLocation auto
+
+ImageSpaceModifier Property FadeToBlackImod Auto
+ImageSpaceModifier Property FadeToBlackBackImod Auto
+ImageSpaceModifier Property FadeToBlackHoldImod Auto
+
+Activator Property SummonFX Auto
+Race Property DefaultRace Auto
+
 ; ---------------------------------- Variables
-int Property haulType Auto Hidden Conditional
-{Used identify the currently running Haul;
-Conditional -> which spell to cast in startScene01}
-
-;Keycodes:
+; Keybinds
 int ActivateKey
-int JumpKey
-int ResetKey
-bool handbrake = false
 
-; OnHaul
-float Property Pilferage = 0.0 Auto Hidden Conditional ;Lost goods
-float baseValue = 1500.0 ;Amount of Goods total
+; Series Info
+int Property Streak Auto Hidden Conditional ; Num Hauls the Player did this series
+float PerfectStreak
+
+; Haul Info
+float Property GoodsTotal = 1500.0 AutoReadOnly Hidden ; Amount of Goods total
+float Property Pilferage = 0.0 Auto Hidden Conditional ; Lost goods
+
 
 ; Humiliation System
 bool Property HumilSex = false Auto Hidden
@@ -125,93 +121,319 @@ int Property HumilPick = 0 Auto Hidden Conditional
 bool Property bIsThethered Auto Hidden Conditional
 ObjectReference Property Kart Auto Hidden
 
+int Property Response_Flawless = 0 AutoReadOnly Hidden ; 0 Pilferage + No Debt
+int Property Response_Deduction = 1 AutoReadOnly Hidden ; X Pilferage + No Debt
+int Property Response_Endebted = 2 AutoReadOnly Hidden ; No Pay + Init Debt
+int Property Response_ReduceDebt1 = 3 AutoReadOnly Hidden ; 0 Pilferage + Debt
+int Property Response_ReduceDebt2 = 4 AutoReadOnly Hidden ; X Pilferage + Debt
+int Property Response_DebtStacking = 5 AutoReadOnly Hidden ; No Pay + Stacking Debt
+int Property Response_DebtDone = 6 AutoReadOnly Hidden
+int Property EvalResponse Auto Hidden Conditional
+
 ; misc
 bool forced
-bool wasEssential
+
 ; ======================================================
 ; =============================== NEW HAUL
 ; ======================================================
 ;/ A new Haul always starts with this Quest. This Quest is active from beginning of a Haul to end and store the Objectives as well as generic Dialogue
 /;
-Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akRef1, ObjectReference akRef2, int aiValue1, int aiValue2)
-  Debug.Trace("SLUTS: Started new Haul")
-  ; Updating Statistics (..after the Haul)
-  forced = aiValue2 == 1
-  ; data.UpdateStatistics(aiValue2 == 1)
-  ; Collect References
-  ObjectReference root0 = akRef1.GetLinkedRef(RootLink)
-  ScenePlayer.ForceRefTo(root0.GetLinkedRef(PlayerWaitLoc))
-  SceneKart.ForceRefTo(root0.GetLinkedRef(KartSpawnLoc))
-  SceneSpell.ForceRefTo(root0.GetLinkedRef(SpellCastLoc))
-
-  ObjectReference root1 = akRef2.GetLinkedRef(RootLink)
-  SceneRecipient.ForceRefTo(root1.GetLinkedRef(CarriageDriver))
-
-  If(data.licenseEscrowPort > 0)
-    escrowSpawn = root1.GetLinkedRef(EscrowLink)
-  else
-    escrowSpawn = root0.GetLinkedRef(EscrowLink)
+Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDispatcher, ObjectReference akRecipient, int aiCustomLoc, int aiForced)
+  Debug.Trace("[SLUTS] Started new Haul")
+  Escrow.lockEscrow()
+  SetMissionState()
+  forced = aiForced
+  If (!SetLinks(akDispatcher, akRecipient))
+    Stop()
+    return
   EndIf
-  ; Payment for this Haul:
-  ObjectReference Recipient = RecipientREF.GetReference()
-  ObjectReference Dispatcher = DispatcherRef.GetReference()
-  Worldspace ref2Space = Recipient.GetWorldSpace()
-  float p = 1 - (aiValue1 * 0.15)
-  float dist
-  float tmpPay = 0
-  If(Dispatcher.GetWorldSpace() == ref2Space)
-    dist = (Dispatcher.GetDistance(Recipient))
-  else ; Not same Worldspace, give a 40k Basepay and check Distance from a Port
-    If(ref2Space == Tamriel)
-      dist = (windhelmPort.GetDistance(Recipient))
-      tmpPay = 40.000
-    ElseIf(ref2Space == Solstheim)
-      dist = (ravenRockPort.GetDistance(Recipient))
-      tmpPay = 40.000
-    Else
-      ; Destination not in Solstheim or Skyrim. Shouldnt ever happen but meh
-      dist = 0
-      tmpPay = Math.Ceiling(Utility.RandomFloat(27500, 45000))
-    EndIf
-  EndIf
-  tmpPay += Math.Ceiling(((Math.pow(Math.sqrt((Math.pow(MCM.fBaseCredit, -1.0) * dist) / 311231.0), -1.0) * dist) / 10) * p)
-  pay.SetValue(tmpPay)
-  UpdateCurrentInstanceGlobal(pay)
-  ; Start the Haul
-  Game.EnableFastTravel(false)
-  SetStage(5)
-  Debug.Trace("SLUTS: Haul Preparations done, SetStage 5")
-  ; Get the actual Hauling Quest
-  int fusedWeight = MCM.iHaulType01 + MCM.iHaulType02
-  int solution = Utility.RandomInt(1, fusedWeight)
-  int walker = 0
-  haulType = 0
-  While(walker < solution)
-    If(haulType == 0)
-      walker += MCM.iHaulType01
-    ElseIf(haulType == 1)
-      walker += MCM.iHaulType02
-    else
-      walker = solution
-    EndIf
-    haulType += 1
-  EndWhile
-  ; Set Hotkeys & Register Events
+
+  float p = 1 - (aiCustomLoc * 0.15) ; 15% Payment Deduction for Custom Loc Hauls
+  Payment.SetValue(GetBasePay(akDispatcher, akRecipient, p))
+  UpdateCurrentInstanceGlobal(Payment)
+  Debug.Trace("[SLUTS] Payment = " + Payment.GetValueInt())
+
   ActivateKey = Input.GetMappedKey("Activate")
-  JumpKey = Input.GetMappedKey("Jump")
-  ResetKey = Input.GetMappedKey("Hotkey8")
   RegisterEvents()
-  ; Misc Stuff
-  humilPick = Utility.RandomInt(0, 7)
+
+  Debug.Trace("[SLUTS] Haul Preparations done, SetStage 5")
+  SetStage(5)
 EndEvent
+
+bool Function SetLinks(ObjectReference akDispatcher, ObjectReference akRecipient)
+  ObjectReference root0 = StorageUtil.GetFormValue(akDispatcher, "SLUTS_ROOT") as ObjectReference
+  ObjectReference root1 = StorageUtil.GetFormValue(akRecipient, "SLUTS_ROOT") as ObjectReference
+  If(!root0 || !root1)
+    Debug.TraceStack("[SLUTS] Missing Root | " + root0 + " | " + root1, 2)
+    Debug.MessageBox("Unable to create Haul. Root Object is missing.")
+    return false
+  EndIf
+  ScenePlayer.ForceRefTo(root0.GetLinkedRef(PlayerWaitLoc))
+  SceneSpell.ForceRefTo(root0.GetLinkedRef(SpellCastLoc))
+  SceneRecipient.ForceRefTo(root1.GetLinkedRef(CarriageDriver))
+  return true
+EndFunction
+
+Function SetMissionState(int missionID = -1)
+  String[] missions = new String[2]
+  missions[0] = "CartHaul"
+  missions[1] = "SpecialDelivery"
+  If (missionID < 0)
+    missionID = SlutsData.Distribute(MCM.HaulWeights) - 1
+  EndIf
+  If(missions[missionID] != GetState())
+    GoToState(missions[missionID])
+    MissionType.SetValueInt(missionID)
+  EndIf
+EndFunction
 
 Function RegisterEvents()
   RegisterForKey(ActivateKey)
-  RegisterForKey(JumpKey)
-  ;RegisterForKey(ResetKey)
   RegisterForModEvent("HookAnimationStart", "OnAnimStart")
 	RegisterForModEvent("HookAnimationEnd", "OnAnimEnd")
 endFunction
+
+ObjectReference Function GetLink(ObjectReference driver, Keyword link)
+  return (StorageUtil.GetFormValue(driver, "SLUTS_ROOT") as ObjectReference).GetLinkedRef(link)
+EndFunction
+
+Function Blackout()
+  FadeToBlackImod.Apply()
+  Utility.Wait(2)
+  FadeToBlackImod.PopTo(FadeToBlackHoldImod)
+EndFunction
+
+Function StripPlayer()
+  int intmax = 2147483647
+  Keyword SLSLicense = Keyword.GetKeyword("_SLS_LicenceDocument")
+  Form[] items = PlayerRef.GetContainerForms()
+  int i = 0
+  While(i < items.Length)
+    Keyword[] kw = items[i].GetKeywords()
+    If (!kw.Length || kw.Find(bd.SlutsRestraints) == -1 && kw.Find(SLSLicense) == -1)
+      PlayerRef.RemoveItem(items[i], intmax, true, Escrow)
+    EndIf
+    i += 1
+  EndWhile
+EndFunction
+
+Function SetupHaul()
+  DispatcherREF.GetReference().MoveTo(SceneSpell.GetReference())
+  PlayerRef.MoveTo(ScenePlayer.GetReference())
+  PlayerRef.PlaceAtMe(SummonFX)
+  StripPlayer()
+  SetupHaulImpl()
+  Bd.DressUpPony(PlayerRef)
+  Pilferage = 0.0
+EndFunction
+Function SetupHaulImpl()
+  Debug.TraceStack("[SLUTS] Function call outside a valid State = " + GetState(), 2)
+EndFunction
+
+State CartHaul
+  Function SetupHaulImpl()
+    Debug.Trace("[SLUTS] Setting up Cart Haul")
+    If(!Kart)
+      Kart = GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form)
+      KartRef.ForceRefTo(Kart)
+      Utility.Wait(0.5)
+    Else ; Chain Haul, make sure the Kart can actually be moved
+      Kart.SetMotionType(Kart.Motion_Dynamic)
+      If(Kart.GetDistance(PlayerRef) > 750)
+        bIsThethered = false
+      EndIf
+    EndIf
+    Tether()
+  EndFunction
+  
+  Event OnEndState()
+    If(Kart)
+      Untether()
+      KartRef.Clear()
+      Kart.Disable()
+      Kart.Delete()
+      Kart = none
+    EndIf
+  EndEvent
+EndState
+
+State SpecialDelivery
+  Function SetupHaulImpl()
+    Debug.Trace("[SLUTS] Setting up Special Delivery")
+    ; TODO: implement
+  EndFunction
+EndState
+
+; ======================================================
+; =============================== EVALUATION
+; ======================================================
+
+float overtimepay ; Accumulated payments over a series of perfect hauls 
+int Property qstage Auto Hidden
+
+Function HandleStage()
+  qstage = 21 + MissionType.GetValueInt()
+  If(IsObjectiveCompleted(qstage))
+    SetObjectiveCompleted(qstage, false)
+  EndIf
+  SetObjectiveDisplayed(qstage, true, true)
+EndFunction
+
+Function Fail()
+  pilferage = GoodsTotal + 100
+  DoPayment()
+EndFunction
+
+Function CreateChainMission(bool abForced, int aiMissionID = -1)
+  Actor recip = RecipientREF.GetReference() as Actor
+  Actor next = Main.GetDestination(recip, DispatcherREF.GetActorReference())
+  Debug.Trace("[SLUTS] Attempting Chain Mission with new Dispatcher = " + recip + " | Recipient = " + next)
+  If (!SetLinks(recip, next))
+    Quit()
+    return
+  EndIf
+  forced = abForced
+  DispatcherREF.ForceRefTo(recip)
+  RecipientREF.ForceRefTo(next)
+  RecipientLOC.ForceLocationTo(Main.myDestLocs[Main.myDrivers.Find(next)])
+  RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
+  SetMissionState(aiMissionID)
+  SetupHaulImpl()
+  Payment.SetValue(GetBasePay(recip, next, 1.0))
+  UpdateCurrentInstanceGlobal(Payment)
+  Debug.Trace("[SLUTS] ChainMission; Payment = " + Payment.GetValueInt())
+  Pilferage = 0.0
+  ; ChainScene.ForceStart()
+  Manifest.GetReference().Activate(PlayerRef)
+  Utility.Wait(0.1)
+  FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
+  Game.SetPlayerAIDriven(false) ; Unsure why this is needed, zz
+  SetStage(20)
+EndFunction
+
+; Assume there to be a Blackout right here
+Function Quit()
+  data.SeriesCompleted()
+  ; Clear State & get Player out of gear
+  PlayerRef.PlaceAtMe(SummonFX)
+  GoToState("")
+  Bd.UndressPony(PlayerRef, true)
+  Game.EnableFastTravel()
+  FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
+  ; Enable post haul Dialogue & place Escrow
+  If (overtimepay > 0)
+    int coins = Math.Floor(overtimepay * GetOvertimeBonus())
+    Escrow.AddItem(FillyCoin, coins)
+  EndIf
+  ObjectReference spawn
+  If (data.licenseEscrowPort > 0)
+    spawn = GetLink(RecipientREF.GetReference(), EscrowLink)
+    data.licenseEscrowPort -= 1
+  Else
+    spawn = GetLink(DispatcherREF.GetReference(), EscrowLink)
+  EndIf
+  Escrow.MoveTo(spawn)
+  Escrow.Lock(false)
+EndFunction
+
+
+; ======================================================
+; =============================== PAYMENT
+; ======================================================
+
+float Function GetBasePay(ObjectReference akDisp, ObjectReference akRecip, float mult = 1.0)
+  Worldspace ref2Space = akRecip.GetWorldSpace()
+  float distance
+  int base = 0
+  If(akDisp.GetWorldSpace() == ref2Space)
+    distance = akDisp.GetDistance(akRecip)
+  Else ; Not same Worldspace, give a 40k Basepay and check Distance from a Port
+    If(ref2Space == Tamriel)
+      distance = windhelmPort.GetDistance(akRecip)
+    ElseIf(ref2Space == Solstheim)
+      distance = ravenRockPort.GetDistance(akRecip)
+    Else ; If in a modded Worldspace dont bother about calculus, just return some random number
+      return Utility.RandomInt(27500, 45000)
+    EndIf
+  EndIf
+  ; Skyrim Diameter (East/West) = ~311231 units
+  ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/14/#comment-3357294
+  ; V3: Hardcoding M = 2 | Division 10 -> 25
+  float ret = (Math.pow(Math.sqrt((0.5 * distance) / 311231.0), -1.0) * distance) / 25
+  return ret * mult
+EndFunction
+
+float Function GetOvertimeBonus()
+  If(SlutsCrime.GetCrimeGold() > 0 || PerfectStreak == 0)
+    return 0
+  else
+    ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/15/#comment-3360719
+    ; V3: Hardcoding M = 1
+    float ret
+    If(PerfectStreak < 15)
+      ret = Math.pow(1.4, (0.3 * PerfectStreak)) - 1
+    else
+      ret = 5 ; MCM.fOvertimeGrowth * 5
+    EndIf
+    ; notify("Having agreed to " + streakPerfect + " hauls in a row your overtime bonus is now " + bonusPerCent + "%")
+    Debug.Trace("Overtime Bonus: " + (ret * 100) + "%")
+    return ret
+  EndIf
+EndFunction
+
+Function DoPayment()
+  Streak += 1
+  data.RunCompleted(Pilferage == 0)
+  PlayerRef.RemoveItem(Manifest.GetReference(), 1, true)
+  ; Finalize Payment, payout to Escrow Chest, get response type
+  int crime = SlutsCrime.GetCrimeGold()
+  int pay = Payment.GetValueInt()
+  If(Pilferage == 0)
+    overtimepay += pay
+    PerfectStreak += 1
+    If(crime == 0)
+      EvalResponse = Response_Flawless
+    Else
+      EvalResponse = Response_ReduceDebt1
+    EndIf
+  Else
+    float mult = (Pilferage / GoodsTotal) * 5
+    pay -= Math.Floor(mult * pay)
+    overtimepay = 0
+    PerfectStreak = 0
+    If (crime == 0)
+      If (mult < 1)
+        EvalResponse = Response_Deduction
+      Else
+        EvalResponse = Response_Endebted
+      EndIf
+    Else
+      If (mult < 1)
+        EvalResponse = Response_ReduceDebt2
+      Else
+        EvalResponse = Response_DebtStacking
+      EndIf
+    EndIf
+  EndIf
+  If(crime <= pay)
+    EvalResponse = Response_DebtDone
+  EndIf
+  Debug.Trace("[SLUTS] Eval Response = " + EvalResponse)
+  If(pay > 0) ; Made profit
+    If(crime > pay)
+      SlutsCrime.ModCrimeGold(-pay)
+      pay = 0
+    ElseIf(crime > 0)
+      SlutsCrime.SetCrimeGold(0)
+      pay -= crime
+    EndIf
+    Escrow.AddItem(FillyCoin, pay, true)
+  ElseIf(pay < 0) ; Made losses
+    SlutsCrime.ModCrimeGold(-pay)
+  EndIf
+  Debug.Trace("[SLUTS] Post Eval => Payment = " + pay + " | Debt = " + SlutsCrime.GetCrimeGold() + " | Overtime Bonus = " + overtimepay)
+  ; Payment = {} | Debt = {} | Overtime Bonus = {}
+EndFunction
 
 ; ======================================================
 ; =============================== HAUL START0
@@ -222,236 +444,37 @@ Function TransferManifest()
 EndFunction
 
 Function ShowManifest()
-  ObjectReference Paper = Manifest.GetReference()
-  Paper.Activate(PlayerRef)
+  Manifest.GetReference().Activate(PlayerRef)
   Bd.EquipIdx(Bd.gagIDX)
 endFunction
-
-Function dressPlayer()
-  data.removeAllNonDDItems(PlayerRef, Escrow as ObjectReference)
-  Escrow.moveEscrow(escrowSpawn)
-  Bd.DressUpPony()
-  PlayerRef.AddItem(HandBook)
-  If(crimeFaction.GetCrimeGold() > 0)
-    PlayerRef.AddSpell(debtCollectSpell)
-  EndIf
-  If(MCM.bSetEssential)
-    ActorBase playerBase = PlayerRef.GetActorBase()
-    If(playerBase.IsEssential() == true)
-      wasEssential = true
-    else
-      playerBase.SetEssential(true)
-    EndIf
-  EndIf
-  Escrow.lockEscrow()
-EndFunction
-
-; ======================================================
-; =============================== DEFAULT HAUL
-; ======================================================
-
-; Called from Spell
-Function PlaceWagon()
-  ObjectReference CartMark = SceneKart.GetReference()
-  Kart = CartMark.PlaceAtMe(Kart_Form, abForcePersist = true)
-  KartRef.ForceRefTo(Kart)
-  dressPlayer()
-  Tether(Kart, PlayerRef)
-  ; haulingTypes[0].Start()
-endFunction
-
-; Called when the Player quits a Series with the last Haul being a Default
-Function clearWagon()
-  Debug.Trace("SLUTS: Cleaning Player from PonyGear")
-  DeleteCart(Kart)
-  RestorePony()
-EndFunction
-
-; ======================================================
-; =============================== END HAUL
-; ======================================================
-
-Function ChainMission(int isForced, bool toStart = false)
-  If(Kart != none)
-    ;Delete Cart. There may be other missions which dont use the cart and looking for them backwards would be fairly undynamic
-    DeleteCart(Kart)
-  EndIf
-  ; Remove Manifest n stuff
-  PlayerRef.RemoveItem(HandBook, 1, true)
-  Escrow.lockEscrow()
-  ; Remove Tats // why? Were doing another Haul right after
-  ; tatlib.Scrub(PlayerRef)
-  Actor Dispatcher = RecipientRef.GetReference() as Actor
-  ; Stop the Quest.. never do this before calling this function you stupid..
-  Stop()
-  ;Let Main Quest start the new Quest
-  If(!toStart)
-    Main.ChainMission(Dispatcher, forced = isForced)
-  Else
-    Main.ChainMission(Dispatcher, Main.myDrivers.find(DispatcherREF.GetActorRef()), isForced)
-  EndIf
-endFunction
-
-; Complete the current Haul with max pilferage and start a new Haul
-Function failHaul()
-  ; haulingTypes[0].Stop()
-  pilferage = 1800
-  payChest()
-  ChainMission(1)
-EndFunction
-
-; Complete the current Haul and start payment evaluation Scene
-Function completeHaul(Scene evalScene)
-  ; haulingTypes[0].Stop()
-  evalScene.Start()
-EndFunction
-
-Function RestorePony()
-  MCM.tatLib.livery_off()
-  PlayerRef.SetFactionRank(DirtyFaction, 0)
-  MCM.tatlib.set_dirty_level(PlayerRef, 0)
-  ; Bd.RemoveIdx(Bd.gagIDX)
-  Bd.UndressPony(PlayerRef)
-  Game.EnableFastTravel(true)
-  SetStage(60)
-  ;data.customLocation = -1
-  ;scrub_tats()
-  If(MCM.bSetEssential && wasEssential == false)
-    PlayerRef.GetActorBase().SetEssential(false);.QueueNiNodeUpdate()
-  EndIf
-  ; Escrow.Enable()
-  Escrow.Lock(false)
-  payOut()
-EndFunction
 
 ; ======================================================
 ; =============================== PAYMENT
 ; ======================================================
 
-; This is called at the end of each Haul, finalizing payment
-Function payChest()
-  ; Remove Manifest & Handbook
-  PlayerRef.RemoveItem(Manifest.GetReference(), 1, true)
-  PlayerRef.RemoveItem(HandBook, 1,  true)
-  ; purrfect Streak or nah?
-  If(pilferage > 0)
-    data.clearStreakPerfect()
-  else
-    data.addStreakPerfect()
-  EndIf
-  ; finalize pay
-  pay.value -= (Pilferage/baseValue) * 1.5 * pay.value
-  totalPay.value += pay.value
-  data.UpdateStatistics(forced)
-  Debug.Trace("SLUTS: Pay this run: " + pay.value + " Pay Total: " + totalPay.value)
-EndFunction
-
 Function spontaneousFailure()
-  if pilferage == 0
-  	;Let's check for Spontaneous Failure
-  	if (Utility.RandomInt(1,100) <= mcm.iSpontFail)
-  		if mcm.bSpontFailRandom
-  			;Deliberately set the chance above the 120 maximum. Overwise max would only have a 1 in 120 chance of happening.
-  			pilferage = (Utility.RandomInt(825,2400))
-  			if pilferage > 1800
-  				pilferage = 1800
-  			endif
-  		else
+  if (pilferage == 0 && Utility.RandomInt(1,100) <= mcm.iSpontFail)
+  	if mcm.bSpontFailRandom
+  		;Deliberately set the chance above the 120 maximum. Overwise max would only have a 1 in 120 chance of happening.
+  		pilferage = (Utility.RandomInt(825,2400))
+  		if pilferage > 1800
   			pilferage = 1800
   		endif
-
-      string X = ""
-      if pilferage < 1500
-    		X = "some of your cargo appears to be missing"
-    	elseif pilferage < 1800
-    		X = "much of your cargo is missing"
-    	else
-    		X = "your cargo is completely gone"
-    	endif
-    	Debug.Messagebox("In a moment of absent mindedness you glance behind you, only to notice to your horror that " + X + "! You have no idea what happened and can only shudder in a cold sweat knowing you will still have to answer for it...")
+  	else
+  		pilferage = 1800
   	endif
+    string X = ""
+    if pilferage < 1500
+  		X = "some of your cargo appears to be missing"
+  	elseif pilferage < 1800
+  		X = "much of your cargo is missing"
+  	else
+  		X = "your cargo is completely gone"
+  	endif
+  	Debug.Messagebox("In a moment of absent mindedness you glance behind you, only to notice to your horror that " + X + "! You have no idea what happened and can only shudder in a cold sweat knowing you will still have to answer for it...")
   endif
 EndFunction
 
-; Add total pay to escrow & reset numbers
-float Function payOut()
-  ; Neither of those should ever happen but just in case..
-  If(totalPay.value == 0.0)
-    data.endRun()
-    return 0.0
-  EndIf
-  Actor Player = Game.GetPlayer()
-  ; Dont apply Overtime Bonnus if we didnt make profit
-  int actualPay = Math.Floor(totalPay.value)
-  If(actualPay > 0)
-    actualPay = Math.Ceiling(data.getOvertimebonus() * actualPay)
-    int crimeGold = crimeFaction.GetCrimeGold()
-    If(crimeGold > 0)
-      ; Indepted
-      If(crimeGold > actualPay)
-        ; Your gain cant cover your debt, no pay for you
-        crimeFaction.ModCrimeGold(-actualPay)
-        actualPay = 0
-        data.notify("Due to your excessive Debt, you didn't receive any pay for this Series. You did however reduce your debt by " + actualPay + " Coins, bringing your total debt down to " + crimeFaction.GetCrimeGold() + "!")
-      Else
-        actualPay -= crimeGold
-        crimeFaction.SetCrimeGold(0)
-        data.notify("You managed to fully pay off your Debt and can call yourself a proper Slut again!\nYour remaning pay (" + actualPay + " Filly Coins) have been added to your Escrow Chest!")
-      EndIf
-    else
-      ; No Debt, just add the full Payment to the Escrow Chest
-      data.notify("You earned " + actualPay + " Filly Coins during your last Haul Series; Stored in your Escrow Chest and ready to be taken!")
-    EndIf
-    Escrow.AddItem(FillyCoin, actualPay, true)
-  else
-    ; Made a Loss
-    If(MCM.bAllDebtToArrears == false) ; Take from Escrow first
-      ; 1 Gold = 50 Coins (Yes we Scan the Player, pshhh)
-      int goldNum = Player.GetItemCount(Gold001) - MCM.iMinGold
-      int coinNum = Player.GetItemCount(FillyCoin)
-      ; Take Coins first, then Gold
-      If(coinNum > -actualPay)
-        ; Got enough Coins to actualPay the Debt entirely
-        Player.RemoveItem(FillyCoin, -actualPay, true)
-        actualPay = 0
-      else
-        Player.RemoveItem(FillyCoin, coinNum, true)
-        actualPay += coinNum ; actualPay is negative rn
-        ; Now take Gold
-        If(goldNum * 50 > -actualPay)
-          ; got enough Gold to negate the Debt
-          Player.RemoveItem(Gold001, -(actualPay/50), true)
-          actualPay = 0
-        else
-          Player.RemoveItem(Gold001, goldNum, true)
-          actualPay += goldNum * 50
-        EndIf
-      EndIf
-      ; Check if payment got zero'ed above
-      If(actualPay == 0)
-        data.notify("S.L.U.T.S. deducted Gold from your Escrow to make up for the Damage you caused. You don't get payed for this Series.")
-      else
-        If(crimeFaction.GetCrimeGold() > 0)
-          ; You already had debt
-          crimeFaction.ModCrimeGold(-actualPay) ; Increase Debt by whats left
-          data.notify("The finances in your Escrow can't handle the damage you caused. Your debt to S.L.U.T.S. increases by " + -actualPay + " and is now " + crimeFaction.GetCrimeGold())
-        else
-          crimeFaction.ModCrimeGold(-actualPay)
-          data.notify("The Damage you caused is more than you can cover. You are left with mere " + MCM.iMinGold + " gold in your Escrow and are indebted so S.L.U.T.S. with " + -actualPay + " Coins.")
-        EndIf
-      EndIf
-    else
-      crimeFaction.ModCrimeGold(-actualPay) ; Increase Debt by whats left
-      If(crimeFaction.GetCrimeGold() == 0) ; You already had debt
-        data.notify("You are indepted to S.L.U.T.S. with " + crimeFaction.GetCrimeGold() + " Coins.")
-      else
-        data.notify("The amount of Money you owe S.L.U.T.S. increases by " + -actualPay + " Coins. Your new debt is " + crimeFaction.GetCrimeGold())
-      EndIf
-    EndIf
-  EndIf
-  data.endRun()
-  totalPay.value = 0.0
-EndFunction
 
 ; ======================================================
 ; =============================== KEYCODES
@@ -461,94 +484,68 @@ Event OnKeyDown(int KeyCode)
   If(!Ctrl || !Kart)
     return
   EndIf
-  bool shifted = Input.IsKeyPressed(42) || Input.IsKeyPressed(54)
+  Debug.Trace("[SLUTS] Key Down")
   If(KeyCode == ActivateKey)
-    If(!bIsThethered && Kart.GetDistance(PlayerRef) < 450)
-      Tether(Kart, PlayerRef)
-    ElseIf(!bIsThethered)
-      ForceTether(Kart, PlayerRef)
+    If(!bIsThethered)
+      Tether()
     Else
-      If(continue.Show() == 0)
-        Unhitch(PlayerRef)
-      endIf
+      If(DetachKartSureMsg.Show() == 0)
+        Unhitch()
+      EndIf
     EndIf
-  ElseIf(KeyCode == JumpKey)
-    ToggleHandbreak()
-  ElseIf(keyCode == ResetKey && shifted)
-    DeleteCart(Kart)
-    Debug.MessageBox("Attempting to Spawn new cart in 3 Seconds..\nDO NOT MOVE.")
-    Utility.Wait(1.5)
-    ObjectReference myMarker = PlayerRef.PlaceAtMe(FillyCoin, abInitiallyDisabled = true)
-    myMarker.SetPosition((myMarker.X - 50.0), (myMarker.Y - 50.0), (myMarker.Z + 10.0))
-    Utility.Wait(1)
-    Kart = myMarker.PlaceAtMe(Kart_Form, abForcePersist = true)
-    Utility.Wait(0.1)
-    Tether(Kart, PlayerRef)
-    ;/Crashes Game:
-    Game.SaveGame("SlutsTmpSave")
-    PlayerRef.Reset()
-    Utility.Wait(1)
-    Game.LoadGame("SlutsTmpSave")/;
   EndIf
 EndEvent
 
-Function ToggleHandbreak()
-  handbrake = !handbrake
-  If(handbrake)
-    Kart.SetMotionType(4)
-  else
-    Kart.SetMotionType(1)
-  EndIf
-endFunction
-
 ; ----------------------------------
 Function HumilChest()
-  Escrow.moveEscrow(RecipientREF.GetReference().GetLinkedRef(RootLink).GetLinkedRef(EscrowLink))
+  Escrow.MoveTo(GetLink(RecipientREF.GetReference(), EscrowLink))
 endFunction
 
 ; ======================================================
 ; =============================== TETHER
 ; ======================================================
-Function Tether(ObjectReference LeCart, Actor myActor)
-  Debug.Trace("SLUTS: Attempting to Tether")
-  LeCart.TetherToHorse(myActor)
-  bIsThethered = true
-  Game.EnableFastTravel(false)
-  Debug.Trace("SLUTS: Tethered Actor to cart")
-endFunction
 
-Function ForceTether(ObjectReference myCart, Actor myActor)
-  If(myCart == none)
-    Debug.MessageBox("SLUTS ForceTether: No cart found, abandon")
+Function Tether()
+  If(!Kart || bIsThethered)
     return
-  endif
-  Game.DisablePlayerControls()
-  ObjectReference Tmp = PlayerRef.PlaceAtMe(FillyCoin, aiCount = 1, abInitiallyDisabled = true)
-  Tmp.SetPosition((PlayerRef.X), (PlayerRef.Y - 150), (PlayerRef.Z + 50))
-  Utility.Wait(0.05)
-  myCart.MoveTo(Tmp)
-  Utility.Wait(0.3)
-  Tether(myCart, myActor)
+  EndIf
+  bIsThethered = true
+  Debug.Trace("[SLUTS] Attempting to tether..")
+
+  If(Kart.GetDistance(PlayerRef) > 500)
+    Kart.SetMotionType(Kart.Motion_Keyframed)
+    Game.DisablePlayerControls()
+    Debug.SetGodMode(true)  ; To avoid the cart physics killing the player
+    ObjectReference tmp = PlayerRef.PlaceAtMe(FillyCoin, aiCount = 1, abInitiallyDisabled = true)
+    tmp.MoveTo(PlayerRef, -258.0 * Math.Sin(PlayerRef.GetAngleZ()), -258.0 * Math.Cos(PlayerRef.GetAngleZ()))
+    Utility.Wait(0.3)
+    Kart.MoveTo(tmp)
+    Utility.Wait(0.2)
+    Kart.SetMotionType(Kart.Motion_Dynamic)
+    Debug.SetGodMode(false)
+    Game.EnablePlayerControls()
+  EndIf
+
+  Race r = PlayerRef.GetRace()
+  PlayerRef.SetRace(DefaultRace)
+  PlayerRef.SetRace(r)
   Utility.Wait(0.1)
-  Game.EnablePlayerControls()
-endFunction
+  Kart.TetherToHorse(PlayerRef)
+  Game.EnableFastTravel(false)
+EndFunction
 
 Function OnLoadTether()
   RegisterEvents()
-  If(!bIsThethered)
+  If(!bIsThethered || !Kart)
     return
   EndIf
-  If(Kart == none)
-    bIsThethered = false
-  EndIf
-  ForceTether(Kart, PlayerRef)
-endFunction
+  ; Tether will always come loose when reloading
+  bIsThethered = false
+  Tether()
+EndFunction
 
-Function Untether(ObjectReference myKart, Actor myActor)
-  ;myKart.Reset(myActor)
-  ;Kart.ApplyHavokImpulse(-1.0, 0.0, 0.5, 0.1)
-  ;Utility.Wait(0.2)
-  Kart.disable()
+Function Untether()
+  Kart.Disable()
   Utility.Wait(0.1)
   Kart.Enable()
   bIsThethered = false
@@ -556,26 +553,15 @@ Function Untether(ObjectReference myKart, Actor myActor)
   Game.EnableFastTravel()
 endFunction
 
-Function Unhitch(Actor myActor)
+Function Unhitch()
   If(!bIsThethered)
     return
   EndIf
-  Debug.Trace("SLUTS: Attempting to Unhitch")
   Debug.Notification("Attempting to untether..")
   If(MCM.bStruggle)
-    Bd.Lib0.abq.StruggleScene(myActor)
+    Bd.Lib0.abq.StruggleScene(PlayerRef)
   EndIf
-  Untether(Kart, myActor)
-  Debug.Notification("You successfully free yourself from the cart")
-endFunction
-
-Function DeleteCart(ObjectReference myKart)
-  If(myKart == Kart)
-    KartRef.Clear()
-    Kart = none
-  EndIf
-  myKart.Disable()
-  myKart.Delete()
+  Untether()
 endFunction
 
 ; ======================================================
@@ -627,7 +613,7 @@ Event OnAnimEnd(int tid, bool HasPlayer)
     Debug.Trace("SLUTS Haul: Player isnt Victim in SL Scene. => Abandon")
     return
   EndIf
-  Dirtify()
+  ; Dirtify()
   If(!Acteurs[1].HasKeyword(ActorTypeNPC) || GetStage() != 20)
     Debug.Trace("SLUTS Haul: Creature Rape or not a Cargo Run => Abandon")
     return
@@ -661,7 +647,7 @@ Event OnAnimEnd(int tid, bool HasPlayer)
     If(Pilferage > 1800)
       Pilferage = 1800
     EndIf
-    Debug.Notification("Somebody has been helping themselves to your goods. Your pilferage value is now " + Pilferage + "/" + baseValue)
+    Debug.Notification("Somebody has been helping themselves to your goods. Your pilferage value is now " + Pilferage + "/" + GoodsTotal)
   EndIf
 endEvent
 
@@ -671,10 +657,11 @@ endEvent
 
 ; HumilPick = 4
 Function debitRate()
-  float dR = Utility.RandomFloat(0.05, 0.35)
-  int debit = Math.Floor(totalPay.Value * dR)
-  Escrow.RemoveItem(FillyCoin, debit)
-  data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
+  ; COMEBACK: Due to payment changes this will no longer work (?)
+  ; float dR = Utility.RandomFloat(0.05, 0.35)
+  ; int debit = Math.Floor(totalPay.Value * dR)
+  ; Escrow.RemoveItem(FillyCoin, debit)
+  ; data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
 EndFunction
 
 function fondle(Message msg=none, float increment=5.0)
@@ -727,40 +714,41 @@ Function Unfriend()
   EndWhile
 EndFunction
 
-Location Function GetCapital(LocationAlias myDest)
+Location Function GetHold(LocationAlias myDest)
   Location myLoc = myDest.GetLocation()
   If(!myLoc)
-    Debug.Trace("SLUTS DefaultHaul: Null Location passed, abandon \"GetCapital\"")
+    Debug.Trace("[SLUTS] DefaultHaul: Null Location passed, abandon \"GetHold\"")
     return none
   EndIf
-  Debug.Trace("SLUTS DefaultHaul: Getting Capital for: " + myLoc.GetName())
-  If(myLoc == WindhelmLocation)
-    Debug.Trace("SLUTS: Capital identified: Windhelm")
+  Debug.Trace("[SLUTS] DefaultHaul: Getting Hold for: " + myLoc.GetName())
+  If(EastmarchHoldLocation.IsChild(myLoc))
+    Debug.Trace("[SLUTS] Hold identified: Windhelm")
     return EastmarchHoldLocation
-  elseIf(myLoc == SolitudeLocation)
-		Debug.Trace("SLUTS: Capital identified: Solitude")
+  ElseIf(HaafingarHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Solitude")
 		return HaafingarHoldLocation
-	elseIf(myLoc == MarkarthLocation)
-		Debug.Trace("SLUTS: Capital identified: Markarth")
+  ElseIf(ReachHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Markarth")
 		return ReachHoldLocation
-	elseIf(myLoc == RiftenLocation)
-		Debug.Trace("SLUTS: Capital identified: Riften")
+  ElseIf(RiftHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Riften")
 		return RiftHoldLocation
-	elseIf(myLoc == WhiterunLocation)
-		Debug.Trace("SLUTS: Capital identified: Whiterun")
+  ElseIf(WhiterunHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Whiterun")
 		return WhiterunHoldLocation
-	elseIf(myLoc == FalkreathLocation)
-		Debug.Trace("SLUTS: Capital identified: Falkreath")
+  ElseIf(FalkreathHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Falkreath")
 		return FalkreathHoldLocation
-	elseIf(myLoc == DawnstarLocation)
-		Debug.Trace("SLUTS: Capital identified: Dawnstar")
+  ElseIf(PaleHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Dawnstar")
 		return PaleHoldLocation
-	elseIf(myLoc == MorthalLocation)
-		Debug.Trace("SLUTS: Capital identified: Morthal")
+  ElseIf(HjaalmarchHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Morthal")
 		return HjaalmarchHoldLocation
-	elseIf(myLoc == WinterholdLocation)
-		Debug.Trace("SLUTS: Capital identified: Winterhold")
+  ElseIf(WinterholdHoldLocation.IsChild(myLoc))
+		Debug.Trace("[SLUTS] Hold identified: Winterhold")
 		return WinterholdHoldLocation
   endIf
 	return none
 endfunction
+

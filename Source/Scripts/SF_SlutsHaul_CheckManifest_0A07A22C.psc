@@ -5,7 +5,7 @@ Scriptname SF_SlutsHaul_CheckManifest_0A07A22C Extends Scene Hidden
 ;BEGIN FRAGMENT Fragment_6
 Function Fragment_6()
 ;BEGIN CODE
-Haul.PayChest()
+; Haul.PayChest()
 ;END CODE
 EndFunction
 ;END FRAGMENT

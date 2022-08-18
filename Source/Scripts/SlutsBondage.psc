@@ -4,7 +4,6 @@ Scriptname SlutsBondage extends Quest
 SlutsMCM Property mcm Auto
 SlutsData Property data Auto
 Actor Property PlayerRef Auto
-Spell Property Sluts_ArrearsDebit_Ab Auto
 ; -------------------------- Devious Devices
 zadLibs Property Lib0 Auto
 zadxLibs Property Lib1 Auto
@@ -164,87 +163,85 @@ EndFunction
 ; /;
 
 ; ============================== FIT + REMOVE GILLY GEAR ===========
-Function DressUpPony(bool yoke = true)
-  If(MCM.bUseThermal)
-		equipIdx(harnessIDX, true)
+Function DressUpPony(Actor target, bool yoke = true)
+	If(target == PlayerRef)
+		If(MCM.bUseThermal)
+			equipIdx(harnessIDX, true)
+			Utility.Wait(0.05)
+		EndIf
+		EquipIdx(collarIDX, true)
 		Utility.Wait(0.05)
-	EndIf
-	EquipIdx(collarIDX, true)
-	Utility.Wait(0.05)
-	EquipIdx(legCuffIDX, true)
-	Utility.Wait(0.05)
-	EquipIdx(glovesIDX, true)
-	Utility.Wait(0.05)
-	EquipIdx(bootsIDX, true)
-	Utility.Wait(0.05)
-	EquipIdx(tailIDX, true)
-	Utility.Wait(0.05)
-	EquipIdx(armCuffIDX, true)
-	Utility.Wait(0.05)
-	If(yoke == true)
-		EquipIdx(yokeIDX, true)
+		EquipIdx(legCuffIDX, true)
 		Utility.Wait(0.05)
-	EndIf
-	If(data.useBlindfold)
-		EquipIdx(blindfoldIDX, true)
+		EquipIdx(glovesIDX, true)
 		Utility.Wait(0.05)
-	EndIf
-	If(data.useChastity)
-		EquipIdx(chastityIDX, true)
+		EquipIdx(bootsIDX, true)
 		Utility.Wait(0.05)
+		EquipIdx(tailIDX, true)
+		Utility.Wait(0.05)
+		EquipIdx(armCuffIDX, true)
+		Utility.Wait(0.05)
+		If(yoke == true)
+			EquipIdx(yokeIDX, true)
+			Utility.Wait(0.05)
+		EndIf
+		If(data.useBlindfold)
+			EquipIdx(blindfoldIDX, true)
+			Utility.Wait(0.05)
+		EndIf
+		If(data.useChastity)
+			EquipIdx(chastityIDX, true)
+			Utility.Wait(0.05)
+		EndIf
+	Else
+		; TODO: NPC Dressup
 	EndIf
 	mcm.tatLib.ApplyTats(PlayerRef)
 EndFunction
 
-Function UndressPony(Actor Target, bool removeTats = false)
+Function UndressPony(Actor target, bool removeTats = false)
 	If(target == PlayerRef)
-		PlayerRef.removespell(Sluts_ArrearsDebit_Ab)
-		undressPlayerPony(removeTats)
+		RemoveIdx(gagIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(collarIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(legCuffIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(armCuffIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(yokeIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(glovesIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(bootsIDX, true)
+		Utility.Wait(0.2)
+		RemoveIdx(tailIDX, true)
+		Utility.Wait(0.2)
+		If(Dev_Backup_I[harnessIDX])
+			RemoveIdx(harnessIDX, true)
+			Utility.Wait(0.05)
+		EndIf
+		If(Dev_Backup_I[blindfoldIDX])
+			RemoveIdx(blindfoldIDX, true)
+			Utility.Wait(0.2)
+		EndIf
+		If(Dev_Backup_I[chastityIDX])
+			RemoveIdx(chastityIDX, true)
+			Utility.Wait(0.2)
+		EndIf
+		Dev_Backup_I = new Armor[11]
 	else
-		; NPC unequip Function here
-	EndIf
-endFunction
-
-Function undressPlayerPony(bool removeTats)
-	RemoveIdx(gagIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(collarIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(legCuffIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(armCuffIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(yokeIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(glovesIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(bootsIDX, true)
-	Utility.Wait(0.2)
-	RemoveIdx(tailIDX, true)
-	Utility.Wait(0.2)
-	If(Dev_Backup_I[harnessIDX])
-		RemoveIdx(harnessIDX, true)
-		Utility.Wait(0.05)
-	EndIf
-	If(Dev_Backup_I[blindfoldIDX])
-		RemoveIdx(blindfoldIDX, true)
-		Utility.Wait(0.2)
-	EndIf
-	If(Dev_Backup_I[chastityIDX])
-		RemoveIdx(chastityIDX, true)
-		Utility.Wait(0.2)
+		; TODO: NPC unequip Function here
 	EndIf
 	If(removeTats)
-		mcm.tatLib.scrub(PlayerRef)
+		mcm.tatLib.scrub(target)
 	EndIf
-	Dev_Backup_I = new Armor[11]
-EndFunction
+endFunction
 
 ; -------------------------- HumiliationScene
 Function DDModel(int humilPick)
 	;1 - Boots, 2 - NOPE (Hobble), 3 - Piercings
 	If(humilPick == 1)
-		Utility.Wait(10)
 		; If(PlayerRef.WornHasKeyword(Dev_Key[6]))
 		; 	armor devI = Lib0.GetWornDevice(PlayerRef, Dev_Key[6])
 		; 	armor devR = Lib0.GetRenderedDevice(devI)
@@ -253,7 +250,6 @@ Function DDModel(int humilPick)
 		int Colour = Utility.RandomInt(0, 1)
 		Lib0.LockDevice(PlayerRef, BalletBoots_I[Colour], true) ; BalletBoots_R[Colour], Dev_Key[6])
 	ElseIf(humilPick == 2)
-		Utility.Wait(10)
 		; If(PlayerRef.WornHasKeyword(Lib0.zad_DeviousSuit))
 		; 	armor devI = Lib0.GetWornDevice(PlayerRef, Lib0.zad_DeviousSuit)
 		; 	armor devR = Lib0.GetRenderedDevice(devI)
@@ -262,7 +258,6 @@ Function DDModel(int humilPick)
 		int Model = Utility.RandomInt(0, 3)
 		Lib0.LockDevice(PlayerRef, HobbleDresses_I[Model], true) ; HobbleDresses_R[Model], Lib0.zad_DeviousPiercingsNipple)
 	ElseIf(humilPick == 3)
-		Utility.Wait(10)
 		; If(PlayerRef.WornHasKeyword(Lib0.zad_DeviousPiercingsNipple))
 		; 	armor devI = Lib0.GetWornDevice(PlayerRef, Lib0.zad_DeviousPiercingsNipple)
 		; 	armor devR = Lib0.GetRenderedDevice(devI)
@@ -318,125 +313,3 @@ Armor Function getRandomArmorReg(Actor toCheck)
 		return ArmorReg[myList].GetAt(Utility.RandomInt(0, ArmorReg[myList].GetSize() - 1)) as Armor
 	EndIf
 EndFunction
-
-;/ -------------------------- Redux Stuff
-Function SetColor(int Color)
-	Dev_Inv[0] = GagColor[Color]
-	Dev_Ren[0] = GagColor[Color+1]
-
-	Dev_Inv[3] = GloveColor[Color]
-	Dev_Ren[3] = GloveColor[Color+1]
-
-	Dev_Inv[6] = BootsColor[Color]
-	Dev_Ren[6] = BootsColor[Color+1]
-endFunction
-
-function costume_color(int Color)
-	if i == 1 ;red
-		Bd.Dev_Inv[0] = costume1_i[0]
-		Bd.Dev_Ren[0] = costume1_s[0]
-		Bd.Dev_Inv[3] = costume1_i[1]
-		Bd.Dev_Ren[3] = costume1_s[1]
-		Bd.Dev_Inv[6] = costume1_i[2]
-		Bd.Dev_Ren[6] = costume1_s[2]
-	elseif i == 2 ;white
-		Bd.Dev_Inv[0] = costume2_i[0]
-		Bd.Dev_Ren[0] = costume2_s[0]
-		Bd.Dev_Inv[3] = costume2_i[1]
-		Bd.Dev_Ren[3] = costume2_s[1]
-		Bd.Dev_Inv[6] = costume2_i[2]
-		Bd.Dev_Ren[6] = costume2_s[2]
-	elseif i == 3 ;blue
-		Bd.Dev_Inv[0] = costume3_i[0]
-		Bd.Dev_Ren[0] = costume3_s[0]
-		Bd.Dev_Inv[3] = costume3_i[1]
-		Bd.Dev_Ren[3] = costume3_s[1]
-		Bd.Dev_Inv[6] = costume3_i[2]
-		Bd.Dev_Ren[6] = costume3_s[2]
-	elseif i == 4 ;pink
-		Bd.Dev_Inv[0] = costume4_i[0]
-		Bd.Dev_Ren[0] = costume4_s[0]
-		Bd.Dev_Inv[3] = costume4_i[1]
-		Bd.Dev_Ren[3] = costume4_s[1]
-		Bd.Dev_Inv[6] = costume4_i[2]
-		Bd.Dev_Ren[6] = costume4_s[2]
-	else ;black by default
-		Bd.Dev_Inv[0] = costume0_i[0]
-		Bd.Dev_Ren[0] = costume0_s[0]
-		Bd.Dev_Inv[3] = costume0_i[1]
-		Bd.Dev_Ren[3] = costume0_s[1]
-		Bd.Dev_Inv[6] = costume0_i[2]
-		Bd.Dev_Ren[6] = costume0_s[2]
-	endif
-endfunction
-
-function remove_costume()
-	pc.removespell(arrearsspell)
-	pc.removeitem(handbook,999,abSilent = false)
-	pc.unequipitem(data.mcm.Thermals,abSilent = true)
-	remove_idx(collarIDX)
-;	utility.wait(0.1)
-	remove_idx(legCuffIDX)
-;	utility.wait(0.1)
-	remove_idx(armCuffIDX)
-;	utility.wait(0.1)
-	remove_idx(yokeIDX)
-;	utility.wait(0.1)
-	remove_idx(glovesIDX)
-;	utility.wait(0.1)
-	remove_idx(bootsIDX)
-;	utility.wait(0.1)
-	if sluts_arrears.getvalue() <= 0 && pc.wornhaskeyword(zlib.zad_deviousHarness)
-;		remove_idx(harnessIDX)
-		zlib.removeDevice(pc, data.harn[0], data.harn[1], zlib.zad_deviousHarness, false, false)
-		pc.removeitem(data.harn[0], 999, true)
-	endif
-	remove_idx(tailIDX)
-;	utility.wait(0.1)
-endfunction
-
-;This block describes the "DressUpPony"-Function
-if (data.mcm.useThermal)
-	pc.equipitem(data.mcm.Thermals,true,true)
-endif
-if !pc.wornhaskeyword(kw_dev[1])
-	equip_idx(collarIDX)
-endif
-utility.wait(0.1) ;Add a slight delay between each item so Skyrim's clunky scripting system can keep up. Otherwise it sometimes skips pieces when conflicting parts are detected.
-;	if !pc.wornhasKeyword(zlib.zad_deviousankleshackles)
-equip_idx(legCuffIDX)
-;	endif
-utility.wait(0.1)
-equip_idx(glovesIDX)
-utility.wait(0.1)
-equip_idx(bootsIDX)
-utility.wait(0.1)
-if data.mcm.tailsIndex != 4
-	equip_idx(tailIDX)
-	utility.wait(0.1)
-endif
-equip_idx(armCuffIDX)
-utility.wait(0.1)
-equip_idx(yokeIDX)
-;EndBlock
-
-function equip_idx(int idx)
-	keyword kw = kw_dev[idx]
-;	if pc.wornhaskeyword(kw) ;If the Player already is wearing a conflicting device let's try to remove it.
-;		r_conflict_device(idx)
-;		utility.wait(0.3) ;Add a slight delay between each item so Skyrim's clunky scripting system can keep up. Otherwise it sometimes skips pieces when conflicting parts are detected.
-;	endif
-	armor dev_i = data.i_devs[idx]
-	armor dev_s = data.s_devs[idx]
-	data.backup_i[idx] = dev_i ;Reserve your costume to prevent removal errors if the player decides...
-	data.backup_s[idx] = dev_s ;...to alter their MCM custom costume mid delivery.
-	zlib.equipDevice(pc, dev_i, dev_s, kw, false, false)
-endfunction
-
-function remove_idx(int idx)
-	armor dev_i = data.backup_i[idx] ;Remove the reserved version, not the one set in sluts_mission_scenes_data
-	armor dev_s = data.backup_s[idx]
-	keyword kw = kw_dev[idx]
-	zlib.removeDevice(pc, dev_i, dev_s, kw, false, false)
-	pc.removeitem(dev_i, 999, true)
-endfunction/;
