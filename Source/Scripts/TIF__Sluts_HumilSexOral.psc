@@ -6,10 +6,8 @@ Scriptname TIF__Sluts_HumilSexOral Extends TopicInfo Hidden
 Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-SlutsMissionHaul q = getowningquest() as SlutsMissionHaul 
-
-q.humilsex = true
-q.sL.QuickStart(q.playerRef, akSpeaker, AnimationTags = "Blowjob")
+SlutsMissionHaul q = getowningquest() as SlutsMissionHaul
+q.sL.QuickStart(q.playerRef, akSpeaker, Hook = "SLUTS_Humil", AnimationTags = "Blowjob")
 ;END CODE
 EndFunction
 ;END FRAGMENT

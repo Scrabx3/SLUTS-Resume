@@ -7,7 +7,6 @@ SlutsMissionHaul Property missionSc Auto
 SlutsTats property tatlib auto
 SlutsBondage Property bd Auto
 
-Actor Property PlayerRef Auto
 ; ---------------------------------- Variables
 string[] difficulty
 ; Settings
@@ -24,41 +23,25 @@ int[] Property HaulWeights
 		return ret
 	EndFunction
 EndProperty
-bool Property bNoTalking = true Auto Hidden Conditional
-{Custom Gag Talk during Hauls}
+
 int Property iSpontFail = 0 Auto Hidden
 {Chance to randomly fail a perfect run}
 bool Property bSpontFailRandom = true Auto Hidden
-bool property tag_cart = false auto Hidden Conditional
-{When set the sluts cart will have a quest marker on it - unused}
 int Property iRehabtRate = 1 Auto Hidden
 {Difficulty Scale for Rehab System}
-float property fBaseCredit = 2.0 auto Hidden Conditional
-float Property fOvertimeGrowth = 2.0 Auto Hidden
-bool Property bAllDebtToArrears = false Auto Hidden
-{Should the mod rob your Escrow before stacking Debt?}
-int Property iMinGold = 50 Auto Hidden
-{If above option = false, this much Gold will stay in your Escrow}
+
 int Property iChancePilf = 50 Auto Hidden
 bool Property bPilfChanceIncr = true Auto Hidden
 int Property iMaxPilferage = 750 Auto Hidden
 int Property iSSminDebt = 2 Auto Hidden
 ; Customisation
-; string[] Property costumeList Auto Hidden
-; int Property costumeIndex = 0 Auto Hidden
-; string[] Property tailList Auto Hidden
-; int Property tailsIndex = 2 Auto Hidden
-; string[] Property yokesList Auto Hidden
-; int Property yokesIndex = 0 Auto Hidden
 bool property bUseThermal = false auto Hidden
 bool property bThermalColor = true Auto Hidden
 bool bPonyAnims = true
-bool bBoundCombat = false
 ;SlaveTats
 bool property bUseSlutsLivery = true auto Hidden Conditional
 bool property bUseSlutsColors = true auto Hidden Conditional
 int property iCustomLiveryColor = 0 auto Hidden
-bool Property bUseDirt = true Auto Hidden Conditional
 ;Debug
 bool Property bLargeMsg = false Auto Hidden
 bool Property bNoRemoveItems = false Auto Hidden
@@ -70,7 +53,6 @@ string sReinitMod = "Click"
 ; bool property bSetEssential = false auto Hidden
 bool Property bShowDist = false Auto Hidden
 
-bool property bUseUNPLivery = false auto Hidden Conditional ; Unused
 ; ---------------------------------- Code
 bool Property bCooldown = false Auto Hidden Conditional
 Function Cooldown()
@@ -87,7 +69,7 @@ Function Initialize()
 	Pages = new string[3]
 	Pages[0] = "$SLUTS_pSettings"
 	Pages[1] = "$SLUTS_pCustomisation"
-	Pages[2] = "$SLUTS_pDebug"
+	Pages[1] = "$SLUTS_pDebug"
 
 	difficulty = new string[4]
 	difficulty[0] = "$SLUTS_difficulty0"
@@ -116,7 +98,6 @@ Event OnPageReset(string Page)
 		; AddSliderOptionST("defaultHaul", "$SLUTS_defHaul", iHaulType01)
 		; AddSliderOptionST("premiumHaul", "$SLUTS_premHaul", iHaulType02)
 		AddHeaderOption("$SLUTS_shHauls")
-		AddToggleOptionST("NoTalking", "$SLUTS_sNoTalk", bNoTalking)
 		AddSliderOptionST("SpontFail", "$SLUTS_sSpontFail", iSpontFail, "{0}%")
 		AddToggleOptionST("SpontFailRandom", "$SLUTS_sSpontFailRnd", bSpontFailRandom)
 		AddEmptyOption()
@@ -127,35 +108,26 @@ Event OnPageReset(string Page)
 		; ============================
 		SetCursorPosition(1)
 		; ============================
-		AddHeaderOption("$SLUTS_shPayment")
-		AddSliderOptionST("BaseCredit", "$SLUTS_sBaseCredit", fBaseCredit, "{0}")
-		AddSliderOptionST("overtimeGrowth", "$SLUTS_sOvertimeGrowth", fOvertimeGrowth, "{1}")
-		AddToggleOptionST("AllDebtToArrears", "$SLUTS_sAllDebtToArrears", bAllDebtToArrears)
-		AddSliderOptionST("MinGoldKept", "$SLUTS_sMinGoldKept", iMinGold, getFlag(!bAllDebtToArrears))
-
 		AddHeaderOption("$SLUTS_shCrime")
 		AddMenuOptionST("RehabRate", "$SLUTS_sRehabRate", difficulty[iRehabtRate])
-
-		AddHeaderOption(" Simple Slavery")
+		AddHeaderOption("$SLUTS_SimpleSlavery")
 		AddMenuOptionST("SSdebtScale", "$SLUTS_sSSdebtScale", difficulty[iSSminDebt])
+
 	ElseIf(Page == "$SLUTS_pCustomisation")
 		AddHeaderOption("$SLUTS_chLivery")
-		; AddMenuOptionST("CostumeChoice", "Costume Color", costumeList[costumeIndex])
-		; AddMenuOptionST("TailChoice", "Pony Tail", tailList[tailsIndex])
-		; AddMenuOptionST("YokeChoice", "Yoke", yokesList[yokesIndex])
 		AddToggleOptionST("UseThermal", "$SLUTS_cUseThermal", bUseThermal)
 		AddToggleOptionST("ThermalColor", "$SLUTS_cThermalColor", bThermalColor, getFlag(bUseThermal))
 		AddEmptyOption()
 		AddToggleOptionST("PonyAnims", "$SLUTS_cPonyAnims", bPonyAnims)
-		AddToggleOptionST("BoundCombat", "$SLUTS_cBoundCombat", bBoundCombat)
-		SetCursorPosition(1)
-		AddHeaderOption(" SlaveTats")
+		AddEmptyOption()
+		AddHeaderOption("$SLUTS_SlaveTats")
 		AddToggleOptionST("UseSlutsLivery", "$SLUTS_cUseSlutsLivery", bUseSlutsLivery)
-		; AddToggleOptionST("UseUNPLivery",	"$SLUTS_cUseUNPLivery", bUseUNPLivery)
 		AddToggleOptionST("UseSlutsColors", "$SLUTS_cUseSlutsColors", bUseSlutsColors)
 		AddColorOptionST("CustomLiveryColor", "$SLUTS_cCustomLiveryColor", iCustomLiveryColor)
-		AddEmptyOption()
-		AddToggleOptionST("UseDirt", "$SLUTS_cUseDirt", bUseDirt)
+		; ============================
+		SetCursorPosition(1)
+		; ============================
+
 	ElseIf(Page == "$SLUTS_pDebug")
 		AddHeaderOption("$SLUTS_dhHauls")
 		AddToggleOptionST("LargeMsg", "$SLUTS_dLargeMsg", bLargeMsg)
@@ -179,7 +151,7 @@ EndEvent
 
 Event OnConfigClose()
 	If(sTatRemove == "Working")
-		if(tatlib.scrub(PlayerRef))
+		if(tatlib.scrub(Game.GetPlayer()))
 			debug.notification("Tattoos Scrubbed")
 			sTatRemove = "Click"
 			SetOptionFlagsST(OPTION_FLAG_NONE, false, "EmergencyTatRemove")
@@ -188,7 +160,7 @@ Event OnConfigClose()
 	If(sUnponify == "Working")
 		Debug.Notification("Removing DD Items..")
 		sUnponify = "Click"
-		Bd.UndressPony(PlayerRef, true)
+		Bd.UndressPony(Game.GetPlayer(), true)
 		SetOptionFlagsST(OPTION_FLAG_NONE, false, "RemoveDD")
 	EndIf
 	If(sReturnCart == "Working")
@@ -234,16 +206,6 @@ State premiumHaul
 		SetInfoText("$SLUTS_premHaul_info")
 	EndEvent
 EndState
-;Hauls
-state NoTalking
-	event onselectst()
-		bNoTalking = !bNoTalking
-		SetToggleOptionValueST(bNoTalking)
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_NoTalking_Info")
-	endevent
-endstate
 
 State SpontFail
 	Event OnSliderOpenST()
@@ -267,25 +229,11 @@ state SpontFailRandom
 		SetToggleOptionValueST(bSpontFailRandom)
 	endevent
 	event ondefaultst()
-		bNoTalking = true
+		bSpontFailRandom = true
 		SetToggleOptionValueST(bSpontFailRandom)
 	endevent
 	event onhighlightst()
 		SetInfoText("$SLUTS_SpontFailRandom_Info")
-	endevent
-endstate
-
-state TagCart
-	event onselectst()
-		tag_cart = !tag_cart
-		SetToggleOptionValueST(tag_cart)
-	endevent
-	event ondefaultst()
-		tag_cart = false
-		SetToggleOptionValueST(tag_cart)
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_TagCart_Info")
 	endevent
 endstate
 
@@ -308,73 +256,6 @@ State RehabRate
 
 	Event OnHighlightST()
 		SetInfoText("$SLUTS_sRehabRate_Highlight")
-	EndEvent
-EndState
-;Payment
-State BaseCredit
-	Event OnSliderOpenST()
-		SetSliderDialogStartValue(fBaseCredit)
-		SetSliderDialogDefaultValue(2)
-		SetSliderDialogRange(1, 10)
-		SetSliderDialogInterval(0.5)
-	EndEvent
-	Event OnSliderAcceptST(float value)
-		fBaseCredit = value
-		SetSliderOptionValueST(fBaseCredit, "{0}")
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_BaseCredit_Info")
-	EndEvent
-EndState
-
-State overtimeGrowth
-	Event OnSliderOpenST()
-		SetSliderDialogStartValue(fOvertimeGrowth)
-		SetSliderDialogDefaultValue(2)
-		SetSliderDialogRange(0, 3)
-		SetSliderDialogInterval(0.5)
-	EndEvent
-	Event OnSliderAcceptST(float value)
-		fOvertimeGrowth = value
-		SetSliderOptionValueST(fOvertimeGrowth)
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_overtimeGrowth_Info")
-	EndEvent
-EndState
-
-state AllDebtToArrears
-	event onselectst()
-		bAllDebtToArrears = !bAllDebtToArrears
-		SetToggleOptionValueST(bAllDebtToArrears)
-		If(!bAllDebtToArrears)
-			SetOptionFlagsST(OPTION_FLAG_NONE, false, "MinGoldKept")
-		else
-			SetOptionFlagsST(OPTION_FLAG_DISABLED, false, "MinGoldKept")
-		EndIf
-	endevent
-	event ondefaultst()
-		bAllDebtToArrears = false
-		SetToggleOptionValueST(bAllDebtToArrears)
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_AllDebtToArrears_Info")
-	endevent
-endstate
-
-State MinGoldKept
-	Event OnSliderOpenST()
-		SetSliderDialogStartValue(iMinGold)
-		SetSliderDialogDefaultValue(50)
-		SetSliderDialogRange(0, 500)
-		SetSliderDialogInterval(5)
-	EndEvent
-	Event OnSliderAcceptST(float value)
-		iMinGold = value as int
-		SetSliderOptionValueST(iMinGold)
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_MinGoldKept_Info")
 	EndEvent
 EndState
 
@@ -557,30 +438,6 @@ state PonyAnims
 	endevent
 endstate
 
-state BoundCombat
-	event onselectst()
-		bBoundCombat = !bBoundCombat
-		SetToggleOptionValueST(bBoundCombat)
-		Bd.setCuffsArm(bBoundCombat as int)
-		; if (!bBoundCombat)
-		; 	Bd.Dev_Inv[4] = form_misc.GetAt(0) As Armor
-		; 	; Bd.Dev_Ren[4] = form_misc.GetAt(1) As Armor
-		; else
-		; 	Bd.Dev_Inv[4] = form_misc.GetAt(4) As Armor
-		; 	; Bd.Dev_Ren[4] = form_misc.GetAt(5) As Armor
-		; endif
-	endevent
-	event ondefaultst()
-		bBoundCombat = false
-		SetToggleOptionValueST(bBoundCombat)
-		Bd.setCuffsArm(0)
-		; Bd.Dev_Inv[4] = form_misc.GetAt(0) As Armor
-		; Bd.Dev_Ren[4] = form_misc.GetAt(1) As Armor
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_BoundCombat_Info")
-	endevent
-endstate
 ;SlaveTats
 state UseSlutsLivery
 	event onselectst()
@@ -593,20 +450,6 @@ state UseSlutsLivery
 	endevent
 	event onhighlightst()
 		SetInfoText("I$SLUTS_UseSlutsLivery_Info")
-	endevent
-endstate
-
-state UseUNPLivery
-	event onselectst()
-		bUseUNPLivery = !bUseUNPLivery
-		SetToggleOptionValueST(bUseUNPLivery)
-	endevent
-	event ondefaultst()
-		bUseUNPLivery = false
-		SetToggleOptionValueST(bUseUNPLivery)
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_UseUNPLivery_Info")
 	endevent
 endstate
 
@@ -642,15 +485,6 @@ state CustomLiveryColor
 	endEvent
 endState
 
-State UseDirt
-	Event OnSelectST()
-		bUseDirt = !bUseDirt
-		SetToggleOptionValueST(bUseDirt)
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_UseDirt_Info")
-	EndEvent
-EndState
 ; ==================================
 ; 				States // Debug
 ; ==================================

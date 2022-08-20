@@ -4,7 +4,7 @@ Scriptname SlutsEscrow extends ObjectReference
 SlutsData Property data Auto
 SlutsMissionHaul Property Haul Auto
 SlutsTats Property TatLib Auto
-Actor Property playerRef Auto
+Actor Property PlayerRef Auto
 MagicEffect Property AdSpell Auto
 Activator Property summonFX Auto
 ObjectReference myMarker ; Where we are currently standing & facing
@@ -16,7 +16,7 @@ Function MoveTo(ObjectReference akTarget, float afXOffset = 0.0, float afYOffset
   EndIf
   akTarget.PlaceAtMe(summonFX)
   Parent.MoveTo(akTarget, afXOffset, afYOffset, afZOffset, abMatchRotation)
-  Self.Enable()
+  Enable()
   myMarker = akTarget
 EndFunction
 
@@ -26,7 +26,7 @@ Function LockEscrow()
 EndFunction
 
 Event OnActivate(ObjectReference akActionRef)
-  If(Haul.GetStage() < 40)
+  If(Haul.GetStage() < 100 || akActionRef != PlayerRef)
     ; <=> Not at the end of a Haul Series
     return
   EndIf
@@ -40,8 +40,7 @@ Event OnActivate(ObjectReference akActionRef)
   If(!PlayerRef.HasMagicEffect(AdSpell))
     TatLib.Scrub(PlayerRef)
   EndIf
-  Lock()
-  SetLockLevel(255)
+  LockEscrow()
   Haul.SetStage(500)
   Utility.Wait(15)
   PlaceAtMe(summonFX)

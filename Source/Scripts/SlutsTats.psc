@@ -62,15 +62,15 @@ string Function GetTatName()
 	endif
 	trace("SLUTS: mcm.bUseSlutsColors = " + mcm.bUseSlutsColors)
 	trace("SLUTS: mcm.iCustomLiveryColor = " + mcm.iCustomLiveryColor)
-	if mcm.bUseUNPLivery && mcm.bUseSlutsColors
-		tat_color = 0
-		return "Livery, Green (UNP)"
-	elseif mcm.bUseSlutsColors
+	; if mcm.bUseUNPLivery && mcm.bUseSlutsColors
+	; 	tat_color = 0
+	; 	return "Livery, Green (UNP)"
+	if mcm.bUseSlutsColors
 		tat_color = 0
 		return "Livery, Green (CBBE)"
-	elseif mcm.bUseUNPLivery
-		tat_color = mcm.iCustomLiveryColor
-		return "Livery, Colorable (UNP)"
+	; elseif mcm.bUseUNPLivery
+	; 	tat_color = mcm.iCustomLiveryColor
+	; 	return "Livery, Colorable (UNP)"
 	else
 		tat_color = mcm.iCustomLiveryColor
 		return "Livery, Colorable (CBBE)"
@@ -88,13 +88,13 @@ function get_name_and_color()
 	;	so choosing UNP effectively locks out the remaining options.
 	trace("sluts_tats: mcm.bUseSlutsColors = " + mcm.bUseSlutsColors)
 	trace("sluts_tats: mcm.iCustomLiveryColor = " + mcm.iCustomLiveryColor)
-	if mcm.bUseUNPLivery && mcm.bUseSlutsColors
-		tat_name = "Livery, Green (UNP)"
-	elseif mcm.bUseSlutsColors
+	; if mcm.bUseUNPLivery && mcm.bUseSlutsColors
+	; 	tat_name = "Livery, Green (UNP)"
+	if mcm.bUseSlutsColors
 		tat_name = "Livery, Green (CBBE)"
-	elseif mcm.bUseUNPLivery
-		tat_name = "Livery, Colorable (UNP)"
-		tat_color = mcm.iCustomLiveryColor
+	; elseif mcm.bUseUNPLivery
+	; 	tat_name = "Livery, Colorable (UNP)"
+	; 	tat_color = mcm.iCustomLiveryColor
 	else
 		tat_name = "Livery, Colorable (CBBE)"
 		tat_color = mcm.iCustomLiveryColor

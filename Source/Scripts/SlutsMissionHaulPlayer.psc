@@ -9,6 +9,9 @@ EndProperty
 Faction Property CrimeFaction Auto
 MiscObject Property Gold001 Auto
 
+Message Property ArrearsClear Auto
+Message Property ArrearsPay Auto
+
 Event OnInit()
   AddInventoryEventFilter(Gold001)
 EndEvent
@@ -16,8 +19,17 @@ EndEvent
 Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akSourceContainer)
   int debt = CrimeFaction.GetCrimeGold()
   If (debt > 0)
-    ; TODO: Debt Reduction or so
-
+    debt = SlutsData.GetGoldFromCoin(debt)
+    If(debt < aiItemCount)
+      GetReference().RemoveItem(akBaseItem, debt, true)
+      CrimeFaction.SetCrimeGold(0)
+      ArrearsClear.Show()
+    Else
+      int paid = SlutsData.GetCoinFromGold(aiItemCount)
+      GetReference().RemoveItem(akBaseItem, aiItemCount, true)
+      CrimeFaction.ModCrimeGold(-paid)
+      ArrearsPay.Show(paid)
+    EndIf
   EndIf
 EndEvent
 

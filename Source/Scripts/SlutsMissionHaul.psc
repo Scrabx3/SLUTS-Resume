@@ -35,6 +35,7 @@ ReferenceAlias Property Manifest Auto
 ReferenceAlias Property ScenePlayer Auto ; Where the Player stands in Intro
 ReferenceAlias Property SceneSpell Auto ; From where the Carter casts his Spell
 ReferenceAlias Property SceneRecipient Auto ; Where the Recipient Waits
+ReferenceAlias Property SceneHumilChest Auto ; Recipient Escrow Position
 
 Keyword Property RootLink Auto ; Driver to Rootnt
 Keyword Property EscrowLink Auto ; Root to Escrow
@@ -88,6 +89,8 @@ ImageSpaceModifier Property FadeToBlackHoldImod Auto
 Activator Property SummonFX Auto
 Race Property DefaultRace Auto
 
+Message Property ScenePilferageMsg Auto
+
 ; ---------------------------------- Variables
 ; Keybinds
 int ActivateKey
@@ -95,6 +98,7 @@ int ActivateKey
 ; Series Info
 int Property Streak Auto Hidden Conditional ; Num Hauls the Player did this series
 float PerfectStreak
+float TotalPay
 
 ; Haul Info
 float Property GoodsTotal = 1500.0 AutoReadOnly Hidden ; Amount of Goods total
@@ -102,8 +106,8 @@ float Property Pilferage = 0.0 Auto Hidden Conditional ; Lost goods
 
 
 ; Humiliation System
-bool Property HumilSex = false Auto Hidden
-{Is the next SL Event we get with the Driver part of this Event?}
+bool Property HumiliatedOnce = false Auto Hidden Conditional
+{Dialogue Condition to split the first humil scene from the others}
 bool Property Humiliated = false Auto Hidden Conditional
 {Humiliation done?}
 int Property HumilPick = 0 Auto Hidden Conditional
@@ -119,7 +123,7 @@ int Property HumilPick = 0 Auto Hidden Conditional
 
 ; Tether System
 bool Property bIsThethered Auto Hidden Conditional
-ObjectReference Property Kart Auto Hidden
+SlutsKart Property Kart Auto Hidden
 
 int Property Response_Flawless = 0 AutoReadOnly Hidden ; 0 Pilferage + No Debt
 int Property Response_Deduction = 1 AutoReadOnly Hidden ; X Pilferage + No Debt
@@ -129,6 +133,9 @@ int Property Response_ReduceDebt2 = 4 AutoReadOnly Hidden ; X Pilferage + Debt
 int Property Response_DebtStacking = 5 AutoReadOnly Hidden ; No Pay + Stacking Debt
 int Property Response_DebtDone = 6 AutoReadOnly Hidden
 int Property EvalResponse Auto Hidden Conditional
+
+String Property CartDefault = "CartHaul" AutoReadOnly Hidden
+String PRoperty Delivery = "SpecialDelivery" AutoReadOnly Hidden
 
 ; misc
 bool forced
@@ -146,6 +153,8 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
   If (!SetLinks(akDispatcher, akRecipient))
     Stop()
     return
+  ElseIf(!RecipientLocHOLD.GetLocation())
+    RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
   EndIf
 
   float p = 1 - (aiCustomLoc * 0.15) ; 15% Payment Deduction for Custom Loc Hauls
@@ -155,6 +164,8 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
 
   ActivateKey = Input.GetMappedKey("Activate")
   RegisterEvents()
+  HumilPick = Utility.RandomInt(0, 8)
+  TotalPay = 0.0
 
   Debug.Trace("[SLUTS] Haul Preparations done, SetStage 5")
   SetStage(5)
@@ -171,13 +182,14 @@ bool Function SetLinks(ObjectReference akDispatcher, ObjectReference akRecipient
   ScenePlayer.ForceRefTo(root0.GetLinkedRef(PlayerWaitLoc))
   SceneSpell.ForceRefTo(root0.GetLinkedRef(SpellCastLoc))
   SceneRecipient.ForceRefTo(root1.GetLinkedRef(CarriageDriver))
+  SceneHumilChest.ForceRefTo(root1.GetLinkedRef(EscrowLink))
   return true
 EndFunction
 
 Function SetMissionState(int missionID = -1)
   String[] missions = new String[2]
-  missions[0] = "CartHaul"
-  missions[1] = "SpecialDelivery"
+  missions[0] = CartDefault
+  missions[1] = Delivery
   If (missionID < 0)
     missionID = SlutsData.Distribute(MCM.HaulWeights) - 1
   EndIf
@@ -234,8 +246,9 @@ State CartHaul
   Function SetupHaulImpl()
     Debug.Trace("[SLUTS] Setting up Cart Haul")
     If(!Kart)
-      Kart = GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form)
+      Kart = GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form) as SlutsKart
       KartRef.ForceRefTo(Kart)
+      Kart.SetUp()
       Utility.Wait(0.5)
     Else ; Chain Haul, make sure the Kart can actually be moved
       Kart.SetMotionType(Kart.Motion_Dynamic)
@@ -252,6 +265,7 @@ State CartHaul
       KartRef.Clear()
       Kart.Disable()
       Kart.Delete()
+      Kart.ShutDown()
       Kart = none
     EndIf
   EndEvent
@@ -317,7 +331,7 @@ Function Quit()
   ; Clear State & get Player out of gear
   PlayerRef.PlaceAtMe(SummonFX)
   GoToState("")
-  Bd.UndressPony(PlayerRef, true)
+  Bd.UndressPony(PlayerRef, false)
   Game.EnableFastTravel()
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
   ; Enable post haul Dialogue & place Escrow
@@ -393,6 +407,8 @@ Function DoPayment()
     PerfectStreak += 1
     If(crime == 0)
       EvalResponse = Response_Flawless
+    ElseIf(crime <= pay)
+      EvalResponse = Response_DebtDone
     Else
       EvalResponse = Response_ReduceDebt1
     EndIf
@@ -408,15 +424,14 @@ Function DoPayment()
         EvalResponse = Response_Endebted
       EndIf
     Else
-      If (mult < 1)
+      If(crime <= pay)
+        EvalResponse = Response_DebtDone
+      ElseIf(mult < 1)
         EvalResponse = Response_ReduceDebt2
       Else
         EvalResponse = Response_DebtStacking
       EndIf
     EndIf
-  EndIf
-  If(crime <= pay)
-    EvalResponse = Response_DebtDone
   EndIf
   Debug.Trace("[SLUTS] Eval Response = " + EvalResponse)
   If(pay > 0) ; Made profit
@@ -432,6 +447,7 @@ Function DoPayment()
     SlutsCrime.ModCrimeGold(-pay)
   EndIf
   Debug.Trace("[SLUTS] Post Eval => Payment = " + pay + " | Debt = " + SlutsCrime.GetCrimeGold() + " | Overtime Bonus = " + overtimepay)
+  TotalPay += pay
   ; Payment = {} | Debt = {} | Overtime Bonus = {}
 EndFunction
 
@@ -488,6 +504,8 @@ Event OnKeyDown(int KeyCode)
   If(KeyCode == ActivateKey)
     If(!bIsThethered)
       Tether()
+      Bd.RemoveIdx(Bd.yokeIDX, true)
+      Bd.EquipIdx(Bd.yokeIDX, true)
     Else
       If(DetachKartSureMsg.Show() == 0)
         Unhitch()
@@ -495,11 +513,6 @@ Event OnKeyDown(int KeyCode)
     EndIf
   EndIf
 EndEvent
-
-; ----------------------------------
-Function HumilChest()
-  Escrow.MoveTo(GetLink(RecipientREF.GetReference(), EscrowLink))
-endFunction
 
 ; ======================================================
 ; =============================== TETHER
@@ -567,88 +580,48 @@ endFunction
 ; ======================================================
 ; =============================== SEXLAB
 ; ======================================================
-;/
+
 Event OnAnimStart(int tid, bool HasPlayer)
-  If(GetStage() != 20 || !HasPlayer) ;This type of stuff should only occur during a haul and only when the Player is involed
+  If(!HasPlayer || GetStage() != 20 || GetState() != CartDefault)
     return
   EndIf
-  Debug.Trace("SLUTS: DefaultHaul: Piferage at SL Scene Start: " + Pilferage)
-  ;	disengage cart by toggling enable state
-  ;	moved this up here so it should always happen
-  Untether(Kart, PlayerRef)
-  ;I assume we assume that the player will only ever be in the 1st Position here.. cause theyre a tied up Pony.. yay!
-  sslThreadController Thread = SL.GetController(tid)
-	Actor[] Acteurs = Thread.Positions
-  int Laenge = Acteurs.Length
-  If(Laenge < 2)
-    return
-    ;	come to think of it, the options are a bit limited for 2-ways
-    ;	but I like to see her get fucked in the traces, so I'm only doing this
-    ;	some of the time ;Well yes.. but actually no
-  ElseIf(Laenge == 2)
-    ;	if we return here, we won't unhook the player
-    ;	so we're unhooking on a 65% chance OR if the actor is a creature
-    If(Utility.RandomInt(1, 100) <= 65 || Acteurs[1].getRace().isPlayable())
-      return
-    EndIf
-  EndIf
-  If(Acteurs[0] == PlayerRef)
-    Untether(Kart, PlayerRef)
-  EndIf
-EndEvent/;
+  Untether()
+EndEvent
 
 Event OnAnimEnd(int tid, bool HasPlayer)
-  Debug.Trace("SLUTS Haul: Piferage at SL Scene End: " + Pilferage)
   sslThreadController Thread = SL.GetController(tid)
-	Actor[] Acteurs = Thread.Positions
-  If(HumilSex && Acteurs[0] == PlayerRef)
-    ;Humiliation Chest Scene Start
+  If(Thread.GetHooks().Find("SLUTS_Humil") > -1)
+    Debug.Trace("[SLUTS] Humiliation Scene End")
     Utility.Wait(0.2)
     moveChestScene.Start()
-    HumilSex = false
+    return
+  ElseIf(!Thread.IsVictim(PlayerRef) || GetStage() != 20)
+    Debug.Trace("[SLUTS] Scene End but Player isn't Victim or not in Mission")
     return
   EndIf
-  ;	pc in victim role?
-  If(!Thread.IsVictim(PlayerRef))
-    Debug.Trace("SLUTS Haul: Player isnt Victim in SL Scene. => Abandon")
-    return
-  EndIf
-  ; Dirtify()
-  If(!Acteurs[1].HasKeyword(ActorTypeNPC) || GetStage() != 20)
-    Debug.Trace("SLUTS Haul: Creature Rape or not a Cargo Run => Abandon")
-    return
-  EndIf
-  ;Certain other mods can make the carriage drivers, minihub dispatchers, and player followers a bit rapey so let's at least stop them from pilfering you. I guess they could be that big of assholes, but nah, let's not do that...
-  bool IncrChance = false
+  Debug.Trace("[SLUTS] Piferage at SL Scene End | Pre = " + Pilferage)
+  int type = 0
   int i = 0
-  While(i < acteurs.length)
-    If(Acteurs[i].IsInFaction(DriverFaction) || Acteurs[i].IsInFaction(PlayerFollowerFaction))
-      ;Stubborn script refuses to acknowledge the vanilla carriage drivers are now part of the SLUTS faction, so we need this failsafe >:(
-      ; Because you only checked for the 2nd Position above :)
+  While(i < Thread.Positions.Length)
+    Actor p = Thread.Positions[i]
+    If(p.IsPlayerTeammate() || p.IsInFaction(DriverFaction))
       return
-    ElseIf((Acteurs[i].IsInFaction(BanditFaction) || Acteurs[i].IsInFaction(ForswornFaction)) && MCM.bPilfChanceIncr)
-      IncrChance = true
+    ElseIf(p.IsInFaction(BanditFaction) || p.IsInFaction(ForswornFaction))
+      type = 1
+    ElseIf(p.GetActorValue("Morality") < 2)
+      type = 2 + p.GetActorValue("Morality") as int
     EndIf
     i += 1
   EndWhile
-	;Also if the random pilferage failure is higher than the MCM setting then cancel pilferage.
-  ;Moving this into its own Function so I can call it on multiple occasions
-  Debug.Trace("SLUTS: Attempting Pilferage, current Pilferage: " + Pilferage)
-  float amount = Pilfered(IncrChance)
-  If amount > 0
-    int numAggr = Acteurs.Length - 1
-    If(numAggr == 0)
-      numAggr = 1 ; I suppose it's plausible for mind control scenes...
+  If(type == 1 || type > 2 && Utility.RandomInt(0, 99) < 40 * (1 + Math.pow(type, -1)))
+    float robbed = Utility.RandomFloat(5 + Thread.Positions.length, 15 + Thread.Positions.length)
+    Pilferage += GoodsTotal * (robbed / 100)
+    If(Pilferage > GoodsTotal * 1.1)
+      Pilferage = GoodsTotal * 1.1
     EndIf
-    ;pilferage += 10 * (n_rapists - 1); add 10% for each additional attacker
-    ;This math is wrong. or the comment outdated. I assume the math is wrong since everyone hates math, so rewriting it to do what the comment says:
-    amount *= 1+0.1*(numAggr - 1)
-    Pilferage += amount
-    If(Pilferage > 1800)
-      Pilferage = 1800
-    EndIf
-    Debug.Notification("Somebody has been helping themselves to your goods. Your pilferage value is now " + Pilferage + "/" + GoodsTotal)
+    ScenePilferageMsg.Show(Pilferage, GoodsTotal)
   EndIf
+  Debug.Trace("[SLUTS] Piferage at SL Scene End | Post = " + Pilferage)
 endEvent
 
 ; ======================================================
@@ -657,11 +630,10 @@ endEvent
 
 ; HumilPick = 4
 Function debitRate()
-  ; COMEBACK: Due to payment changes this will no longer work (?)
-  ; float dR = Utility.RandomFloat(0.05, 0.35)
-  ; int debit = Math.Floor(totalPay.Value * dR)
-  ; Escrow.RemoveItem(FillyCoin, debit)
-  ; data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
+  float dR = Utility.RandomFloat(0.05, 0.35)
+  int debit = Math.Floor(TotalPay * dR)
+  Escrow.RemoveItem(FillyCoin, debit)
+  data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
 EndFunction
 
 function fondle(Message msg=none, float increment=5.0)
@@ -675,28 +647,24 @@ function fondle(Message msg=none, float increment=5.0)
 ; 	ModEvent.Send(eid)
 endfunction
 
+Function HumilChest()
+  HumiliatedOnce = true
+  Escrow.MoveTo(SceneHumilChest.GetReference())
+endFunction
+
 ; ======================================================
 ; =============================== UTILITY
 ; ======================================================
-float Function Pilfered(bool HighChance)
-  If(!HighChance && Utility.RandomInt(1, 100) > MCM.iChancePilf)
-    return 0
-  ElseIf(HighChance && Utility.RandomInt(1, 100) > (MCM.iChancePilf*2))
-    return 0
-  EndIf
-  return (Utility.RandomInt(1, MCM.iMaxPilferage))
-endFunction
-
-Function Dirtify()
-  If(!MCM.bUseDirt)
-    return
-  EndIf
-  int L = PapyrusUtil.ClampInt(PlayerRef.GetFactionRank(DirtyFaction) + 1, 1, 10)
-	;slavetats.simple_add_tattoo(pc, "Dirty S.L.U.T.S.", "Dirty Head " + level, last = false, silent = true )
-	;slavetats.simple_add_tattoo(pc, "Dirty S.L.U.T.S.", "Dirt " + level, last = true, silent = true )
-	PlayerRef.SetFactionRank(DirtyFaction, L)
-	mcm.TatLib.set_dirty_level(PlayerRef, L)
-endfunction
+; Function Dirtify()
+;   If(!MCM.bUseDirt)
+;     return
+;   EndIf
+;   int L = PapyrusUtil.ClampInt(PlayerRef.GetFactionRank(DirtyFaction) + 1, 1, 10)
+; 	;slavetats.simple_add_tattoo(pc, "Dirty S.L.U.T.S.", "Dirty Head " + level, last = false, silent = true )
+; 	;slavetats.simple_add_tattoo(pc, "Dirty S.L.U.T.S.", "Dirt " + level, last = true, silent = true )
+; 	PlayerRef.SetFactionRank(DirtyFaction, L)
+; 	mcm.TatLib.set_dirty_level(PlayerRef, L)
+; endfunction
 
 Function Befriend()
   int i = 0
