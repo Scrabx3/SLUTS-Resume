@@ -30,9 +30,6 @@ bool Property bSpontFailRandom = true Auto Hidden
 int Property iRehabtRate = 1 Auto Hidden
 {Difficulty Scale for Rehab System}
 
-int Property iChancePilf = 50 Auto Hidden
-bool Property bPilfChanceIncr = true Auto Hidden
-int Property iMaxPilferage = 750 Auto Hidden
 int Property iSSminDebt = 2 Auto Hidden
 ; Customisation
 bool property bUseThermal = false auto Hidden
@@ -44,7 +41,6 @@ bool property bUseSlutsColors = true auto Hidden Conditional
 int property iCustomLiveryColor = 0 auto Hidden
 ;Debug
 bool Property bLargeMsg = false Auto Hidden
-bool Property bNoRemoveItems = false Auto Hidden
 bool Property bStruggle = true Auto Hidden
 string sTatRemove = "Click"
 string sUnponify = "Click"
@@ -67,9 +63,9 @@ endFunction
 
 Function Initialize()
 	Pages = new string[3]
-	Pages[0] = "$SLUTS_pSettings"
-	Pages[1] = "$SLUTS_pCustomisation"
-	Pages[1] = "$SLUTS_pDebug"
+	Pages[0] = "$SLUTS_Settings"
+	Pages[1] = "$SLUTS_Customisation"
+	Pages[2] = "$SLUTS_Debug"
 
 	difficulty = new string[4]
 	difficulty[0] = "$SLUTS_difficulty0"
@@ -93,80 +89,68 @@ Event OnPageReset(string Page)
 	else
 		UnloadCustomContent()
 	endIf
-	If(Page == "$SLUTS_pSettings")
-		; AddHeaderOption("$SLUTS_sHaulTypes")
-		; AddSliderOptionST("defaultHaul", "$SLUTS_defHaul", iHaulType01)
-		; AddSliderOptionST("premiumHaul", "$SLUTS_premHaul", iHaulType02)
-		AddHeaderOption("$SLUTS_shHauls")
-		AddSliderOptionST("SpontFail", "$SLUTS_sSpontFail", iSpontFail, "{0}%")
-		AddToggleOptionST("SpontFailRandom", "$SLUTS_sSpontFailRnd", bSpontFailRandom)
-		AddEmptyOption()
-		AddSliderOptionST("PilfChance", "$SLUTS_sPilfChance", iChancePilf)
-		AddToggleOptionST("PilfChanceIncr", "$SLUTS_sPilfChanceIncr", bPilfChanceIncr)
-		AddSliderOptionST("MaxPilferage", "$SLUTS_sMaxPilferage", iMaxPilferage)
-		AddEmptyOption()
+	If(Page == "$SLUTS_Settings")
+		AddHeaderOption("$SLUTS_HaulTypes")
+		AddSliderOptionST("defaultHaul", "$SLUTS_HaulCargo", iHaulType01)
+		AddSliderOptionST("premiumHaul", "$SLUTS_HaulDelivery", iHaulType02, "{0}", OPTION_FLAG_DISABLED)
 		; ============================
 		SetCursorPosition(1)
 		; ============================
-		AddHeaderOption("$SLUTS_shCrime")
-		AddMenuOptionST("RehabRate", "$SLUTS_sRehabRate", difficulty[iRehabtRate])
+		AddHeaderOption("$SLUTS_Hauls")
+		AddSliderOptionST("SpontFail", "$SLUTS_SpontFail", iSpontFail, "{0}%")
+		AddToggleOptionST("SpontFailRandom", "$SLUTS_SpontFailRnd", bSpontFailRandom)
+		AddEmptyOption()
+		AddHeaderOption("$SLUTS_Crime")
+		AddMenuOptionST("RehabRate", "$SLUTS_RehabRate", difficulty[iRehabtRate])
+		AddEmptyOption()
 		AddHeaderOption("$SLUTS_SimpleSlavery")
-		AddMenuOptionST("SSdebtScale", "$SLUTS_sSSdebtScale", difficulty[iSSminDebt])
+		AddMenuOptionST("SSdebtScale", "$SLUTS_SSdebtScale", difficulty[iSSminDebt])
 
-	ElseIf(Page == "$SLUTS_pCustomisation")
-		AddHeaderOption("$SLUTS_chLivery")
-		AddToggleOptionST("UseThermal", "$SLUTS_cUseThermal", bUseThermal)
-		AddToggleOptionST("ThermalColor", "$SLUTS_cThermalColor", bThermalColor, getFlag(bUseThermal))
+	ElseIf(Page == "$SLUTS_Customisation")
+		AddHeaderOption("$SLUTS_FillyGear")
+		AddToggleOptionST("UseThermal", "$SLUTS_UseThermal", bUseThermal)
+		AddToggleOptionST("ThermalColor", "$SLUTS_ThermalColor", bThermalColor, getFlag(bUseThermal))
 		AddEmptyOption()
-		AddToggleOptionST("PonyAnims", "$SLUTS_cPonyAnims", bPonyAnims)
-		AddEmptyOption()
+		AddToggleOptionST("PonyAnims", "$SLUTS_PonyAnims", bPonyAnims)
+		; ============================
+		SetCursorPosition(1)
+		; ============================
 		AddHeaderOption("$SLUTS_SlaveTats")
-		AddToggleOptionST("UseSlutsLivery", "$SLUTS_cUseSlutsLivery", bUseSlutsLivery)
-		AddToggleOptionST("UseSlutsColors", "$SLUTS_cUseSlutsColors", bUseSlutsColors)
-		AddColorOptionST("CustomLiveryColor", "$SLUTS_cCustomLiveryColor", iCustomLiveryColor)
-		; ============================
-		SetCursorPosition(1)
-		; ============================
+		AddToggleOptionST("UseSlutsLivery", "$SLUTS_UseSlutsLivery", bUseSlutsLivery)
+		AddToggleOptionST("UseSlutsColors", "$SLUTS_UseSlutsColors", bUseSlutsColors)
+		AddColorOptionST("CustomLiveryColor", "$SLUTS_CustomLiveryColor", iCustomLiveryColor)
 
-	ElseIf(Page == "$SLUTS_pDebug")
-		AddHeaderOption("$SLUTS_dhHauls")
-		AddToggleOptionST("LargeMsg", "$SLUTS_dLargeMsg", bLargeMsg)
-		AddToggleOptionST("NoRemoveItems", "$SLUTS_dNoRemoveItems", bNoRemoveItems)
-		AddToggleOptionST("DDStruggle", "$SLUTS_dDDStruggle", bStruggle)
+	ElseIf(Page == "$SLUTS_Debug")
+		AddHeaderOption("$SLUTS_Hauls")
+		AddToggleOptionST("LargeMsg", "$SLUTS_LargeMsg", bLargeMsg)
+		AddToggleOptionST("DDStruggle", "$SLUTS_DDStruggle", bStruggle)
 		AddEmptyOption()
-		AddHeaderOption(" Debug")
-		AddTextOptionST("EmergencyTatRemove", "$SLUTS_dEmergencyTatRemove", sTatRemove)
+		AddHeaderOption("$SLUTS_Debug")
+		AddTextOptionST("EmergencyTatRemove", "$SLUTS_EmergencyTatRemove", sTatRemove)
 		AddTextOptionST("RemoveDD", "$SLUTS_removeDD", sUnponify)
-		AddTextOptionST("ReturnCart", "$SLUTS_dReturnCart", sReturnCart)
-		; AddToggleOptionST("SetEssential", "$SLUTS_dSetEssential", bSetEssential)
+		AddTextOptionST("ReturnCart", "$SLUTS_ReturnCart", sReturnCart, getFlag(missionSc.GetState() == missionSc.CartDefault && missionSc.GetStage() == 20))
 		AddEmptyOption()
-		; AddToggleOptionST("ShowDistance", "$SLUTS_dShowDistance", bShowDist)
 		SetCursorPosition(1)
-		AddHeaderOption("$SLUTS_dhHOTKEYS")
-		AddTextOptionST("ResetCart", "$SLUTS_dResetCart", "")
-		AddTextOptionST("TogglePhysics", "$SLUTS_dTogglePhysics", "")
-		; AddTextOptionST("SpawnCart", "CTRL + SHIFT + 8 = Spawn new Cart","")
+		AddHeaderOption("$SLUTS_HOTKEYS")
+		AddTextOptionST("ResetCart", "$SLUTS_ResetCart", "", OPTION_FLAG_DISABLED)
 	EndIf
 EndEvent
 
 Event OnConfigClose()
-	If(sTatRemove == "Working")
+	If(sTatRemove == "$SLUTS_Working")
 		if(tatlib.scrub(Game.GetPlayer()))
-			debug.notification("Tattoos Scrubbed")
-			sTatRemove = "Click"
-			SetOptionFlagsST(OPTION_FLAG_NONE, false, "EmergencyTatRemove")
+			Debug.notification("Tattoos Scrubbed")
+			sTatRemove = "$SLUTS_Click"
 		endif
 	EndIf
-	If(sUnponify == "Working")
+	If(sUnponify == "$SLUTS_Working")
 		Debug.Notification("Removing DD Items..")
-		sUnponify = "Click"
-		Bd.UndressPony(Game.GetPlayer(), true)
-		SetOptionFlagsST(OPTION_FLAG_NONE, false, "RemoveDD")
+		sUnponify = "$SLUTS_Click"
+		Bd.UndressPony(Game.GetPlayer(), false)
 	EndIf
-	If(sReturnCart == "Working")
+	If(sReturnCart == "$SLUTS_Working")
 		missionSc.Tether()
-		sReturnCart = "Click"
-		SetOptionFlagsST(OPTION_FLAG_NONE, false, "ReturnCart")
+		sReturnCart = "$SLUTS_Click"
 	EndIf
 
 EndEvent
@@ -174,6 +158,7 @@ EndEvent
 ; ==================================
 ; 				States // Settings
 ; ==================================
+
 ;Haul Types
 State defaultHaul
 	Event OnSliderOpenST()
@@ -187,7 +172,7 @@ State defaultHaul
 		SetSliderOptionValueST(iHaulType01)
 	EndEvent
 	Event OnHighlightST()
-		SetInfoText("$SLUTS_defHaul_info")
+		SetInfoText("$SLUTS_HaulCargoHighlight")
 	EndEvent
 EndState
 
@@ -203,7 +188,7 @@ State premiumHaul
 		SetSliderOptionValueST(iHaulType02)
 	EndEvent
 	Event OnHighlightST()
-		SetInfoText("$SLUTS_premHaul_info")
+		SetInfoText("$SLUTS_HaulDeliveryHighlight")
 	EndEvent
 EndState
 
@@ -219,7 +204,7 @@ State SpontFail
 		SetSliderOptionValueST(iSpontFail)
 	EndEvent
 	Event OnHighlightST()
-		SetInfoText("$SLUTS_SpontFail_Info")
+		SetInfoText("$SLUTS_SpontFailHighlight")
 	EndEvent
 EndState
 
@@ -233,7 +218,7 @@ state SpontFailRandom
 		SetToggleOptionValueST(bSpontFailRandom)
 	endevent
 	event onhighlightst()
-		SetInfoText("$SLUTS_SpontFailRandom_Info")
+		SetInfoText("$SLUTS_SpontFailRndHighlight")
 	endevent
 endstate
 
@@ -255,51 +240,10 @@ State RehabRate
 	EndEvent
 
 	Event OnHighlightST()
-		SetInfoText("$SLUTS_sRehabRate_Highlight")
+		SetInfoText("$SLUTS_RehabRateHighlight")
 	EndEvent
 EndState
 
-State PilfChance
-	Event OnSliderOpenST()
-		SetSliderDialogStartValue(iChancePilf)
-		SetSliderDialogDefaultValue(50)
-		SetSliderDialogRange(0, 100)
-		SetSliderDialogInterval(1)
-	EndEvent
-	Event OnSliderAcceptST(float value)
-		iChancePilf = value as int
-		SetSliderOptionValueST(iChancePilf)
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_PilfChance_Info")
-	EndEvent
-EndState
-
-State PilfChanceIncr
-	Event OnSelectST()
-		bPilfChanceIncr = !bPilfChanceIncr
-		SetToggleOptionValueST(bPilfChanceIncr)
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_PilfChanceIncrease_Info")
-	EndEvent
-EndState
-
-State MaxPilferage
-	Event OnSliderOpenST()
-		SetSliderDialogStartValue(iMaxPilferage)
-		SetSliderDialogDefaultValue(750)
-		SetSliderDialogRange(50, 1500)
-		SetSliderDialogInterval(50)
-	EndEvent
-	Event OnSliderAcceptST(float value)
-		iMaxPilferage = value as int
-		SetSliderOptionValueST(iMaxPilferage)
-	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_MaxPilferage_Info")
-	EndEvent
-EndState
 ;Simple Slavery
 State SSdebtScale
 	Event OnMenuOpenST()
@@ -319,7 +263,7 @@ State SSdebtScale
 	EndEvent
 
 	Event OnHighlightST()
-		SetInfoText("$SLUTS_sSSdebtScale_Highlight")
+		SetInfoText("$SLUTS_SSdebtScaleHighlight")
 	EndEvent
 EndState
 
@@ -327,74 +271,6 @@ EndState
 ; ==================================
 ; 			States // Customisation
 ; ==================================
-; Livery
-
-; State CostumeChoice
-; 	Event OnMenuOpenST()
-; 		SetMenuDialogStartIndex(costumeIndex)
-; 		SetMenuDialogDefaultIndex(0)
-; 		SetMenuDialogOptions(costumeList)
-; 	EndEvent
-; 	Event OnMenuAcceptST(int index)
-; 		costumeIndex = index
-; 		SetMenuOptionValueST(costumeList[costumeIndex])
-; 		; Bd.SetColor(index*2)
-; 	EndEvent
-; 	Event OnDefaultST()
-; 		costumeIndex = 0
-; 		SetMenuOptionValueST(costumeList[costumeIndex])
-; 		; Bd.SetColor(0)
-; 	EndEvent
-; 	Event OnHighlightST()
-; 		SetInfoText("Customize your base color theme.")
-; 	endEvent
-; EndState
-
-; State TailChoice
-; 	Event OnMenuOpenST()
-; 		SetMenuDialogStartIndex(tailsIndex)
-; 		SetMenuDialogDefaultIndex(2)
-; 		SetMenuDialogOptions(tailList)
-; 	EndEvent
-; 	Event OnMenuAcceptST(int index)
-; 		tailsIndex = index
-; 		SetMenuOptionValueST(tailList[tailsIndex])
-; 		Bd.Dev_Inv[7] = form_tails_i.GetAt(tailsIndex) As Armor
-; 		; Bd.Dev_Ren[7] = form_tails_s.GetAt(tailsIndex) as Armor
-; 	EndEvent
-; 	Event OnDefaultST()
-; 		tailsIndex = 2
-; 		SetMenuOptionValueST(tailList[tailsIndex])
-; 		Bd.Dev_Inv[7] = form_tails_i.GetAt(tailsIndex) As Armor
-; 		; Bd.Dev_Ren[7] = form_tails_s.GetAt(tailsIndex) as Armor
-; 	EndEvent
-; 	Event OnHighlightST()
-; 		SetInfoText("Customize your ponytail. No not that type of ponytail...")
-; 	endEvent
-; EndState
-
-; State YokeChoice
-; 	Event OnMenuOpenST()
-; 		SetMenuDialogStartIndex(yokesIndex)
-; 		SetMenuDialogDefaultIndex(0)
-; 		SetMenuDialogOptions(yokesList)
-; 	EndEvent
-; 	Event OnMenuAcceptST(int index)
-; 		yokesIndex = index
-; 		SetMenuOptionValueST(yokesList[yokesIndex])
-; 		Bd.Dev_Inv[2] = form_yoke_i.GetAt(yokesIndex) As Armor
-; 		; Bd.Dev_Ren[2] = form_yoke_s.GetAt(yokesIndex) as armor
-; 	EndEvent
-; 	Event OnDefaultST()
-; 		yokesIndex = 0
-; 		SetMenuOptionValueST(yokesList[yokesIndex])
-; 		Bd.Dev_Inv[2] = form_yoke_i.GetAt(0) As Armor
-; 		; Bd.Dev_Ren[2] = form_yoke_s.GetAt(0) as armor
-; 	EndEvent
-; 	Event OnHighlightST()
-; 		SetInfoText("Customize your yoke style.\nIF YOU ARE EXPERENCING CRASHES AFTER THE CART SPELL IS CAST ON YOU TRY THE BREAST OR CHAINLESS DESIGN")
-; 	endEvent
-; EndState
 
 state UseThermal
 	event onselectst()
@@ -449,7 +325,7 @@ state UseSlutsLivery
 		SetToggleOptionValueST(bUseSlutsLivery)
 	endevent
 	event onhighlightst()
-		SetInfoText("I$SLUTS_UseSlutsLivery_Info")
+		SetInfoText("I$SLUTS_UseSlutsLiveryHighlight")
 	endevent
 endstate
 
@@ -463,7 +339,7 @@ state UseSlutsColors
 		SetToggleOptionValueST(bUseSlutsColors)
 	endevent
 	event onhighlightst()
-		SetInfoText("$SLUTS_UseSlutsColors_Info")
+		SetInfoText("$SLUTS_UseSlutsColorsHighlight")
 	endevent
 endstate
 
@@ -481,7 +357,7 @@ state CustomLiveryColor
 		SetColorOptionValueST(iCustomLiveryColor)
 	endEvent
 	event OnHighlightST()
-		SetInfoText("$SLUTS_CustomLiveryColor_Info")
+		SetInfoText("$SLUTS_CustomLiveryColorHighlight")
 	endEvent
 endState
 
@@ -497,117 +373,53 @@ state LargeMsg
 		bLargeMsg = false
 		SetToggleOptionValueST(bLargeMsg)
 	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_LargeMsg_Info")
-	endevent
-
 endstate
-
-State NoRemoveItems
-	event onselectst()
-		bNoRemoveItems = !bNoRemoveItems
-		SetToggleOptionValueST(bNoRemoveItems)
-	endevent
-	event ondefaultst()
-		bNoRemoveItems = false
-		SetToggleOptionValueST(bNoRemoveItems)
-	endevent
-	event onhighlightst()
-		SetInfoText("$SLUTS_NoRemoveItems_Info")
-	endevent
-endState
 
 State DDStruggle
 	Event OnSelectST()
 		bStruggle = !bStruggle
 		SetToggleOptionValueST(bStruggle)
 	EndEvent
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_DDStruggle_Info")
-	EndEvent
 EndState
 ;Debug
 state EmergencyTatRemove
 	event onselectst()
-		sTatRemove = "Working"
-		Debug.trace("SLUTS MCM: Attempting to remove SlaveTats")
+		sTatRemove = "$SLUTS_Working"
 		SetTextoptionValueST(sTatRemove)
 		SetOptionFlagsST(OPTION_FLAG_DISABLED)
-		Debug.MessageBox("$SLUTS_dEmergencyTatRemove_Msg")
+		ShowMessage("$SLUTS_EmergencyTatRemoveMsg", false, "$SLUTS_Ok")
 	endevent
 	event onhighlightst()
-		SetInfoText("$SLUTS_dEmergencyTatRemove_Highlight")
+		SetInfoText("$SLUTS_EmergencyTatRemoveHighlight")
 	endevent
 endstate
 
 State RemoveDD
 	Event OnSelectST()
-		sUnponify = "Working"
-		Debug.trace("SLUTS MCM: Attempting to remove SlaveTats")
+		sUnponify = "$SLUTS_Working"
 		SetTextoptionValueST(sUnponify)
 		SetOptionFlagsST(OPTION_FLAG_DISABLED)
+		ShowMessage("$SLUTS_removeDDMsg", false, "$SLUTS_Ok")
 		Debug.MessageBox("$SLUTS_removeDD_Msg")
 	EndEvent
 
 	Event OnHighlightST()
-		SetInfoText("$SLUTS_removeDD_Highlight")
+		SetInfoText("$SLUTS_removeDDHighlight")
 	EndEvent
 EndState
 
 state ReturnCart
 	event onselectst()
-		sReturnCart = "Working"
-		Debug.Trace("SLUTS MCM: Attempting to force return Cart")
+		sReturnCart = "$SLUTS_Working"
 		SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		SetTextoptionValueST(sReturnCart)
+		ShowMessage("$SLUTS_ReturnCartMsg", false, "$SLUTS_Ok")
 		Debug.MessageBox("$SLUTS_dReturnCart_Msg")
 	endevent
 	event onhighlightst()
-		SetInfoText("$SLUTS_dReturnCart_Info")
+		SetInfoText("$SLUTS_ReturnCartHighlight")
 	endevent
 endstate
-
-; state SetEssential
-; 	event onselectst()
-; 		bSetEssential = !bSetEssential
-; 		SetToggleOptionValueST(bSetEssential)
-; 	endevent
-; 	event ondefaultst()
-; 		bSetEssential = false
-; 		SetToggleOptionValueST(bSetEssential)
-; 	endevent
-; 	event onhighlightst()
-; 		SetInfoText("$SLUTS_SetEssential_Info")
-; 	endevent
-; endstate
-
-; State ShowDistance
-; 	Event OnSelectST()
-; 		bShowDist = !bShowDist
-; 		SetToggleOptionValueST(bShowDist)
-; 	EndEvent
-; 	Event OnHighlightST()
-; 		SetInfoText("Get a notification telling you the Distance between your Dispatch & Destination Root. This is number is meaningless for regular play")
-; 	EndEvent
-; EndState
-
-State ResetCart
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_ResetCart_Info")
-	endEvent
-EndState
-
-State TogglePhysics
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_TogglePhysics_Info")
-	endEvent
-EndState
-
-State SpawnCart
-	Event OnHighlightST()
-		SetInfoText("$SLUTS_SpawnCart_Info")
-	endEvent
-EndState
 
 ; ---------------------------------- Utility
 int Function getFlag(bool option)
