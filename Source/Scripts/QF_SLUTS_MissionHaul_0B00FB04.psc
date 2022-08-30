@@ -1,36 +1,6 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 17
+;NEXT FRAGMENT INDEX 18
 Scriptname QF_SLUTS_MissionHaul_0B00FB04 Extends Quest Hidden
-
-;BEGIN ALIAS PROPERTY Player
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY StartHold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_StartHold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DestHold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_DestHold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY KartRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_KartRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY HumiliChestRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_HumiliChestRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SceneRecipient
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SceneRecipient Auto
-;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DestHoldCap
 ;ALIAS PROPERTY TYPE LocationAlias
@@ -47,9 +17,9 @@ ReferenceAlias Property Alias_EscrowChestRef Auto
 ReferenceAlias Property Alias_RecipientRef Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY DispatcherRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_DispatcherRef Auto
+;BEGIN ALIAS PROPERTY StartHold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_StartHold Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY ScenePlayer
@@ -57,9 +27,49 @@ ReferenceAlias Property Alias_DispatcherRef Auto
 ReferenceAlias Property Alias_ScenePlayer Auto
 ;END ALIAS PROPERTY
 
+;BEGIN ALIAS PROPERTY DispatcherRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_DispatcherRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY KartRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_KartRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY PackageRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_PackageRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY TargetRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_TargetRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SceneRecipient
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SceneRecipient Auto
+;END ALIAS PROPERTY
+
 ;BEGIN ALIAS PROPERTY SceneSpell
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_SceneSpell Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY HumiliChestRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_HumiliChestRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DestHold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_DestHold Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Manifest
@@ -67,63 +77,17 @@ ReferenceAlias Property Alias_SceneSpell Auto
 ReferenceAlias Property Alias_Manifest Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_13
-Function Fragment_13()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
-;BEGIN CODE
-; Voluntarely doing another haul
-SetObjectiveCompleted(kmyQuest.qstage)
+;BEGIN ALIAS PROPERTY PackageSpawn
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_PackageSpawn Auto
+;END ALIAS PROPERTY
 
-kmyQuest.Blackout()
-kmyQuest.CreateChainMission(false)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_7
-Function Fragment_7()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
+;BEGIN FRAGMENT Fragment_0
+Function Fragment_0()
 ;BEGIN CODE
-; Haul Series is done. Enable Escrow n all that
-SendModEvent("SLUTS_MissionQuit")
+; Run successfully completed with picking up a chest
 CompleteAllObjectives()
-
-kmyQuest.Blackout()
-kmyQuest.Quit()
-
-SetObjectiveDisplayed(100)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
-;BEGIN CODE
-;/ This is unused V3+
-
- Run successfully completed and doing another haul
-Game.GetPlayer().RemoveItem(Alias_Manifest.GetReference(), 1, true)
-CompleteAllObjectives()
-kmyQuest.ChainMission(0)
-/;
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_9
-Function Fragment_9()
-;BEGIN CODE
-; Setup completed
+Stop()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -142,10 +106,20 @@ SendModEvent("SLUTS_MissionEnd")
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_16
-Function Fragment_16()
+;BEGIN FRAGMENT Fragment_8
+Function Fragment_8()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
 ;BEGIN CODE
-SendModEvent("SLUTS_MissionStart")
+;/ This is unused V3+
+
+Run successfully completed and forced into another haul
+Game.GetPlayer().RemoveItem(Alias_Manifest.GetReference(), 1, true)
+CompleteAllObjectives()
+kmyQuest.ChainMission(1)
+/;
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -168,6 +142,68 @@ kmyQuest.FailHaul() ; This also start a chainhaul
 EndFunction
 ;END FRAGMENT
 
+;BEGIN FRAGMENT Fragment_17
+Function Fragment_17()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Delivery Job, Part1 Completed
+kmyQuest.UnregisterForUpdate()
+SetObjectiveCompleted(22)
+kmyQuest.MissionComplete = 1
+
+If(IsObjectiveCompleted(82))
+  SetObjectiveCompleted(82, false)
+EndIf
+SetObjectiveDisplayed(82, true, true)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_9
+Function Fragment_9()
+;BEGIN CODE
+; Setup completed
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_13
+Function Fragment_13()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Voluntarely doing another haul
+SetObjectiveCompleted(kmyQuest.qstage)
+
+kmyQuest.Blackout()
+kmyQuest.CreateChainMission(false)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+;/ This is unused V3+
+
+ Run successfully completed and doing another haul
+Game.GetPlayer().RemoveItem(Alias_Manifest.GetReference(), 1, true)
+CompleteAllObjectives()
+kmyQuest.ChainMission(0)
+/;
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;BEGIN FRAGMENT Fragment_11
 Function Fragment_11()
 ;BEGIN AUTOCAST TYPE SlutsMissionHaul
@@ -177,6 +213,8 @@ SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;BEGIN CODE
 ; Setup Scene completed, Quest started properly here
 SendModEvent("SLUTS_MissionHaul", kmyQuest.GetState())
+Print()
+StorageUtil.SetFloatValue(none, "SLUTS_Time", Utility.GetCurrentRealTime())
 SetObjectiveDisplayed(20)
 
 kmyQuest.HandleStage()
@@ -184,30 +222,31 @@ kmyQuest.HandleStage()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_0
-Function Fragment_0()
-;BEGIN CODE
-; Run successfully completed with picking up a chest
-CompleteAllObjectives()
-Stop()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_8
-Function Fragment_8()
+;BEGIN FRAGMENT Fragment_7
+Function Fragment_7()
 ;BEGIN AUTOCAST TYPE SlutsMissionHaul
 Quest __temp = self as Quest
 SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;END AUTOCAST
 ;BEGIN CODE
-;/ This is unused V3+
-
-Run successfully completed and forced into another haul
-Game.GetPlayer().RemoveItem(Alias_Manifest.GetReference(), 1, true)
+; Haul Series is done. Enable Escrow n all that
+SendModEvent("SLUTS_MissionQuit")
+Print()
+StorageUtil.SetFloatValue(none, "SLUTS_Time", 0)
 CompleteAllObjectives()
-kmyQuest.ChainMission(1)
-/;
+
+kmyQuest.Blackout()
+kmyQuest.Quit()
+
+SetObjectiveDisplayed(100)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_16
+Function Fragment_16()
+;BEGIN CODE
+SendModEvent("SLUTS_MissionStart")
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -231,3 +270,12 @@ EndFunction
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 Scene Property recipIntro  Auto  
+
+Function Print()
+  float time = StorageUtil.GetFloatValue(none, "SLUTS_Time")
+  If(time > 0)
+    time = Utility.GetCurrentRealTime() - time
+    String str = "Dispatch = " + Alias_DispatcherRef.GetReference() + " | Recipient = " + Alias_RecipientRef.GetReference() + " | Time = " + time
+    JsonUtil.StringListAdd("../SLUTS", "Time", str)
+  EndIf
+EndFunction

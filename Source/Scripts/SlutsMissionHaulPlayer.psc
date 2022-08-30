@@ -38,3 +38,27 @@ Event OnPlayerLoadGame()
     Haul.OnLoadTether()
   EndIf
 EndEvent
+
+State SpecialDelivery
+  Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
+    Weapon wep = akSource as Weapon
+    If(!wep)
+      Spell spll = akSource as Spell
+      If(!spll || !spll.IsHostile())
+        return
+      EndIf
+      int i = spll.GetCostliestEffectIndex()
+      MagicEffect effect = spll.GetNthEffectMagicEffect(i)
+      If(effect.GetAssociatedSkill() == "Destruction")
+        Haul.Pilferage += Haul.GoodsTotal * 0.01
+      EndIf
+    Else
+      If(abPowerAttack)
+        Haul.Pilferage += Haul.GoodsTotal * 0.03
+      Else
+        Haul.Pilferage += Haul.GoodsTotal * 0.01
+      EndIf
+    EndIf
+    Haul.CheckPackageStatus()
+  EndEvent
+EndState

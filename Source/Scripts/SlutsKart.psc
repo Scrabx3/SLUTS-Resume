@@ -37,17 +37,11 @@ event onactivate(objectreference akActionRef)
 endevent
 
 Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-	If(abBashAttack || akAggressor != Game.GetPlayer())
+	If(!mission.MCM.bCargoAttack || abBashAttack || akAggressor != Game.GetPlayer())
 		return
 	EndIf
 	Weapon wep = akSource as Weapon
-	If(wep)
-		If(abPowerAttack)
-			mission.Pilferage += wep.GetBaseDamage()
-		Else
-			mission.Pilferage += wep.GetBaseDamage() / 3.0
-		EndIf
-	Else
+	If(!wep)
 		Spell spll = akSource as Spell
 		If(!spll || !spll.IsHostile())
 			return
@@ -55,12 +49,25 @@ Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile,
 		int i = spll.GetCostliestEffectIndex()
 		MagicEffect effect = spll.GetNthEffectMagicEffect(i)
 		If(effect.GetAssociatedSkill() == "Destruction")
-			mission.Pilferage += spll.GetNthEffectMagnitude(i) / 8.0
+			mission.Pilferage += mission.GoodsTotal * 0.01
 		EndIf
+	Else
+		If(abPowerAttack)
+			mission.Pilferage += mission.GoodsTotal * 0.03
+		Else
+			mission.Pilferage += mission.GoodsTotal * 0.01
+		EndIf
+	EndIf
+	If(mission.Pilferage >= mission.GoodsTotal + mission.KartHealth)
+		mission.Pilferage = mission.GoodsTotal + mission.KartHealth
+		Disable()
 	EndIf
 EndEvent
 
 Event OnUnload()
+	If(IsDisabled() || !mission.MCM.bCargoAway)
+		return
+	EndIf
 	GoToState("Unloaded")
 EndEvent
 
@@ -92,8 +99,10 @@ Function PilferAway()
 	EndIf
 	Debug.Trace("[SLUTS] PilferAway()")
 	If(Utility.RandomFloat(0, 99.5) < PilferAway)
-		mission.Pilferage += 7.5
-		If(mission.Pilferage > mission.GoodsTotal + 100)
+		mission.Pilferage += mission.GoodsTotal * 0.03 + mission.Pilferage * 0.01
+		If(mission.Pilferage >= mission.GoodsTotal + mission.KartHealth)
+			Debug.Trace("[SLUTS] Kart Destroyed")
+			mission.Pilferage = mission.GoodsTotal + mission.KartHealth
 			Disable()
 			GoToState("")
 			return

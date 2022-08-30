@@ -25,28 +25,27 @@ int[] Property HaulWeights
 EndProperty
 
 int Property iSpontFail = 0 Auto Hidden
-{Chance to randomly fail a perfect run}
 bool Property bSpontFailRandom = true Auto Hidden
-int Property iRehabtRate = 1 Auto Hidden
-{Difficulty Scale for Rehab System}
+bool Property bCargoAssault = true Auto Hidden
+bool Property bCargoAttack = true Auto Hidden
+bool Property bCargoAway = true Auto Hidden
 
+int Property iRehabtRate = 1 Auto Hidden
 int Property iSSminDebt = 2 Auto Hidden
 ; Customisation
 bool property bUseThermal = false auto Hidden
 bool property bThermalColor = true Auto Hidden
 bool bPonyAnims = true
-;SlaveTats
+
 bool property bUseSlutsLivery = true auto Hidden Conditional
 bool property bUseSlutsColors = true auto Hidden Conditional
 int property iCustomLiveryColor = 0 auto Hidden
-;Debug
+; Debug
 bool Property bLargeMsg = false Auto Hidden
 bool Property bStruggle = true Auto Hidden
-string sTatRemove = "Click"
-string sUnponify = "Click"
-string sReturnCart = "Click"
-string sReinitMod = "Click"
-; bool property bSetEssential = false auto Hidden
+string sTatRemove = "$SLUTS_Click"
+string sUnponify = "$SLUTS_Click"
+string sReturnCart = "$SLUTS_Click"
 bool Property bShowDist = false Auto Hidden
 
 ; ---------------------------------- Code
@@ -91,20 +90,28 @@ Event OnPageReset(string Page)
 	endIf
 	If(Page == "$SLUTS_Settings")
 		AddHeaderOption("$SLUTS_HaulTypes")
-		AddSliderOptionST("defaultHaul", "$SLUTS_HaulCargo", iHaulType01)
-		AddSliderOptionST("premiumHaul", "$SLUTS_HaulDelivery", iHaulType02, "{0}", OPTION_FLAG_DISABLED)
+		AddSliderOptionST("defaultHaul", "$SLUTS_HaulCargo", iHaulType01, "{0}")
+		AddSliderOptionST("premiumHaul", "$SLUTS_HaulDelivery", iHaulType02, "{0}")
+		AddEmptyOption()	; Reserved for Additional Haul Types
+		; AddEmptyOption()	; Reserved for Additional Haul Types
+		; AddEmptyOption()	; Reserved for Additional Haul Types
+		; AddEmptyOption()	; Reserved for Additional Haul Types
+		; AddEmptyOption()	; Reserved for Additional Haul Types
+		AddHeaderOption("$SLUTS_Crime")
+		AddMenuOptionST("RehabRate", "$SLUTS_RehabRate", difficulty[iRehabtRate])
+		AddHeaderOption("$SLUTS_SimpleSlavery")
+		AddMenuOptionST("SSdebtScale", "$SLUTS_SSdebtScale", difficulty[iSSminDebt])
 		; ============================
 		SetCursorPosition(1)
 		; ============================
-		AddHeaderOption("$SLUTS_Hauls")
+		AddHeaderOption("$SLUTS_HaulCargo")
 		AddSliderOptionST("SpontFail", "$SLUTS_SpontFail", iSpontFail, "{0}%")
 		AddToggleOptionST("SpontFailRandom", "$SLUTS_SpontFailRnd", bSpontFailRandom)
 		AddEmptyOption()
-		AddHeaderOption("$SLUTS_Crime")
-		AddMenuOptionST("RehabRate", "$SLUTS_RehabRate", difficulty[iRehabtRate])
+		; AddToggleOptionST("cargoassault", "$SLUTS_CargoAssault", bCargoAssault)
+		; AddToggleOptionST("cargoattac", "$SLUTS_CargoAttack", bCargoAttack)
+		; AddToggleOptionST("cargoaway", "$SLUTS_CargoAway", bCargoAway)
 		AddEmptyOption()
-		AddHeaderOption("$SLUTS_SimpleSlavery")
-		AddMenuOptionST("SSdebtScale", "$SLUTS_SSdebtScale", difficulty[iSSminDebt])
 
 	ElseIf(Page == "$SLUTS_Customisation")
 		AddHeaderOption("$SLUTS_FillyGear")

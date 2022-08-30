@@ -50,6 +50,12 @@ Actor Function GetDestination(Actor akExclude, Actor akExclude2 = none)
 	If(akExclude2)
 		potentials = StrippedCopyCat(potentials, akExclude2)
 	EndIf
+	int where = myDrivers.Find(akExclude)
+	If(where == 4)
+		potentials = StrippedCopyCat(potentials, myDrivers[9])
+	ElseIf(where == 9)
+		potentials = StrippedCopyCat(potentials, myDrivers[4])
+	EndIf
 	return potentials[Utility.RandomInt(0, (potentials.Length - 1))]
 EndFunction
 Actor Function GetDestinationEx(Actor[] akExclude)

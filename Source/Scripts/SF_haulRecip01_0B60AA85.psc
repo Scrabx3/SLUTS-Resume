@@ -2,12 +2,15 @@
 ;NEXT FRAGMENT INDEX 3
 Scriptname SF_haulRecip01_0B60AA85 Extends Scene Hidden
 
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1()
+;BEGIN FRAGMENT Fragment_0
+Function Fragment_0()
 ;BEGIN CODE
-SendModEvent("dhlp-Resume")
-game.setplayeraidriven(false)
-Haul.Unfriend()
+SendModEvent("dhlp-Suspend")
+Haul.Kart.SetMotionType(Haul.Kart.Motion_Keyframed)
+Haul.MissionComplete = 1
+Haul.Befriend()
+Game.GetPlayer().StopCombatAlarm()
+Game.SetPlayerAIDriven(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -20,14 +23,12 @@ Haul.DoPayment()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_0
-Function Fragment_0()
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
 ;BEGIN CODE
-SendModEvent("dhlp-Suspend")
-Haul.Kart.SetMotionType(Haul.Kart.Motion_Keyframed)
-Haul.Befriend()
-Game.GetPlayer().StopCombatAlarm()
-Game.SetPlayerAIDriven(true)
+SendModEvent("dhlp-Resume")
+game.setplayeraidriven(false)
+Haul.Unfriend()
 ;END CODE
 EndFunction
 ;END FRAGMENT
