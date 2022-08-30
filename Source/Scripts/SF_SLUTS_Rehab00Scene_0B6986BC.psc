@@ -10,10 +10,19 @@ FadeToBlackImod.Apply()
 Utility.Wait(2)
 FadeToBlackImod.PopTo(FadeToBlackHoldImod)
 Utility.Wait(3)
-Guard.GetReference().MoveTo(where, afYOffset = -100.0)
 Game.GetPlayer().MoveTo(where)
+Guard.GetReference().MoveTo(where, afYOffset = -100.0)
 Utility.Wait(0.5)
 FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
+;BEGIN CODE
+SendModEvent("dhlp-Resume")
+game.setplayeraidriven(false)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -28,16 +37,6 @@ Game.GetPlayer().StopCombatAlarm()
 ObjectReference root = StorageUtil.GetFormValue(Driver.GetReference(), "SLUTS_ROOT") as ObjectReference
 PlayerLoc.ForceRefTo(root.GetLinkedRef(PlayerCarriage))
 GetOwningQuest().SetStage(5)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1()
-;BEGIN CODE
-SendModEvent("dhlp-Resume")
-game.setplayeraidriven(false)
-Guard.GetReference().MoveToMyEditorLocation()
 ;END CODE
 EndFunction
 ;END FRAGMENT
