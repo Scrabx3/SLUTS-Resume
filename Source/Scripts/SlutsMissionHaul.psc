@@ -230,7 +230,6 @@ Function SetupHaul()
   PlayerRef.PlaceAtMe(SummonFX)
   StripPlayer()
   SetupHaulImpl()
-  Bd.DressUpPony(PlayerRef)
   Pilferage = 0.0
 
   If(Game.GetModByName("YameteKudasai.esp") != 255)
@@ -258,6 +257,7 @@ State CartHaul
       EndIf
     EndIf
     Tether()
+    Bd.DressUpPony(PlayerRef)
   EndFunction
   
   Event OnEndState()
@@ -291,6 +291,7 @@ State SpecialDelivery
     PlayerAlias.GoToState(Delivery)
     DeliverySelectorQst.Stop()
     ; TODO: Look for artist for some kinda bag equipping
+    Bd.DressUpPony(PlayerRef, false)
     PlayerRef.AddItem(PackageREF.GetReference())
     ; Total Dur from Riften to Solitude = ~30min -> ~10k Distance every Minute
     PremiumDeliveryDelay = 0

@@ -213,8 +213,6 @@ SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;BEGIN CODE
 ; Setup Scene completed, Quest started properly here
 SendModEvent("SLUTS_MissionHaul", kmyQuest.GetState())
-Print()
-StorageUtil.SetFloatValue(none, "SLUTS_Time", Utility.GetCurrentRealTime())
 SetObjectiveDisplayed(20)
 
 kmyQuest.HandleStage()
@@ -231,8 +229,6 @@ SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;BEGIN CODE
 ; Haul Series is done. Enable Escrow n all that
 SendModEvent("SLUTS_MissionQuit")
-Print()
-StorageUtil.SetFloatValue(none, "SLUTS_Time", 0)
 CompleteAllObjectives()
 
 kmyQuest.Blackout()
@@ -270,12 +266,3 @@ EndFunction
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 Scene Property recipIntro  Auto  
-
-Function Print()
-  float time = StorageUtil.GetFloatValue(none, "SLUTS_Time")
-  If(time > 0)
-    time = Utility.GetCurrentRealTime() - time
-    String str = "Dispatch = " + Alias_DispatcherRef.GetReference() + " | Recipient = " + Alias_RecipientRef.GetReference() + " | Time = " + time
-    JsonUtil.StringListAdd("../SLUTS", "Time", str)
-  EndIf
-EndFunction
