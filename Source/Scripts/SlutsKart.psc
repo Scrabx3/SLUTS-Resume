@@ -66,7 +66,7 @@ EndEvent
 
 Event OnCellDetach()
 	Debug.Trace("[SLUTS] Kart OnCellDetach()")
-	mission.SetUntethered()
+	mission.Untether()
 EndEvent
 
 Event OnUnload()

@@ -563,8 +563,11 @@ EndFunction
 ; =============================== KEYCODES
 ; ======================================================
 Event OnKeyDown(int KeyCode)
+  If(Utility.IsInMenuMode())
+		return
+  EndIf
   bool Ctrl = Input.IsKeyPressed(29) || Input.IsKeyPressed(157)
-  If(!Ctrl || !Kart)
+  If(!Ctrl || !Kart || PlayerRef.IsInInterior())
     return
   EndIf
   Debug.Trace("[SLUTS] Key Down")
@@ -616,7 +619,7 @@ EndFunction
 
 Function OnLoadTether()
   RegisterEvents()
-  If(!bIsThethered || !Kart)
+  If(!bIsThethered || !Kart || PlayerRef.IsInInterior())
     return
   EndIf
   ; Tether will always come loose when reloading
@@ -625,19 +628,17 @@ Function OnLoadTether()
 EndFunction
 
 Function Untether()
-  Kart.Disable()
-  Utility.Wait(0.1)
-  Kart.Enable()
-  SetUntethered()
-endFunction
-Function SetUntethered()
   If(!bIsThethered)
     return
+  ElseIf(Kart.Is3DLoaded())
+    Kart.Disable()
+    Utility.Wait(0.1)
+    Kart.Enable()
   EndIf
   Debug.Trace("[SLUTS] Untethered Kart")
   bIsThethered = false
   Game.EnableFastTravel(true)
-EndFunction
+endFunction
 
 Function Unhitch()
   If(!bIsThethered)
