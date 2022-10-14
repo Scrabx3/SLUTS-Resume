@@ -12,7 +12,7 @@ string[] difficulty
 ; Settings
 int Property iHaulType01 = 50 Auto Hidden
 {Default Haul, with the buggy cart}
-int Property iHaulType02 = 0 Auto Hidden
+int Property iHaulType02 = 50 Auto Hidden
 {Premium Haul, special Delivery to a random NPC}
 int[] Property HaulWeights
 	{All Haul Types wrapped together in a single array}
@@ -407,7 +407,6 @@ State RemoveDD
 		SetTextoptionValueST(sUnponify)
 		SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		ShowMessage("$SLUTS_removeDDMsg", false, "$SLUTS_Ok")
-		Debug.MessageBox("$SLUTS_removeDD_Msg")
 	EndEvent
 
 	Event OnHighlightST()
@@ -421,7 +420,6 @@ state ReturnCart
 		SetOptionFlagsST(OPTION_FLAG_DISABLED)
 		SetTextoptionValueST(sReturnCart)
 		ShowMessage("$SLUTS_ReturnCartMsg", false, "$SLUTS_Ok")
-		Debug.MessageBox("$SLUTS_dReturnCart_Msg")
 	endevent
 	event onhighlightst()
 		SetInfoText("$SLUTS_ReturnCartHighlight")

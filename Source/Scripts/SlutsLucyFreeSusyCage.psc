@@ -11,7 +11,7 @@ ObjectReference Property CageCenter Auto
 Auto State Waiting
 	Event OnTriggerEnter(ObjectReference akActionRef)
 		If(akActionRef == LucyREF && CageCenter.GetDistance(SusyREF) < 150 && GameHour.Value >= 7 && GameHour.Value <= 12)
-			Debug.Notification("Start myScene")
+			; Debug.Notification("Start myScene")
 			myScene.Start()
 			GoToState("Cooldown")
 			RegisterForSingleUpdateGameTime(10)

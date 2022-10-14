@@ -38,6 +38,8 @@ GlobalVariable Property MissionType Auto  ; Currently active Mission Type
 GlobalVariable Property Payment Auto  ; Base Pay of the current Haul
 MiscObject Property FillyCoin Auto
 MiscObject Property Gold001 Auto
+Message Property DebitMsg Auto
+Message Property AttemptUntetherMsg Auto
 Message Property DetachKartSureMsg Auto
 Message Property ScenePilferageMsg Auto
 Message Property PackageDestroyedMsg Auto
@@ -613,7 +615,7 @@ Function Tether()
   Race r = PlayerRef.GetRace()
   PlayerRef.SetRace(DefaultRace)
   PlayerRef.SetRace(r)
-  Utility.Wait(0.25)
+  Utility.Wait(0.5)
   Kart.TetherToHorse(PlayerRef)
   Game.EnableFastTravel(false)
 EndFunction
@@ -645,7 +647,8 @@ Function Unhitch()
   If(!bIsThethered)
     return
   EndIf
-  Debug.Notification("Attempting to untether..")
+  AttemptUntetherMsg.Show()
+  ; Debug.Notification("Attempting to untether..")
   If(MCM.bStruggle)
     Bd.Lib0.abq.StruggleScene(PlayerRef)
   EndIf
@@ -708,7 +711,8 @@ Function debitRate()
   float dR = Utility.RandomFloat(0.05, 0.35)
   int debit = Math.Floor(TotalPay * dR)
   Escrow.RemoveItem(FillyCoin, debit)
-  data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
+  DebitMsg.Show(dR * 100)
+  ; data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
 EndFunction
 
 function fondle(Message msg=none, float increment=5.0)

@@ -4,6 +4,12 @@ SlutsMissionHaul property mission auto
 keyword property slut_yoke auto
 Actor Property PlayerRef Auto
 
+Message Property NoPilferageMsg Auto					; The cart is loaded and the seal is intact
+Message Property LittlePilferageMsg Auto			; The seal has been broken. Most of the cargo is intact.
+Message Property NotablePilferageMsg Auto			; Several choice items are missing from the cargo.
+Message Property SignificantPilferageMsg Auto	; Your compartment has been well and truly pillaged.
+Message Property SeverePilferageMsg Auto			; Your cargo has been stolen and the cart has been damaged
+
 float PilferAway
 
 Function SetUp()
@@ -22,17 +28,17 @@ event onactivate(objectreference akActionRef)
 	ElseIf(mission.GetStage() < 20 || mission.GetStage() >= 100)
 		return
 	EndIf
-	float p = mission.pilferage/mission.GoodsTotal
+	float p = mission.pilferage / mission.GoodsTotal
 	if p == 0.0
-		debug.notification("The cart is loaded and the seal is intact")
+		NoPilferageMsg.Show()
 	elseif p < 0.3
-		debug.notification("The seal has been broken. Most of the cargo is intact.")
+		LittlePilferageMsg.Show()
 	elseif p < 0.6
-		debug.notification("Several choice items are missing from the cargo.")
+		NotablePilferageMsg.Show()
 	elseif p < 1
-		debug.notification("Your compartment has been well and truly pillaged.")
+		SignificantPilferageMsg.Show()
 	else
-		debug.notification("Your cargo has been stolen and the cart has been damaged")
+		SeverePilferageMsg.Show()
 	endif
 endevent
 
