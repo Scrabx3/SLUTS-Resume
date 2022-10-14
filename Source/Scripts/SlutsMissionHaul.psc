@@ -526,9 +526,11 @@ Function TransferManifest()
   DispatcherRef.GetReference().RemoveItem(Paper, 1, true, PlayerRef)
 EndFunction
 
-Function ShowManifest()
+Function ShowManifest(bool abEquipGag)
   Manifest.GetReference().Activate(PlayerRef)
-  Bd.EquipIdx(Bd.gagIDX)
+  If(abEquipGag)
+    Bd.EquipIdx(Bd.gagIDX)
+  EndIf
 endFunction
 
 ; ======================================================
@@ -570,7 +572,6 @@ Event OnKeyDown(int KeyCode)
   If(!Ctrl || !Kart || PlayerRef.IsInInterior())
     return
   EndIf
-  Debug.Trace("[SLUTS] Key Down")
   If(KeyCode == ActivateKey)
     If(!bIsThethered)
       Tether()

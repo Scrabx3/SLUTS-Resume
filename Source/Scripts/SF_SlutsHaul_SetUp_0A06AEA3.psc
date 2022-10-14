@@ -60,7 +60,7 @@ EndFunction
 ;BEGIN FRAGMENT Fragment_18
 Function Fragment_18()
 ;BEGIN CODE
-Haul.ShowManifest()
+Haul.ShowManifest(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT

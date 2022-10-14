@@ -15,7 +15,7 @@ EndFunction
 Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-(GetOwningQuest() as SlutsMissionHaul).ShowManifest()
+(GetOwningQuest() as SlutsMissionHaul).ShowManifest(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
