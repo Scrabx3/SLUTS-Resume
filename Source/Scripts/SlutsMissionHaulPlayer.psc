@@ -8,7 +8,6 @@ EndProperty
 
 Faction Property CrimeFaction Auto
 MiscObject Property Gold001 Auto
-
 Message Property ArrearsClear Auto
 Message Property ArrearsPay Auto
 
@@ -33,11 +32,11 @@ Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemRefere
   EndIf
 EndEvent
 
-Event OnPlayerLoadGame()
-  If(Haul.MissionType.Value == 0)
+State CartHaul
+	Event OnPlayerLoadGame()
     Haul.OnLoadTether()
-  EndIf
-EndEvent
+  EndEvent
+EndState
 
 State SpecialDelivery
   Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)

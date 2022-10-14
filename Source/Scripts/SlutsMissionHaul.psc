@@ -123,13 +123,13 @@ int Property HumilPick = 0 Auto Hidden Conditional
 bool Property bIsThethered Auto Hidden Conditional
 SlutsKart Property Kart Auto Hidden
 
-int Property Response_Flawless = 0 AutoReadOnly Hidden ; 0 Pilferage + No Debt
-int Property Response_Deduction = 1 AutoReadOnly Hidden ; X Pilferage + No Debt
-int Property Response_Endebted = 2 AutoReadOnly Hidden ; No Pay + Init Debt
-int Property Response_ReduceDebt1 = 3 AutoReadOnly Hidden ; 0 Pilferage + Debt
-int Property Response_ReduceDebt2 = 4 AutoReadOnly Hidden ; X Pilferage + Debt
-int Property Response_DebtStacking = 5 AutoReadOnly Hidden ; No Pay + Stacking Debt
-int Property Response_DebtDone = 6 AutoReadOnly Hidden  ; Debt fully payed off
+int Property Response_Flawless = 0 AutoReadOnly Hidden      ; 0 Pilferage + No Debt
+int Property Response_Deduction = 1 AutoReadOnly Hidden     ; X Pilferage + No Debt
+int Property Response_Endebted = 2 AutoReadOnly Hidden      ; No Pay + Init Debt
+int Property Response_ReduceDebt1 = 3 AutoReadOnly Hidden   ; 0 Pilferage + Debt
+int Property Response_ReduceDebt2 = 4 AutoReadOnly Hidden   ; X Pilferage + Debt
+int Property Response_DebtStacking = 5 AutoReadOnly Hidden  ; No Pay + Stacking Debt
+int Property Response_DebtDone = 6 AutoReadOnly Hidden      ; Debt fully payed off
 int Property EvalResponse Auto Hidden Conditional
 
 ; misc
@@ -254,6 +254,7 @@ State CartHaul
     EndIf
     Tether()
     Bd.DressUpPony(PlayerRef)
+    PlayerAlias.GoToState(CartDefault)
   EndFunction
   
   Event OnEndState()
@@ -608,7 +609,7 @@ Function Tether()
   Race r = PlayerRef.GetRace()
   PlayerRef.SetRace(DefaultRace)
   PlayerRef.SetRace(r)
-  Utility.Wait(0.1)
+  Utility.Wait(0.25)
   Kart.TetherToHorse(PlayerRef)
   Game.EnableFastTravel(false)
 EndFunction
@@ -627,10 +628,16 @@ Function Untether()
   Kart.Disable()
   Utility.Wait(0.1)
   Kart.Enable()
-  bIsThethered = false
-  Debug.Trace("SLUTS: Untethered Kart")
-  Game.EnableFastTravel()
+  SetUntethered()
 endFunction
+Function SetUntethered()
+  If(!bIsThethered)
+    return
+  EndIf
+  Debug.Trace("[SLUTS] Untethered Kart")
+  bIsThethered = false
+  Game.EnableFastTravel(true)
+EndFunction
 
 Function Unhitch()
   If(!bIsThethered)

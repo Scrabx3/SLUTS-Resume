@@ -64,6 +64,11 @@ Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile,
 	EndIf
 EndEvent
 
+Event OnCellDetach()
+	Debug.Trace("[SLUTS] Kart OnCellDetach()")
+	mission.SetUntethered()
+EndEvent
+
 Event OnUnload()
 	If(IsDisabled() || !mission.MCM.bCargoAway)
 		return
