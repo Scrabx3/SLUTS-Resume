@@ -17,9 +17,14 @@ Keyword Property sluts_slavery_kw Auto
 Keyword Property rehab_kw Auto
 
 ; ---------------------------------- Hauls
+
+ObjectReference Function GetLink(ObjectReference akDriver, Keyword akLink) global
+  return (StorageUtil.GetFormValue(akDriver, "SLUTS_ROOT") as ObjectReference).GetLinkedRef(akLink)
+EndFunction
+
 ;/If were already using SendStoryEvent, why not using it properly
 Going to shred this function and get all necessary data here to send it together with the Event. Should spare some Script work when filling Aliases in the actual Haul Quest and give me significantly more control over whats happening/;
-Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
+bool Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 	int customLoc = 1
 	Actor Recipient
 	Location destLoc
@@ -34,7 +39,7 @@ Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 	If(!Recipient || !destLoc)
 		Debug.Trace("[SLUTS] No valid Recipient or Destination, abandon; Recipient: " + Recipient + " | Loc = " + destLoc)
 		Debug.MessageBox("[SLUTS] Unable to find a valid Recipient or Destination, abandon")
-		return
+		return false
 	EndIf
 	Debug.Trace("[SLUTS] Sending story event with " + Dispatcher + " to " + Recipient + " | Loc = " + destLoc)
 	;Loc => Destination
@@ -42,7 +47,7 @@ Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 	;Ref2 => Recipent (Destination Hold)
 	;aiValue1 => Desination: 1 => Custom, 0 => random
 	;aiValue2 => Forced: 1 => True, 0 => False
-	sluts_mission_Kw.SendStoryEvent(destLoc, Dispatcher, Recipient, customLoc, forced)
+	return sluts_mission_Kw.SendStoryEventAndWait(destLoc, Dispatcher, Recipient, customLoc, forced)
 EndFunction
 
 Actor Function GetDestination(Actor akExclude, Actor akExclude2 = none)

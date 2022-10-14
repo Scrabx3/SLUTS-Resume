@@ -200,10 +200,6 @@ Function RegisterEvents()
 	RegisterForModEvent("HookAnimationEnd", "OnAnimEnd")
 endFunction
 
-ObjectReference Function GetLink(ObjectReference driver, Keyword link)
-  return (StorageUtil.GetFormValue(driver, "SLUTS_ROOT") as ObjectReference).GetLinkedRef(link)
-EndFunction
-
 Function Blackout()
   FadeToBlackImod.Apply()
   Utility.Wait(2)
@@ -246,7 +242,7 @@ State CartHaul
     Debug.Trace("[SLUTS] Setting up Cart Haul")
     TargetREF.ForceRefTo(RecipientREF.GetReference())
     If(!Kart)
-      Kart = GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form) as SlutsKart
+      Kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form) as SlutsKart
       KartRef.ForceRefTo(Kart)
       Kart.SetUp()
       Utility.Wait(0.5)
@@ -409,10 +405,10 @@ Function Quit()
   EndIf
   ObjectReference spawn
   If (data.licenseEscrowPort > 0)
-    spawn = GetLink(RecipientREF.GetReference(), EscrowLink)
+    spawn = SlutsMain.GetLink(RecipientREF.GetReference(), EscrowLink)
     data.licenseEscrowPort -= 1
   Else
-    spawn = GetLink(DispatcherREF.GetReference(), EscrowLink)
+    spawn = SlutsMain.GetLink(DispatcherREF.GetReference(), EscrowLink)
   EndIf
   Escrow.MoveTo(spawn)
   Escrow.Lock(false)

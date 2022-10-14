@@ -31,30 +31,30 @@ ReferenceAlias Property StatisticsPlace Auto
 ReferenceAlias Property StatisticsBook Auto
 Book Property StatisticsBook_Form Auto
 ; ---------------------------------- Progression Data
-GlobalVariable Property RunsCompleted Auto
+GlobalVariable Property SeriesCompleted Auto
 {Times the Player completed a Series (opened Escrow Chest)}
 GlobalVariable Property HaulsCompleted Auto
 {Amout of single Hauls the Player completed}
 GlobalVariable Property HaulsPerfect Auto
 {Amount of perfect Hauls the Player completed total}
 
-; BELOW GLOBALS ARE UNUSED AS OF YET
-GlobalVariable Property HaulsCompletedStreak Auto
-{Highest amount of Hauls completed in a single Streak, forced and voluntary}
-GlobalVariable Property HaulsPerfectStreak Auto
-{Highest amount of perfect Hauls in a row}
-GlobalVariable Property HaulsPerfectStreakAllTime Auto
-{Amount of perfect Hauls in a row across multiple Runs}
-GlobalVariable Property voluntaryHaulsCompleted Auto
-{Amount of voluntary Hauls the Player has completed}
-GlobalVariable Property voluntaryHaulsCompletedStreak Auto
-{Highest amount of voluntary Hauls the Plyer has completed in a row}
-GlobalVariable Property ForcedHaulsCompleted Auto
-{Amountfs of forced Hauls the Player completed}
-GlobalVariable Property ForcedHaulsCompletedStreak Auto
-{Highest amount of forced Hauls the Player has completed in a row}
-GlobalVariable Property CargoLost Auto
-{The amount of times the Player failed to get the Cargo to the Recipient}
+; NOTE: BELOW GLOBALS ARE UNUSED AS OF YET
+; GlobalVariable Property HaulsCompletedStreak Auto
+; {Highest amount of Hauls completed in a single Streak, forced and voluntary}
+; GlobalVariable Property HaulsPerfectStreak Auto
+; {Highest amount of perfect Hauls in a row}
+; GlobalVariable Property HaulsPerfectStreakAllTime Auto
+; {Amount of perfect Hauls in a row across multiple Runs}
+; GlobalVariable Property voluntaryHaulsCompleted Auto
+; {Amount of voluntary Hauls the Player has completed}
+; GlobalVariable Property voluntaryHaulsCompletedStreak Auto
+; {Highest amount of voluntary Hauls the Plyer has completed in a row}
+; GlobalVariable Property ForcedHaulsCompleted Auto
+; {Amountfs of forced Hauls the Player completed}
+; GlobalVariable Property ForcedHaulsCompletedStreak Auto
+; {Highest amount of forced Hauls the Player has completed in a row}
+; GlobalVariable Property CargoLost Auto
+; {The amount of times the Player failed to get the Cargo to the Recipient}
 
 ; int Property streak = 0 Auto Hidden Conditional
 ; {The current Haul-Streak, positive = voluntary - negative = forced}
@@ -64,7 +64,7 @@ GlobalVariable Property CargoLost Auto
 ; {The current perfect haul streak. Missionhaul stacks this for every haul it considers "perfect"}
 
 Function UpdateGlobals()
-  UpdateCurrentInstanceGlobal(RunsCompleted)
+  UpdateCurrentInstanceGlobal(SeriesCompleted)
   UpdateCurrentInstanceGlobal(HaulsCompleted)
   UpdateCurrentInstanceGlobal(HaulsPerfect)
 EndFunction
@@ -81,7 +81,7 @@ Function RunCompleted(bool abPerfect)
 EndFunction
 
 Function SeriesCompleted()
-  RunsCompleted.Value += 1
+  SeriesCompleted.Value += 1
 EndFunction
 
 ; ======================================================
