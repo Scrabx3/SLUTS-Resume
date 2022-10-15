@@ -6,7 +6,6 @@ SlutsMCM Property MCM Auto
 SlutsBondage Property Bd Auto
 SlutsData Property data Auto
 SlutsHQBusinessLedger Property ledger Auto
-SexLabFramework Property SL Auto
 Actor Property PlayerRef Auto
 MiscObject Property FillyCoin Auto
 MiscObject Property Gold001 Auto
@@ -525,8 +524,7 @@ Function serveGuard(Actor guard)
   Actor[] actors = new Actor[2]
   actors[0] = PlayerRef
   actors[1] = guard
-  sslBaseAnimation[] anims = SL.PickAnimationsByActors(actors)
-  SL.StartSex(actors, anims)
+  SlutsAnimation.StartSceneByActors(actors)
 EndFunction
 
 Function lockRandomRestraintOnPlayer()

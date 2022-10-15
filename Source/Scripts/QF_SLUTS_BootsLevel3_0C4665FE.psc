@@ -36,19 +36,17 @@ Actor PlayerRef = Game.GetPlayer()
 Actor Anette = Alias_Anette.GetReference() as Actor
 
 Actor[] tmp = new Actor[2]
-sslBaseAnimation[] Anims
 If(PlayerRef.GetActorBase().GetSex() == 0) ; male
   tmp[0] = Anette
   tmp[1] = PlayerRef
-  Anims = SL.GetAnimationsByTags(2, "femdom")
+  SlutsAnimation.StartScene(tmp, "femdom")
 else
   tmp[0] = PlayerRef
   tmp[1] = Anette
-  SL.TreatAsMale(Anette)
-  Anims = SL.PickAnimationsByActors(tmp)
+  SlutsAnimation.ManipulateGender(Anette, 0)
+  SlutsAnimation.StartSceneByActors(tmp)
+  SlutsAnimation.ManipulateGender(Anette, -1)
 EndIf
-SL.StartSex(tmp, Anims)
-SL.ClearForcedGender(Anette)
 
 Dia.upgradeGear(1)
 CompleteAllObjectives()
@@ -60,8 +58,4 @@ EndFunction
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
-SexLabFramework Property SL  Auto  
-
 SlutsHQDialogue Property Dia  Auto  
-
-MiscObject Property titanium  Auto  

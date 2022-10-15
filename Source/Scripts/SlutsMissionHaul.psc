@@ -5,7 +5,6 @@ SlutsMain Property Main Auto
 SlutsMCM Property MCM Auto
 SlutsData Property data Auto
 SlutsBondage Property Bd Auto
-SexLabFramework Property SL Auto
 SlutsEscrow Property Escrow Auto
 
 Actor Property PlayerRef Auto
@@ -667,21 +666,21 @@ Event OnAnimStart(int tid, bool HasPlayer)
 EndEvent
 
 Event OnAnimEnd(int tid, bool HasPlayer)
-  sslThreadController Thread = SL.GetController(tid)
-  If(Thread.GetHooks().Find("SLUTS_Humil") > -1)
+  If(SlutsAnimation.GetSceneHooks(tid).Find("SLUTS_Humil") > -1)
     Debug.Trace("[SLUTS] Humiliation Scene End")
     Utility.Wait(0.2)
     moveChestScene.Start()
     return
-  ElseIf(!MCM.bCargoAssault || !Thread.IsVictim(PlayerRef) || GetStage() != 20)
+  ElseIf(!MCM.bCargoAssault || !SlutsAnimation.GetSceneVictim(tid) != PlayerRef || GetStage() != 20)
     Debug.Trace("[SLUTS] Scene End Pilferage is disabled or Player is not Victim")
     return
   EndIf
   Debug.Trace("[SLUTS] Piferage at Scene End | Pre = " + Pilferage)
+  Actor[] positions = SlutsAnimation.GetSceneActors(tid)
   int type = 0
   int i = 0
-  While(i < Thread.Positions.Length)
-    Actor p = Thread.Positions[i]
+  While(i < positions.Length)
+    Actor p = positions[i]
     If(p.IsPlayerTeammate() || p.IsInFaction(DriverFaction))
       return
     ElseIf(p.IsInFaction(BanditFaction) || p.IsInFaction(ForswornFaction))
@@ -692,7 +691,7 @@ Event OnAnimEnd(int tid, bool HasPlayer)
     i += 1
   EndWhile
   If(type == 1 || type > 2 && Utility.RandomInt(0, 99) < 40 * (1 + Math.pow(type, -1)))
-    float robbed = Utility.RandomFloat(5 + Thread.Positions.length, 15 + Thread.Positions.length)
+    float robbed = Utility.RandomFloat(5 + positions.length, 15 + positions.length)
     Pilferage += GoodsTotal * (robbed / 100)
     If(Pilferage > GoodsTotal * 1.1)
       Pilferage = GoodsTotal * 1.1
