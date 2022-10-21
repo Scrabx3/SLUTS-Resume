@@ -2,20 +2,20 @@
 ;NEXT FRAGMENT INDEX 2
 Scriptname TIF_Sluts_0B75DE07 Extends TopicInfo Hidden
 
+;BEGIN FRAGMENT Fragment_0
+Function Fragment_0(ObjectReference akSpeakerRef)
+Actor akSpeaker = akSpeakerRef as Actor
+;BEGIN CODE
+GetOwningQuest().SetStage(100)
+;END CODE
+EndFunction
+;END FRAGMENT
+
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
 (GetOwningQuest() as SlutsMissionHaul).Fail()
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_0
-Function Fragment_0(ObjectReference akSpeakerRef)
-Actor akSpeaker = akSpeakerRef as Actor
-;BEGIN CODE
-GetOwningQuest().SetStage(82)
 ;END CODE
 EndFunction
 ;END FRAGMENT

@@ -15,20 +15,20 @@ Game.SetPlayerAIDriven(true)
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_2
-Function Fragment_2()
-;BEGIN CODE
-Haul.DoPayment()
-;END CODE
-EndFunction
-;END FRAGMENT
-
 ;BEGIN FRAGMENT Fragment_1
 Function Fragment_1()
 ;BEGIN CODE
 SendModEvent("dhlp-Resume")
 game.setplayeraidriven(false)
 Haul.Unfriend()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_2
+Function Fragment_2()
+;BEGIN CODE
+Haul.DoPayment()
 ;END CODE
 EndFunction
 ;END FRAGMENT

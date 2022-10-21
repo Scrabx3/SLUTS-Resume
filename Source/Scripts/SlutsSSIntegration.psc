@@ -39,4 +39,5 @@ Function StartHaul()
 	If(!Main.StartHaul(CarterRef.GetReference() as Actor, forced = 1))
 		Game.SetPlayerAIDriven(false)
 	EndIf
+	Stop()
 EndFunction

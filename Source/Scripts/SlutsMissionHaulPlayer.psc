@@ -58,6 +58,6 @@ State SpecialDelivery
         Haul.Pilferage += Haul.GoodsTotal * 0.01
       EndIf
     EndIf
-    Haul.CheckPackageStatus()
+    Haul.UpdatePackageStatus()
   EndEvent
 EndState

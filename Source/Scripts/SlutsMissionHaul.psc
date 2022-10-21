@@ -14,27 +14,26 @@ ReferenceAlias Property DispatcherREF Auto
 ReferenceAlias property RecipientREF Auto
 ReferenceAlias Property TargetREF Auto
 ReferenceAlias Property Manifest Auto
-ReferenceAlias Property ScenePlayer Auto ; Where the Player stands in Intro
-ReferenceAlias Property SceneSpell Auto ; From where the Carter casts his Spell
-ReferenceAlias Property SceneRecipient Auto ; Where the Recipient Waits
-ReferenceAlias Property SceneHumilChest Auto ; Recipient Escrow Position
+ReferenceAlias Property ScenePlayer Auto      ; Where the Player stands in Intro
+ReferenceAlias Property SceneSpell Auto       ; From where the Carter casts his Spell
+ReferenceAlias Property SceneRecipient Auto   ; Where the Recipient Waits
+ReferenceAlias Property SceneHumilChest Auto  ; Recipient Escrow Position
 
 LocationAlias Property RecipientLOC Auto
 LocationAlias Property RecipientLOCHold Auto
 
-Keyword Property RootLink Auto ; Driver to Rootnt
-Keyword Property EscrowLink Auto ; Root to Escrow
-Keyword Property PlayerWaitLoc Auto ; Root to Player Marker
-Keyword Property KartSpawnLoc Auto ; Root to Kart Marker
-Keyword Property SpellCastLoc Auto ; Root to Spellcast Marker
-Keyword Property CarriageDriver Auto ; Root to Driver Wait Marker
+Keyword Property EscrowLink Auto          ; Root to Escrow
+Keyword Property PlayerWaitLoc Auto       ; Root to Player Marker
+Keyword Property KartSpawnLoc Auto        ; Root to Kart Marker
+Keyword Property SpellCastLoc Auto        ; Root to Spellcast Marker
+Keyword Property CarriageDriver Auto      ; Root to Driver Wait Marker
 ; ===
-ReferenceAlias Property PackageREF Auto ; Prem Delivery Package
-ReferenceAlias Property KartREF Auto ; Used for Dialogue Conditions
-Activator Property Kart_Form Auto ; Carts Base Object
+ReferenceAlias Property PackageREF Auto   ; Prem Delivery Package
+ReferenceAlias Property KartREF Auto      ; Used for Dialogue Conditions
+Activator Property Kart_Form Auto         ; Carts Base Object
 
 GlobalVariable Property MissionType Auto  ; Currently active Mission Type
-GlobalVariable Property Payment Auto  ; Base Pay of the current Haul
+GlobalVariable Property Payment Auto      ; Base Pay of the current Haul
 MiscObject Property FillyCoin Auto
 MiscObject Property Gold001 Auto
 Message Property DebitMsg Auto
@@ -48,11 +47,11 @@ Activator Property SummonFX Auto
 Race Property DefaultRace Auto
 
 Quest Property DeliverySelectorQst Auto ; Pick a random NPC from the current Hold
-Scene Property moveChestScene Auto ; Post Humiliation reward
+Scene Property moveChestScene Auto      ; Post Humiliation reward
 
-Faction Property SlutsCrime Auto ; Sluts Crime Faction
-Faction Property DriverFaction Auto ; All Drivers
-Faction Property DirtyFaction Auto ; For Dirt Tats
+Faction Property SlutsCrime Auto        ; Sluts Crime Faction
+Faction Property DriverFaction Auto     ; All Drivers
+Faction Property DirtyFaction Auto      ; For Dirt Tats
 Faction Property PlayerFollowerFaction Auto
 Faction Property BanditFaction Auto
 Faction property ForswornFaction Auto
@@ -81,38 +80,42 @@ ImageSpaceModifier Property FadeToBlackHoldImod Auto
 Faction YK_Ignored
 
 ; ---------------------------------- Variables
-String Property CartDefault = "CartHaul" AutoReadOnly Hidden
-String PRoperty Delivery = "SpecialDelivery" AutoReadOnly Hidden
+String Property JobCart = "CartHaul" AutoReadOnly Hidden
+String Property JobDelivery = "SpecialDelivery" AutoReadOnly Hidden
 
-float Property SkyrimDiameter = 311231.0 AutoReadOnly Hidden  ; Distance between 2 Drivers frutherst away from each other
+float Property SkyrimDiameter = 311231.0 AutoReadOnly Hidden
 
 ; Keybinds
 int ActivateKey
 
 ; Series Info
-int Property Streak Auto Hidden Conditional ; Num Hauls the Player did this series
-float PerfectStreak
-float TotalPay
+int Property Streak Auto Hidden Conditional     ; Number of Hauls the player did this series
+float Property TotalPay Auto Hidden Conditional ; Total amount of payment in this series. May be negative for loss making serieses
+
+float PerfectStreak                             ; Number of Perfect Hauls in a row, to calculate final overtime bonus
+float OvertimePay                               ; Accumulated payments over a series of perfect hauls. Will reset on non perfect haul
 
 ; Haul Info
-float Property GoodsTotal = 1500.0 AutoReadOnly Hidden ; Amount of Goods total
-float Property KartHealth = 100.0 AutoReadOnly Hidden ; Amount of Damage the can Kart beyond GoodsTotal
-float Property Pilferage = 0.0 Auto Hidden Conditional ; Lost goods
+float Property GoodsTotal   = 1500.0 AutoReadOnly Hidden  ; Amount of Goods total
+float Property KartHealth   = 100.0 AutoReadOnly Hidden   ; Additional Damage on failure
+float Property Pilferage Auto Hidden Conditional          ; Lost goods
 
-int Property MissionComplete Auto Hidden Conditional  ; To keep track of mission progress for multi objective missions
+int Property MissionComplete Auto Hidden Conditional      ; To keep track of mission progress for multi objective missions
+int Property JobStage Auto Hidden                         ; The current Job Stage, for objective management
 
-int Property PremiumDeliveryDelay Auto Hidden Conditional ; 0 Early | 1 On Time | 2 Too Late
-int Property PremiumPackageStatus Auto Hidden Conditional ; 0 NoDmg | 1 Light Dmg | 2 Heavy Dmg | 3 Destroyed
-int Property PackageStatusLightDmg = 300 AutoReadOnly Hidden ; Pilferage at which Package is considered damaged
-int Property PackageStatusHeavyDmg = 900 AutoReadOnly Hidden
+int Property PremiumDeliveryDelay Auto Hidden Conditional       ; 0 Early | 1 On Time | 2 Too Late
+int Property PremiumPackageStatus Auto Hidden Conditional       ; 0 NoDmg | 1 Light Dmg | 2 Heavy Dmg | 3 Destroyed
+int Property PackageStatusLightDmg = 200 AutoReadOnly Hidden    ; Pilferage at which Package is considered damaged
+int Property PackageStatusHeavyDmg = 700 AutoReadOnly Hidden
+int Property PackageStatusSevereDmg = 1000 AutoReadOnly Hidden
 
 ; Humiliation System
-bool Property HumiliatedOnce = false Auto Hidden Conditional  ; Set after 1st Humiliation. Dialogue flag
-bool Property Humiliated = false Auto Hidden Conditional
-int Property HumilPick = 0 Auto Hidden Conditional
+bool Property HumiliatedOnce = false Auto Hidden Conditional    ; Set after 1st Humiliation. Dialogue flag for future missions
+bool Property Humiliated = false Auto Hidden Conditional        ; If humiliation is done for this haul
+int Property HumilPick Auto Hidden Conditional
 ; 0 - Nothing, free to go
 ; 1 - DD Boots
-; 2 - BURN ALL HOBBLEDRESSES
+; 2 - Hobbledress
 ; 3 - Piercings
 ; 4 - Give up part of your payment
 ; 5 - Unused
@@ -124,23 +127,23 @@ int Property HumilPick = 0 Auto Hidden Conditional
 bool Property bIsThethered Auto Hidden Conditional
 SlutsKart Property Kart Auto Hidden
 
-int Property Response_Flawless = 0 AutoReadOnly Hidden      ; 0 Pilferage + No Debt
-int Property Response_Deduction = 1 AutoReadOnly Hidden     ; X Pilferage + No Debt
-int Property Response_Endebted = 2 AutoReadOnly Hidden      ; No Pay + Init Debt
-int Property Response_ReduceDebt1 = 3 AutoReadOnly Hidden   ; 0 Pilferage + Debt
-int Property Response_ReduceDebt2 = 4 AutoReadOnly Hidden   ; X Pilferage + Debt
-int Property Response_DebtStacking = 5 AutoReadOnly Hidden  ; No Pay + Stacking Debt
-int Property Response_DebtDone = 6 AutoReadOnly Hidden      ; Debt fully payed off
+int Property Response_Flawless      = 0 AutoReadOnly Hidden   ; 0 Pilferage + No Debt
+int Property Response_Deduction     = 1 AutoReadOnly Hidden   ; X Pilferage + No Debt
+int Property Response_Endebted      = 2 AutoReadOnly Hidden   ; No Pay + Init Debt
+int Property Response_ReduceDebt1   = 3 AutoReadOnly Hidden   ; 0 Pilferage + Debt
+int Property Response_ReduceDebt2   = 4 AutoReadOnly Hidden   ; X Pilferage + Debt
+int Property Response_DebtStacking  = 5 AutoReadOnly Hidden   ; No Pay + Stacking Debt
+int Property Response_DebtDone      = 6 AutoReadOnly Hidden   ; Debt fully payed off
 int Property EvalResponse Auto Hidden Conditional
 
 ; misc
-bool forced
+int Property INT_MAX = 2147483647 AutoReadOnly Hidden
+bool forced   ; Unused, idk what I should use this for tbh
 
 ; ======================================================
 ; =============================== NEW HAUL
 ; ======================================================
-;/ A new Haul always starts with this Quest. This Quest is active from beginning of a Haul to end and store the Objectives as well as generic Dialogue
-/;
+
 Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDispatcher, ObjectReference akRecipient, int aiCustomLoc, int aiForced)
   Debug.Trace("[SLUTS] Started new Haul")
   Escrow.lockEscrow()
@@ -160,13 +163,10 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
 
   ActivateKey = Input.GetMappedKey("Activate")
   RegisterEvents()
-  HumilPick = Utility.RandomInt(0, 8)
-  TotalPay = 0.0
 
   Debug.Trace("[SLUTS] Haul Preparations done, SetStage 5")
   SetStage(5)
 EndEvent
-
 bool Function SetLinks(ObjectReference akDispatcher, ObjectReference akRecipient)
   ObjectReference root0 = StorageUtil.GetFormValue(akDispatcher, "SLUTS_ROOT") as ObjectReference
   ObjectReference root1 = StorageUtil.GetFormValue(akRecipient, "SLUTS_ROOT") as ObjectReference
@@ -184,8 +184,8 @@ EndFunction
 
 Function SetMissionState(int missionID = -1)
   String[] missions = new String[2]
-  missions[0] = CartDefault
-  missions[1] = Delivery
+  missions[0] = JobCart
+  missions[1] = JobDelivery
   If (missionID < 0)
     missionID = SlutsData.Distribute(MCM.HaulWeights) - 1
   EndIf
@@ -208,39 +208,45 @@ Function Blackout()
 EndFunction
 
 Function StripPlayer()
-  int intmax = 2147483647
   Keyword SLSLicense = Keyword.GetKeyword("_SLS_LicenceDocument")
   Form[] items = PlayerRef.GetContainerForms()
   int i = 0
   While(i < items.Length)
     Keyword[] kw = items[i].GetKeywords()
     If (!kw.Length || kw.Find(bd.SlutsRestraints) == -1 && kw.Find(SLSLicense) == -1)
-      PlayerRef.RemoveItem(items[i], intmax, true, Escrow)
+      PlayerRef.RemoveItem(items[i], INT_MAX, true, Escrow)
     EndIf
     i += 1
   EndWhile
 EndFunction
 
-Function SetupHaul()
+Function SetupHaul()  ; Called during first setup only
+  HumilPick = Utility.RandomInt(0, 8)
   DispatcherREF.GetReference().MoveTo(SceneSpell.GetReference())
   PlayerRef.MoveTo(ScenePlayer.GetReference())
   PlayerRef.PlaceAtMe(SummonFX)
   StripPlayer()
   SetupHaulImpl()
+  
+  MissionComplete = 1 ; To not have HandleStage() fail on first call
   Pilferage = 0.0
+  PerfectStreak = 0
+  Streak = 0
+  OvertimePay = 0.0
+  TotalPay = 0.0
 
   If(Game.GetModByName("YameteKudasai.esp") != 255)
     YK_Ignored = Game.GetFormFromFile(0x9F9D1E, "YameteKudasai.esp") as Faction
     PlayerRef.AddToFaction(YK_Ignored)
   EndIf
 EndFunction
-Function SetupHaulImpl()
+Function SetupHaulImpl()  ; Called every time BEFORE a new job starts
   Debug.TraceStack("[SLUTS] Function call outside a valid State = " + GetState(), 2)
 EndFunction
 
 State CartHaul
   Function SetupHaulImpl()
-    Debug.Trace("[SLUTS] Setting up Cart Haul")
+    Debug.Trace("[SLUTS] Setting up CartHaul")
     TargetREF.ForceRefTo(RecipientREF.GetReference())
     If(!Kart)
       Kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form) as SlutsKart
@@ -255,9 +261,9 @@ State CartHaul
     EndIf
     Tether()
     Bd.DressUpPony(PlayerRef)
-    PlayerAlias.GoToState(CartDefault)
+    PlayerAlias.GoToState(JobCart)
   EndFunction
-  
+
   Event OnEndState()
     If(Kart)
       Untether()
@@ -272,26 +278,26 @@ EndState
 
 State SpecialDelivery
   Function SetupHaulImpl()
-    Debug.Trace("[SLUTS] Setting up Special Delivery")
+    Debug.Trace("[SLUTS] Setting up SpecialDelivery")
     If(Main.myDrivers.Find(RecipientREF.GetActorReference()) == 9)
       RecipientREF.ForceRefTo(Main.myDrivers[4])
     EndIf
     If(!DeliverySelectorQst.Start())
-      Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + CartDefault)
+      Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + JobCart)
       SetMissionState(0)
       return
     EndIf
     ReferenceAlias target = DeliverySelectorQst.GetAliasById(3) as ReferenceAlias
     ObjectReference tref = target.GetReference()
-    Debug.Trace("[SLUTS] Found Target for Package Delivery = " + tref)
+    Debug.Trace("[SLUTS] Found Target = " + tref)
     TargetREF.ForceRefTo(tref)
     RecipientLOC.ForceLocationTo(tref.GetCurrentLocation())
-    PlayerAlias.GoToState(Delivery)
-    DeliverySelectorQst.Stop()
     ; TODO: Look for artist for some kinda bag equipping
     Bd.DressUpPony(PlayerRef, false)
     PlayerRef.AddItem(PackageREF.GetReference())
-    ; Total Dur from Riften to Solitude = ~30min -> ~10k Distance every Minute
+    PlayerAlias.GoToState(JobDelivery)
+    DeliverySelectorQst.Stop()
+    ; Expecting an average speed of 10k distance every minute
     PremiumDeliveryDelay = 0
     float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference())
     int segments = Math.Ceiling(d / 10000)
@@ -303,13 +309,14 @@ State SpecialDelivery
   EndEvent
 
   Event OnEndState()
-    PlayerAlias.GoToState("")
     ; TODO: Once bag implemented, remove it here again
   EndEvent
 EndState
 
-Function TakePackage()
-  PlayerRef.RemoveItem(PackageREF.GetReference())
+Function TakePackage(bool abRemovePackage = true)
+  If(abRemovePackage)
+    PlayerRef.RemoveItem(PackageREF.GetReference())
+  EndIf
   If(PremiumDeliveryDelay > 1)
     Pilferage += (GoodsTotal / 5) * (PremiumDeliveryDelay - 1)
   ElseIf(PremiumPackageStatus == 0)
@@ -318,14 +325,15 @@ Function TakePackage()
   DoPayment()
 EndFunction
 
-Function CheckPackageStatus()
+Function UpdatePackageStatus()
   If(Pilferage < PackageStatusLightDmg)
     PremiumPackageStatus = 0 ; No Damage
   ElseIf(Pilferage < PackageStatusHeavyDmg)
     PremiumPackageStatus = 1 ; Light Damage
-  ElseIf(Pilferage < GoodsTotal)
+  ElseIf(Pilferage < PackageStatusSevereDmg)
     PremiumPackageStatus = 2 ; Heavy Damage
-  Else
+  Else  ; If(Pilferage >= PackageStatusSevereDmg)
+    Pilferage = GoodsTotal
     PremiumPackageStatus = 3 ; Destroyed
     If(PlayerRef.GetItemCount(PackageREF.GetReference()) > 0)
       PackageDestroyedMsg.Show()
@@ -338,29 +346,49 @@ EndFunction
 ; =============================== EVALUATION
 ; ======================================================
 
-float overtimepay ; Accumulated payments over a series of perfect hauls 
-int Property qstage Auto Hidden
-
 Function HandleStage()
   If(MissionComplete < 1)
     return
   EndIf
   MissionComplete = 0 - MissionType.GetValueInt()
   int stage = 21 + MissionType.GetValueInt()
-  If(stage != qstage)
-    SetObjectiveDisplayed(qstage, false, true)
+  If(stage != JobStage) ; Switching haul type, hide the previous objective
+    SetObjectiveDisplayed(stage, false)
+    If(stage == 22) ; Prem Delivery also has Stage 100
+      SetObjectiveDisplayed(100, false)
+    EndIf
   EndIf
-  qstage = stage
-  If(IsObjectiveCompleted(qstage))
-    SetObjectiveCompleted(qstage, false)
+  JobStage = stage
+  If(IsObjectiveCompleted(JobStage))
+    SetObjectiveCompleted(JobStage, false)
   EndIf
-  SetObjectiveDisplayed(qstage, true, true)
+  SetObjectiveDisplayed(JobStage, true, true)
+EndFunction
+
+Function CompleteJobStages()
+  SetObjectiveCompleted(JobStage)
+  If(JobStage == 22)
+    SetObjectiveCompleted(100)
+  EndIf
 EndFunction
 
 Function Fail()
   MissionComplete = 1
   pilferage = GoodsTotal + KartHealth
   DoPayment()
+EndFunction
+
+Function GambleBlackmailFailure(Actor akBlackmailer)
+  int betrayalchance = 75
+  int rel = akBlackmailer.GetRelationshipRank(PlayerRef)
+  If(rel >= 0)
+    betrayalchance = 50 - (rel * 15)
+  EndIf
+  If(Utility.RandomInt(0, 99) < betrayalchance)
+    Fail()
+  Else
+    TakePackage(false)
+  EndIf
 EndFunction
 
 Function CreateChainMission(bool abForced, int aiMissionID = -1)
@@ -659,24 +687,30 @@ endFunction
 ; ======================================================
 
 Event OnAnimStart(int tid, bool HasPlayer)
-  If(!HasPlayer || GetStage() != 20 || GetState() != CartDefault)
+  If(!HasPlayer || GetStage() != 20 || GetState() != JobCart)
     return
   EndIf
   Untether()
 EndEvent
 
 Event OnAnimEnd(int tid, bool HasPlayer)
-  If(SlutsAnimation.GetSceneHooks(tid).Find("SLUTS_Humil") > -1)
+  Actor[] positions = SlutsAnimation.GetSceneActors(tid)
+  String[] hooks = SlutsAnimation.GetSceneHooks(tid)
+  If(hooks.Find("SLUTS_Humil") > -1)
     Debug.Trace("[SLUTS] Humiliation Scene End")
     Utility.Wait(0.2)
     moveChestScene.Start()
     return
+  ElseIf(hooks.Find("SLUTS_BlackMailSex") > -1)
+    Actor[] copy = PapyrusUtil.RemoveActor(positions, PlayerRef)
+    GambleBlackmailFailure(copy[0])
+    SetStage(100)
   ElseIf(!MCM.bCargoAssault || !SlutsAnimation.GetSceneVictim(tid) != PlayerRef || GetStage() != 20)
     Debug.Trace("[SLUTS] Scene End Pilferage is disabled or Player is not Victim")
     return
   EndIf
   Debug.Trace("[SLUTS] Piferage at Scene End | Pre = " + Pilferage)
-  Actor[] positions = SlutsAnimation.GetSceneActors(tid)
+ 
   int type = 0
   int i = 0
   While(i < positions.Length)
@@ -707,6 +741,9 @@ endEvent
 
 ; HumilPick = 4
 Function debitRate()
+  If(TotalPay <= 100)
+    return
+  EndIf
   float dR = Utility.RandomFloat(0.05, 0.35)
   int debit = Math.Floor(TotalPay * dR)
   Escrow.RemoveItem(FillyCoin, debit)

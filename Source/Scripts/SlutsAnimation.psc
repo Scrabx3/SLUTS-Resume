@@ -65,8 +65,8 @@ int Function StartSceneByActors(Actor[] akPositions, Actor akVictim = none, Stri
   return SL.StartSex(akPositions, anims, akVictim, akVictim, true, hook)
 EndFunction
 
-bool Function QuickStartAnimation(Actor Actor1, Actor Actor2 = none, Actor Actor3 = none, Actor Actor4 = none, Actor Actor5 = none, Actor Victim = none, string Hook = "", string asTags = "") global
-  return SexLabUtil.QuickStart(Actor1, Actor2, Actor3, Actor4, Actor5, Victim, Hook, asTags)
+bool Function QuickStartAnimation(Actor Actor1, Actor Actor2 = none, Actor Actor3 = none, Actor Actor4 = none, Actor Actor5 = none, Actor akVictim = none, string asHook = "", string asTags = "") global
+  return SexLabUtil.QuickStart(Actor1, Actor2, Actor3, Actor4, Actor5, akVictim, asHook, asTags)
 EndFunction
 
 Actor[] Function GetSceneActors(int tid) global

@@ -6,7 +6,7 @@ Scriptname TIF_Sluts_0B67F1B2 Extends TopicInfo Hidden
 Function Fragment_1(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-GetOwningQuest().setstage(90)
+getowningquest().setstage(295)
 ;END CODE
 EndFunction
 ;END FRAGMENT

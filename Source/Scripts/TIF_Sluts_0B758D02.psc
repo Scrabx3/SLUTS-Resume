@@ -15,7 +15,7 @@ EndFunction
 Function Fragment_1(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-GetOwningQuest().SetStage(82)
+GetOwningQuest().SetStage(100)
 ;END CODE
 EndFunction
 ;END FRAGMENT

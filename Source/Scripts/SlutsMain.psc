@@ -9,6 +9,8 @@ Actor[] Property myDrivers Auto
 {0 - Windhelm, 1 - Whiterun, 2 - Solitude, 3 - Markarth, 4 - Riften,
 5 - Morthal, 6 - Falkreath, 7 - Winterhold, 8 - Dawnstar, 9 - HQ}
 
+Keyword Property LocTypeHold Auto
+
 Faction Property SlutsCrime Auto
 Faction Property slut_drivers_fac Auto
 Faction Property HQStaff Auto
@@ -42,32 +44,44 @@ bool Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 		return false
 	EndIf
 	Debug.Trace("[SLUTS] Sending story event with " + Dispatcher + " to " + Recipient + " | Loc = " + destLoc)
-	;Loc => Destination
-	;Ref1 => Dispatcher (Starting Hold)
-	;Ref2 => Recipent (Destination Hold)
-	;aiValue1 => Desination: 1 => Custom, 0 => random
-	;aiValue2 => Forced: 1 => True, 0 => False
+	; Loc => Destination
+	; Ref1 => Dispatcher (Starting Hold)
+	; Ref2 => Recipent (Destination Hold)
+	; aiValue1 => Desination: 1 => Custom, 0 => random
+	; aiValue2 => Forced: 1 => True, 0 => False
 	return sluts_mission_Kw.SendStoryEventAndWait(destLoc, Dispatcher, Recipient, customLoc, forced)
 EndFunction
 
 Actor Function GetDestination(Actor akExclude, Actor akExclude2 = none)
-	Actor[] potentials = StrippedCopyCat(myDrivers, akExclude)
+	Actor[] excludings
 	If(akExclude2)
-		potentials = StrippedCopyCat(potentials, akExclude2)
+		excludings = new Actor[2]
+		excludings[1] = akExclude2
+	Else
+		excludings = new Actor[1]
 	EndIf
-	int where = myDrivers.Find(akExclude)
-	If(where == 4)
-		potentials = StrippedCopyCat(potentials, myDrivers[9])
-	ElseIf(where == 9)
-		potentials = StrippedCopyCat(potentials, myDrivers[4])
-	EndIf
-	return potentials[Utility.RandomInt(0, (potentials.Length - 1))]
+	excludings[0] = akExclude
+	return GetDestinationEx(excludings)
 EndFunction
 Actor Function GetDestinationEx(Actor[] akExclude)
 	Actor[] potentials = StrippedCopyCat(myDrivers, akExclude[0])
 	int i = 1
 	While(i < akExclude.Length)
 		potentials = StrippedCopyCat(potentials, akExclude[i])
+		; New destinations are in different holds. Throw every1 out that is in same hold as this actor
+		Location excloc = akExclude[i].GetCurrentLocation()
+		If(excloc)
+			int n = 0
+			While(n < myDrivers.Length)
+				If(potentials.Find(myDrivers[n]) > -1)
+					Location dloc = myDrivers[n].GetCurrentLocation()
+					If(excloc.HasCommonParent(dloc, LocTypeHold))
+						potentials = PapyrusUtil.RemoveActor(potentials, myDrivers[n])
+					EndIf
+				EndIf 
+				n += 1
+			EndWhile
+		EndIf
 		i += 1
 	EndWhile
 	return potentials[Utility.RandomInt(0, (potentials.Length - 1))]
@@ -80,7 +94,7 @@ Actor[] Function StrippedCopyCat(Actor[] arr, Actor akExclude)
 	return PapyrusUtil.RemoveActor(arr, arr[i])
 EndFunction
 
-; ---------------------------------- SS Integration
+; ---------------------------------- Simple Slavery
 Event On_Enslavement(string asEventName, string asStringArg, float afNumArg, form akSender)
 	Debug.Trace("[SLUTS] Main: Simple Slavery Event Call")
 	;Skipping the Intro
@@ -89,13 +103,12 @@ Event On_Enslavement(string asEventName, string asStringArg, float afNumArg, for
 		SetStage(30)
 	EndIf
 	; Get players current hold and send them to the specific Driver..
-	Keyword LocTypeHold = Keyword.GetKeyword("LocTypeHold")
 	Location pLoc = Game.GetPlayer().GetCurrentLocation()
 	int i = 0
 	While(i < myDestLocs.Length)
 		If(pLoc.HasCommonParent(myDestLocs[i], LocTypeHold))
 			If(sluts_slavery_kw.SendStoryEventAndWait(none, myDrivers[i]))
-				Debug.Trace("[SLUTS] Created Enslavement Call in Location with ID = " + i)
+				Debug.Trace("[SLUTS] Created Enslavement Call in " + myDestLocs[i].GetName())
 				return
 			EndIf
 		EndIf
@@ -110,34 +123,30 @@ Event On_Enslavement(string asEventName, string asStringArg, float afNumArg, for
 	EndIf
 EndEvent
 
-; ---------------------------------- Startup
+; ---------------------------------- Rehabilitation
 Event On_Rehab(string asEventName, string asStringArg, float afNumArg, form akSender)
-	If(akSender as Faction)
-		StartRehabImpl(akSender as Faction, none)
-	ElseIf(akSender as Actor)
+	If(akSender as Actor)
 		StartRehab(akSender as Actor)
 	Else
-		Debug.TraceStack("[SLUTS] On_Rehab received invalid Sender Parameter. Sender must be of Type Actor or Faction", 2)
-		Debug.Messagebox("[SLUTS]\nFailed to start Rehab")
+		Debug.TraceStack("[SLUTS] On_Rehab invalid parameter. Sender must be of type 'Actor' | \"Actor.SendModEvent(...)\".", 2)
+		Debug.Messagebox("[SLUTS]\nFailed to start Rehab.")
 	EndIf
 EndEvent
 
 Function StartRehab(Actor akInitiator)
-	Faction crime = akInitiator.GetCrimeFaction()
-	If(!crime)
+	Faction crimefaction = akInitiator.GetCrimeFaction()
+	If(!crimefaction)
 		Debug.TraceStack("[SLUTS] Given Actor = " + akInitiator + " has no associated Crime Faction")
 		Debug.MessageBox("[SLUTS]\nFailed to create Rehabilitation Event\nMissing an associated Crime Faction")
 		return
 	EndIf
-	StartRehabImpl(akInitiator.GetCrimeFaction(), akInitiator)
-EndFunction
-Function StartRehabImpl(Faction akCrimeFaction, Actor akInitiator)
-	int crime = akCrimeFaction.GetCrimeGoldViolent() + akCrimeFaction.GetCrimeGoldNonviolent()
-	akCrimeFaction.SetCrimeGold(0)
-	akCrimeFaction.SetCrimeGoldViolent(0)
+
+	int crime = crimefaction.GetCrimeGoldViolent() + crimefaction.GetCrimeGoldNonviolent()
+	crimefaction.SetCrimeGold(0)
+	crimefaction.SetCrimeGoldViolent(0)
 	SlutsCrime.ModCrimeGold(SlutsData.GetCoinFromGold(crime))
 
-	If(!rehab_kw.SendStoryEventAndWait(akRef1 = akInitiator))
+	If(!rehab_kw.SendStoryEventAndWait(akRef1 = akInitiator, aiValue1 = crime))
 		Debug.Trace("[SLUTS] Failed to start Rehab Quest")
 		Debug.MessageBox("[SLUTS]\nFailed to create Rehabilitation Event")
 	EndIf

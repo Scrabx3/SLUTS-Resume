@@ -6,7 +6,7 @@ Scriptname TIF__Sluts_HumilSexSolo Extends TopicInfo Hidden
 Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-SlutsAnimation.QuickStartAnimation(Game.GetPlayer(), Hook = "SLUTS_Humil")
+SlutsAnimation.QuickStartAnimation(Game.GetPlayer(), asHook = "SLUTS_Humil")
 ;END CODE
 EndFunction
 ;END FRAGMENT
