@@ -87,12 +87,16 @@ EndFunction
 ; ======================================================
 ; =============================== UTILITY
 ; ======================================================
-int Function GetCoinFromGold(int coins) global
-  return coins * 50
+int Function GetCoinRatio() global
+  return 50
 EndFunction
 
-int Function GetGoldFromCoin(int gold) global
-  return gold / 50
+int Function GetCoinFromGold(int aiGoldValue) global
+  return aiGoldValue * GetCoinRatio()
+EndFunction
+
+int Function GetGoldFromCoin(int aiCoinValue) global
+  return aiCoinValue / GetCoinRatio()
 EndFunction
 
 ; Function notify(string msg)
