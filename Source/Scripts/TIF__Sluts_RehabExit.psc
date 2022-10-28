@@ -9,18 +9,6 @@ Actor akSpeaker = akSpeakerRef as Actor
 If(Main.GetStage() < 30)
 	Main.SetStage(30)
 EndIf
-
-;/
-SlutsMCM MCM = GetOwningQuest() as SlutsMCM
-slutsCrime.SetCrimeGold(Math.Floor(tmpCrimeGold.Value * ((MCM.iRehabtRate + 1) * 30)))
-int crimeG = slutsCrime.GetCrimeGold()
-If(MCM.bLargeMsg)
-	Debug.MessageBox("S.L.U.T.S. Pony Rehabilitation Program has determined that your " + tmpCrimeGold.Value as int + " fine calculates into a " + crimeG + " Arrear.")
-else
-	Debug.Notification("S.L.U.T.S. Pony Rehabilitation Program has determined that your " + tmpCrimeGold.Value as int + " fine calculates into a " + crimeG + " Arrear.")
-endif
-tmpCrimeGold.SetValue(0)
-/;
 ;END CODE
 EndFunction
 ;END FRAGMENT

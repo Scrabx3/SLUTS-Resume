@@ -41,7 +41,6 @@ bool property bUseSlutsLivery = true auto Hidden Conditional
 bool property bUseSlutsColors = true auto Hidden Conditional
 int property iCustomLiveryColor = 0 auto Hidden
 ; Debug
-bool Property bLargeMsg = false Auto Hidden
 bool Property bStruggle = true Auto Hidden
 string sTatRemove = "$SLUTS_Click"
 string sUnponify = "$SLUTS_Click"
@@ -129,7 +128,6 @@ Event OnPageReset(string Page)
 
 	ElseIf(Page == "$SLUTS_Debug")
 		AddHeaderOption("$SLUTS_Hauls")
-		AddToggleOptionST("LargeMsg", "$SLUTS_LargeMsg", bLargeMsg)
 		AddToggleOptionST("DDStruggle", "$SLUTS_DDStruggle", bStruggle)
 		AddEmptyOption()
 		AddHeaderOption("$SLUTS_Debug")
@@ -371,17 +369,6 @@ endState
 ; ==================================
 ; 				States // Debug
 ; ==================================
-state LargeMsg
-	event onselectst()
-		bLargeMsg = !bLargeMsg
-		SetToggleOptionValueST(bLargeMsg)
-	endevent
-	event ondefaultst()
-		bLargeMsg = false
-		SetToggleOptionValueST(bLargeMsg)
-	endevent
-endstate
-
 State DDStruggle
 	Event OnSelectST()
 		bStruggle = !bStruggle

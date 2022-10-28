@@ -99,14 +99,6 @@ int Function GetGoldFromCoin(int aiCoinValue) global
   return aiCoinValue / GetCoinRatio()
 EndFunction
 
-; Function notify(string msg)
-;   If(MCM.bLargeMsg)
-;     Debug.MessageBox(msg)
-;   else
-;     Debug.Notification(msg)
-;   EndIf
-; EndFunction
-
 int Function Distribute(int[] weights) global
   int all = 0
   int i = 0
