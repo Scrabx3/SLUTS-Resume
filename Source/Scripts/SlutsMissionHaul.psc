@@ -378,11 +378,18 @@ Function Fail()
   DoPayment()
 EndFunction
 
-Function GambleBlackmailFailure(Actor akBlackmailer)
+Function CreateBlackmail(Actor akBlackmailer)
+  akBlackmailer.SendModEvent("S.L.U.T.S. Blackmail")
+EndFunction
+
+Function GambleBlackmailFailure(Actor akBlackmailer, int aiAddChance = 0)
   int betrayalchance = 75
-  int rel = akBlackmailer.GetRelationshipRank(PlayerRef)
+  int rel = akBlackmailer.GetRelationshipRank(PlayerRef) + aiAddChance
   If(rel >= 0)
-    betrayalchance = 50 - (rel * 15)
+    If(rel > 4)
+      rel = 4
+    EndIf
+    betrayalchance = 50 - (rel * 12)
   EndIf
   If(Utility.RandomInt(0, 99) < betrayalchance)
     Fail()
@@ -675,7 +682,6 @@ Function Unhitch()
     return
   EndIf
   AttemptUntetherMsg.Show()
-  ; Debug.Notification("Attempting to untether..")
   If(MCM.bStruggle)
     Bd.Lib0.abq.StruggleScene(PlayerRef)
   EndIf

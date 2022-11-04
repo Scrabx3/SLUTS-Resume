@@ -17,6 +17,7 @@ Faction Property HQStaff Auto
 Keyword Property sluts_mission_Kw Auto
 Keyword Property sluts_slavery_kw Auto
 Keyword Property rehab_kw Auto
+Keyword Property blackmail_kw Auto
 
 ; ---------------------------------- Hauls
 
@@ -95,7 +96,7 @@ Actor[] Function StrippedCopyCat(Actor[] arr, Actor akExclude)
 EndFunction
 
 ; ---------------------------------- Simple Slavery
-Event On_Enslavement(string asEventName, string asStringArg, float afNumArg, form akSender)
+Event OnEnslavement(string asEventName, string asStringArg, float afNumArg, form akSender)
 	Debug.Trace("[SLUTS] Main: Simple Slavery Event Call")
 	;Skipping the Intro
 	If(GetStage() != 30)
@@ -124,11 +125,24 @@ Event On_Enslavement(string asEventName, string asStringArg, float afNumArg, for
 EndEvent
 
 ; ---------------------------------- Rehabilitation
-Event On_Rehab(string asEventName, string asStringArg, float afNumArg, form akSender)
+Event OnBlackmail(string asEventName, String asStringArg, float afNumArg, Form akBlackmailer)
+	If(!akBlackmailer as Actor)
+		Debug.TraceStack("[SLUTS] OnBlackmail invalid parameter. Sender must be of type 'Actor' | \"Actor.SendModEvent(...)\"", 2)
+		Debug.Messagebox("[SLUTS]\nFailed to start Blackmail Quest")
+		return
+	EndIf
+	If(!blackmail_kw.SendStoryEventAndWait(akRef1 = akBlackmailer as Actor, aiValue1 = afNumArg as int))
+		Debug.Trace("[SLUTS] Failed to start Blackmailing Quest")
+		Debug.MessageBox("[SLUTS]\nFailed to create Blackmailing Event")
+	EndIf
+EndEvent
+
+; ---------------------------------- Rehabilitation
+Event OnRehab(string asEventName, string asStringArg, float afNumArg, form akSender)
 	If(akSender as Actor)
 		StartRehab(akSender as Actor)
 	Else
-		Debug.TraceStack("[SLUTS] On_Rehab invalid parameter. Sender must be of type 'Actor' | \"Actor.SendModEvent(...)\".", 2)
+		Debug.TraceStack("[SLUTS] OnRehab invalid parameter. Sender must be of type 'Actor' | \"Actor.SendModEvent(...)\"", 2)
 		Debug.Messagebox("[SLUTS]\nFailed to start Rehab.")
 	EndIf
 EndEvent
@@ -154,7 +168,6 @@ EndFunction
 
 ; ---------------------------------- Startup
 ; Copy of the vanilla drivers so they dont get lost when the player uninstalls CTFO zzz
-; srsly curse this mod though
 Actor[] myDrivers_og
 
 ; Hey, I know! Let's delete all the vanilla NPlayerRefS and replace them with clones!
@@ -185,8 +198,9 @@ Function Maintenance()
 		RegisterDriver(myDrivers[i], myRoots[i])
 		i += 1
 	EndWhile
-	RegisterForModEvent("S.L.U.T.S. Enslavement", "On_Enslavement")
-	RegisterForModEvent("S.L.U.T.S. Rehab", "On_Rehab")
+	RegisterForModEvent("S.L.U.T.S. Enslavement", "OnEnslavement")
+	RegisterForModEvent("S.L.U.T.S. Blackmail", "OnBlackmail")
+	RegisterForModEvent("S.L.U.T.S. Rehab", "OnRehab")
 EndFunction
 
 Function PatchCFTO()
