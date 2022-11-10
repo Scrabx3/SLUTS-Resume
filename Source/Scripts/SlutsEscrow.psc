@@ -10,10 +10,6 @@ Activator Property summonFX Auto
 ObjectReference myMarker ; Where we are currently standing & facing
 ; ---------------------------------- Code
 Function MoveTo(ObjectReference akTarget, float afXOffset = 0.0, float afYOffset = 0.0, float afZOffset = 0.0, bool abMatchRotation = true)
-  If(myMarker == akTarget)
-    ; Dont move when were already here
-    return
-  EndIf
   akTarget.PlaceAtMe(summonFX)
   Parent.MoveTo(akTarget, afXOffset, afYOffset, afZOffset, abMatchRotation)
   Enable()

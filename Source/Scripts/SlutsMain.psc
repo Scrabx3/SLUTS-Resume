@@ -182,10 +182,10 @@ EndEvent
 
 ; Called OnInit() and every game load
 Function Maintenance()
-	If(Game.GetModByName("CTFO.esp") != 255)
+	If(Game.GetModByName("CFTO.esp") != 255)
 		int i = 0
 		While(i < myDrivers.Length)
-			myDrivers_og[i].DisableNoWait()
+			myDrivers_og[i].Disable()
 			i += 1
 		EndWhile
 		PatchCFTO()
