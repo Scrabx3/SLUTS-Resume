@@ -237,6 +237,7 @@ Function SetupHaul()  ; Called during first setup only
   Streak = 0
   OvertimePay = 0.0
   TotalPay = 0.0
+  UpdatePackageStatus()
 
   If(Game.GetModByName("YameteKudasai.esp") != 255)
     YK_Ignored = Game.GetFormFromFile(0x9F9D1E, "YameteKudasai.esp") as Faction
@@ -420,6 +421,7 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1)
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment = " + Payment.GetValueInt())
   Pilferage = 0.0
+  UpdatePackageStatus()
   ; ChainScene.ForceStart()
   Manifest.GetReference().Activate(PlayerRef)
   Utility.Wait(0.1)
