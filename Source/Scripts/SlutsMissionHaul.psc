@@ -102,6 +102,9 @@ float Property Pilferage Auto Hidden Conditional          ; Lost goods
 
 int Property MissionComplete Auto Hidden Conditional      ; To keep track of mission progress for multi objective missions
 int Property JobStage Auto Hidden                         ; The current Job Stage, for objective management
+int Property JOBSTAGE_BASE = 21 AutoReadOnly Hidden
+int Property MISSIONID_CART = 0 AutoReadOnly Hidden
+int Property MISSIONID_PACKAGE = 1 AutoReadOnly Hidden
 
 int Property PremiumDeliveryDelay Auto Hidden Conditional       ; 0 Early | 1 On Time | 2 Too Late
 int Property PremiumPackageStatus Auto Hidden Conditional       ; 0 NoDmg | 1 Light Dmg | 2 Heavy Dmg | 3 Destroyed
@@ -184,8 +187,8 @@ EndFunction
 
 Function SetMissionState(int missionID = -1)
   String[] missions = new String[2]
-  missions[0] = JobCart
-  missions[1] = JobDelivery
+  missions[MISSIONID_CART] = JobCart
+  missions[MISSIONID_PACKAGE] = JobDelivery
   If (missionID < 0)
     missionID = SlutsData.Distribute(MCM.HaulWeights) - 1
   EndIf
@@ -284,7 +287,7 @@ State SpecialDelivery
     EndIf
     If(!DeliverySelectorQst.Start())
       Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + JobCart)
-      SetMissionState(0)
+      SetMissionState(MISSIONID_CART)
       return
     EndIf
     ReferenceAlias target = DeliverySelectorQst.GetAliasById(3) as ReferenceAlias
@@ -351,10 +354,10 @@ Function HandleStage()
     return
   EndIf
   MissionComplete = 0 - MissionType.GetValueInt()
-  int stage = 21 + MissionType.GetValueInt()
+  int stage = JOBSTAGE_BASE + MissionType.GetValueInt()
   If(stage != JobStage) ; Switching haul type, hide the previous objective
     SetObjectiveDisplayed(stage, false)
-    If(stage == 22) ; Prem Delivery also has Stage 100
+    If(stage == JOBSTAGE_BASE + MISSIONID_PACKAGE) ; Prem Delivery also has Stage 100
       SetObjectiveDisplayed(100, false)
     EndIf
   EndIf
@@ -693,7 +696,7 @@ endFunction
 ; ======================================================
 
 Event OnAnimStart(int tid, bool HasPlayer)
-  If(!HasPlayer || GetStage() != 20 || GetState() != JobCart)
+  If(!HasPlayer || MissionComplete != (0 - MISSIONID_CART))
     return
   EndIf
   Untether()

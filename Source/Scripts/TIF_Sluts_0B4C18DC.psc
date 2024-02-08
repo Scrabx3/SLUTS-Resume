@@ -6,7 +6,7 @@ Scriptname TIF_Sluts_0B4C18DC Extends TopicInfo Hidden
 Function Fragment_1(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
-int Count = 3
+;/ int Count = 3
 While(Count)
 	Count -= 1
 	Utility.Wait(0.7) ; To not add everything at once... immersion things
@@ -14,6 +14,8 @@ While(Count)
 	PlayerRef.AddItem(myFood, abSilent = true)
 	PlayerRef.EquipItem(myFood, abSilent = true)
 endWhile
+/;
+PlayerRef.EquipItem(Rations, abSilent = true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -23,3 +25,5 @@ EndFunction
 Potion[] Property FoodStuff  Auto  
 
 Actor Property PlayerRef  Auto  
+
+LeveledItem Property Rations  Auto  
