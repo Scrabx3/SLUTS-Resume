@@ -727,14 +727,15 @@ endEvent
 
 ; HumilPick = 4
 Function debitRate()
-  If(TotalPay <= 100)
+  If(TotalPay <= 0)
     return
   EndIf
-  float dR = Utility.RandomFloat(0.05, 0.35)
-  int debit = Math.Floor(TotalPay * dR)
+  float mult = Utility.RandomFloat(0.05, 0.35)
+  int debit = Math.Floor(TotalPay * mult)
   Escrow.RemoveItem(FillyCoin, debit)
-  DebitMsg.Show(dR * 100)
-  ; data.notify(Math.Floor(dR * 100) + "% has been debited from your last payout")
+  float percent = mult * 100
+  DebitMsg.Show(percent)
+  Debug.Trace("[SLUTS] HumilPick4; Debit Rate " + percent as int)
 EndFunction
 
 function fondle(Message msg=none, float increment=5.0)
@@ -756,6 +757,7 @@ endFunction
 ; ======================================================
 ; =============================== UTILITY
 ; ======================================================
+
 ; Function Dirtify()
 ;   If(!MCM.bUseDirt)
 ;     return
