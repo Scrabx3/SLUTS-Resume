@@ -9,7 +9,22 @@ SlutsBondage Property bd Auto
 
 ; ---------------------------------- Variables
 string[] difficulty
-; Settings
+int Property DIFFICULTY_EASY  = 0 AutoReadOnly Hidden
+int Property DIFFICULTY_NORM  = 1 AutoReadOnly Hidden
+int Property DIFFICULTY_HARD  = 2 AutoReadOnly Hidden
+int Property DIFFICULTY_SLAVE = 3 AutoReadOnly Hidden
+int Property DIFFICULTY_TOTAL = 4 AutoReadOnly Hidden
+
+; Payment
+float Property fPaymentArg = 2.0 Auto Hidden
+float Property fOvertimeArg = 1.0 Auto Hidden
+
+; Difficulty
+int Property iPilferageLevel = 2 Auto Hidden
+int Property iRehabtRate = 1 Auto Hidden
+int Property iSSminDebt = 2 Auto Hidden
+
+; Haulings
 int Property iHaulType01 = 50 Auto Hidden
 {Default Haul, with the buggy cart}
 int Property iHaulType02 = 50 Auto Hidden
@@ -30,8 +45,6 @@ bool Property bCargoAssault = true Auto Hidden
 bool Property bCargoAttack = true Auto Hidden
 bool Property bCargoAway = true Auto Hidden
 
-int Property iRehabtRate = 1 Auto Hidden
-int Property iSSminDebt = 2 Auto Hidden
 ; Customisation
 bool property bUseThermal = false auto Hidden
 bool property bThermalColor = true Auto Hidden
@@ -88,29 +101,25 @@ Event OnPageReset(string Page)
 		UnloadCustomContent()
 	endIf
 	If(Page == "$SLUTS_Settings")
-		AddHeaderOption("$SLUTS_HaulTypes")
-		AddSliderOptionST("defaultHaul", "$SLUTS_HaulCargo", iHaulType01, "{0}")
-		AddSliderOptionST("premiumHaul", "$SLUTS_HaulDelivery", iHaulType02, "{0}")
-		AddEmptyOption()	; Reserved for Additional Haul Types
-		; AddEmptyOption()	; Reserved for Additional Haul Types
-		; AddEmptyOption()	; Reserved for Additional Haul Types
-		; AddEmptyOption()	; Reserved for Additional Haul Types
-		; AddEmptyOption()	; Reserved for Additional Haul Types
-		AddHeaderOption("$SLUTS_Crime")
+		AddHeaderOption("$SLUTS_Payment")
+		AddSliderOptionST("PaymentArg", "$SLUTS_PaymentArg", fPaymentArg, "{1}")
+		AddSliderOptionST("OvertimeArg", "$SLUTS_OvertimeArg", fOvertimeArg, "{1}")
+		AddHeaderOption("$SLUTS_Difficulty")
+		AddMenuOptionST("PilferageLevel", "$SLUTS_Pilferage", difficulty[iPilferageLevel])
 		AddMenuOptionST("RehabRate", "$SLUTS_RehabRate", difficulty[iRehabtRate])
-		AddHeaderOption("$SLUTS_SimpleSlavery")
 		AddMenuOptionST("SSdebtScale", "$SLUTS_SSdebtScale", difficulty[iSSminDebt])
 		; ============================
 		SetCursorPosition(1)
 		; ============================
+		AddHeaderOption("$SLUTS_HaulTypes")
+		AddSliderOptionST("defaultHaul", "$SLUTS_HaulCargo", iHaulType01, "{0}")
+		AddSliderOptionST("premiumHaul", "$SLUTS_HaulDelivery", iHaulType02, "{0}")
 		AddHeaderOption("$SLUTS_HaulCargo")
 		AddSliderOptionST("SpontFail", "$SLUTS_SpontFail", iSpontFail, "{0}%")
 		AddToggleOptionST("SpontFailRandom", "$SLUTS_SpontFailRnd", bSpontFailRandom)
-		AddEmptyOption()
 		; AddToggleOptionST("cargoassault", "$SLUTS_CargoAssault", bCargoAssault)
 		; AddToggleOptionST("cargoattac", "$SLUTS_CargoAttack", bCargoAttack)
 		; AddToggleOptionST("cargoaway", "$SLUTS_CargoAway", bCargoAway)
-		AddEmptyOption()
 
 	ElseIf(Page == "$SLUTS_Customisation")
 		AddHeaderOption("$SLUTS_FillyGear")
@@ -163,6 +172,65 @@ EndEvent
 ; ==================================
 ; 				States // Settings
 ; ==================================
+
+State PaymentArg
+	Event OnSliderOpenST()
+		SetSliderDialogStartValue(fPaymentArg)
+		SetSliderDialogDefaultValue(2.0)
+		SetSliderDialogRange(1, 10)
+		SetSliderDialogInterval(0.5)
+	EndEvent
+	Event OnSliderAcceptST(Float afValue)
+		fPaymentArg = afValue
+		SetSliderOptionValueST(fPaymentArg, "{1}")
+	EndEvent
+	Event OnDefaultST()
+		fPaymentArg = 2.0
+		SetSliderOptionValueST(fPaymentArg, "{1}")
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_PaymentArgHighlight")
+	EndEvent
+EndState
+
+State OvertimeArg
+	Event OnSliderOpenST()
+		SetSliderDialogStartValue(fOvertimeArg)
+		SetSliderDialogDefaultValue(1.0)
+		SetSliderDialogRange(0, 3)
+		SetSliderDialogInterval(0.5)
+	EndEvent
+	Event OnSliderAcceptST(Float afValue)
+		fOvertimeArg = afValue
+		SetSliderOptionValueST(fOvertimeArg, "{1}")
+	EndEvent
+	Event OnDefaultST()
+		fOvertimeArg = 1.0
+		SetSliderOptionValueST(fOvertimeArg, "{1}")
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_OvertimeArgHighlight")
+	EndEvent
+EndState
+
+State PilferageLevel
+	Event OnMenuOpenST()
+		SetMenuDialogStartIndex(iPilferageLevel)
+		SetMenuDialogDefaultIndex(2)
+		SetMenuDialogOptions(difficulty)
+	EndEvent
+	Event OnMenuAcceptST(Int aiIndex)
+		iPilferageLevel = aiIndex
+		SetMenuOptionValueST(difficulty[iPilferageLevel])
+	EndEvent
+	Event OnDefaultST()
+		iPilferageLevel = 2
+		SetMenuOptionValueST(difficulty[iPilferageLevel])
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_PilferageHighlight")
+	EndEvent
+EndState
 
 ;Haul Types
 State defaultHaul

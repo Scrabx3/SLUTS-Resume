@@ -77,8 +77,6 @@ ImageSpaceModifier Property FadeToBlackImod Auto
 ImageSpaceModifier Property FadeToBlackBackImod Auto
 ImageSpaceModifier Property FadeToBlackHoldImod Auto
 
-Faction YK_Ignored
-
 ; ---------------------------------- Variables
 String Property JobCart = "CartHaul" AutoReadOnly Hidden
 String Property JobDelivery = "SpecialDelivery" AutoReadOnly Hidden
@@ -91,26 +89,29 @@ int ActivateKey
 ; Series Info
 int Property Streak Auto Hidden Conditional     ; Number of Hauls the player did this series
 float Property TotalPay Auto Hidden Conditional ; Total amount of payment in this series. May be negative for loss making serieses
-
 float PerfectStreak                             ; Number of Perfect Hauls in a row, to calculate final overtime bonus
 float OvertimePay                               ; Accumulated payments over a series of perfect hauls. Will reset on non perfect haul
 
 ; Haul Info
-float Property GoodsTotal   = 1500.0 AutoReadOnly Hidden  ; Amount of Goods total
-float Property KartHealth   = 100.0 AutoReadOnly Hidden   ; Additional Damage on failure
-float Property Pilferage Auto Hidden Conditional          ; Lost goods
+GlobalVariable Property PilferageThresh00 Auto          ; Threshholds which divide Pilferage damage into 4 segments:
+GlobalVariable Property PilferageThresh01 Auto          ; [...0] -> [1..T1] -> ... -> [(T3 + 1)...]
+GlobalVariable Property PilferageThresh02 Auto
+GlobalVariable Property PilferageThresh03 Auto
+GlobalVariable Property PilferageReinforcement Auto     ; State of the Seal (Bonus Hp) (May be increased through license buffs)
+float Property GoodsTotal = 1000.0 AutoReadOnly Hidden  ; Amount of goods total (Base Hp)
+float Property KartHealth = 100.0 AutoReadOnly Hidden   ; Additional damage on failure (Overkill Hp)
+float Property Pilferage Auto Hidden Conditional        ; Amount of damage to goods/seal (Damaged Hp)
 
-int Property MissionComplete Auto Hidden Conditional      ; To keep track of mission progress for multi objective missions
-int Property JobStage Auto Hidden                         ; The current Job Stage, for objective management
+int Property PremiumDelivery_EARLY  = 0 AutoReadOnly Hidden
+int Property PremiumDelivery_INTIME = 1 AutoReadOnly Hidden
+int Property PremiumDelivery_LATE   = 2 AutoReadOnly Hidden
+int Property PremiumDeliveryDelay Auto Hidden Conditional
+
+int Property MissionComplete Auto Hidden Conditional    ; To keep track of mission progress for multi objective missions
+int Property JobStage Auto Hidden                       ; The current Job Stage, for objective management
 int Property JOBSTAGE_BASE = 21 AutoReadOnly Hidden
 int Property MISSIONID_CART = 0 AutoReadOnly Hidden
 int Property MISSIONID_PACKAGE = 1 AutoReadOnly Hidden
-
-int Property PremiumDeliveryDelay Auto Hidden Conditional       ; 0 Early | 1 On Time | 2 Too Late
-int Property PremiumPackageStatus Auto Hidden Conditional       ; 0 NoDmg | 1 Light Dmg | 2 Heavy Dmg | 3 Destroyed
-int Property PackageStatusLightDmg = 200 AutoReadOnly Hidden    ; Pilferage at which Package is considered damaged
-int Property PackageStatusHeavyDmg = 700 AutoReadOnly Hidden
-int Property PackageStatusSevereDmg = 1000 AutoReadOnly Hidden
 
 ; Humiliation System
 bool Property HumiliatedOnce = false Auto Hidden Conditional    ; Set after 1st Humiliation. Dialogue flag for future missions
@@ -232,20 +233,14 @@ Function SetupHaul()  ; Called during first setup only
   SetupHaulImpl()
   
   MissionComplete = 1 ; To not have HandleStage() fail on first call
-  Pilferage = 0.0
+  Pilferage = 0.0 - PilferageReinforcement.Value
   PerfectStreak = 0
   Streak = 0
   OvertimePay = 0.0
   TotalPay = 0.0
-  UpdatePackageStatus()
-
-  If(Game.GetModByName("YameteKudasai.esp") != 255)
-    YK_Ignored = Game.GetFormFromFile(0x9F9D1E, "YameteKudasai.esp") as Faction
-    PlayerRef.AddToFaction(YK_Ignored)
-  EndIf
 EndFunction
 Function SetupHaulImpl()  ; Called every time BEFORE a new job starts
-  Debug.TraceStack("[SLUTS] Function call outside a valid State = " + GetState(), 2)
+  Debug.TraceStack("[SLUTS] Function call 'SetupHaulImpl' outside a valid State = " + GetState(), 2)
 EndFunction
 
 State CartHaul
@@ -255,7 +250,6 @@ State CartHaul
     If(!Kart)
       Kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form) as SlutsKart
       KartRef.ForceRefTo(Kart)
-      Kart.SetUp()
       Utility.Wait(0.5)
     Else ; Chain Haul, make sure the Kart can actually be moved
       Kart.SetMotionType(Kart.Motion_Dynamic)
@@ -264,6 +258,7 @@ State CartHaul
       EndIf
     EndIf
     Tether()
+    Kart.SetUp()
     Bd.DressUpPony(PlayerRef)
     PlayerAlias.GoToState(JobCart)
   EndFunction
@@ -271,10 +266,10 @@ State CartHaul
   Event OnEndState()
     If(Kart)
       Untether()
+      Kart.ShutDown()
       KartRef.Clear()
       Kart.Disable()
       Kart.Delete()
-      Kart.ShutDown()
       Kart = none
     EndIf
   EndEvent
@@ -302,7 +297,7 @@ State SpecialDelivery
     PlayerAlias.GoToState(JobDelivery)
     DeliverySelectorQst.Stop()
     ; Expecting an average speed of 10k distance every minute
-    PremiumDeliveryDelay = 0
+    PremiumDeliveryDelay = PremiumDelivery_EARLY
     float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference())
     int segments = Math.Ceiling(d / 10000)
     RegisterForUpdate(segments * 40)
@@ -312,38 +307,29 @@ State SpecialDelivery
     PremiumDeliveryDelay += 1
   EndEvent
 
+  ; Wrapper to remove package before doing payment (or leave it in inventory if not received)
+  Function TakePackage(bool abRemovePackage = true)
+    If(abRemovePackage)
+      PlayerRef.RemoveItem(PackageREF.GetReference())
+    EndIf
+    If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM)
+      If (PremiumDeliveryDelay == PremiumDelivery_LATE)
+        Pilferage += PilferageThresh01.Value
+      ElseIf (PremiumDeliveryDelay == PremiumDelivery_LATE + 1)
+        Pilferage += PilferageThresh02.Value
+      ElseIf (PremiumDeliveryDelay >= PremiumDelivery_LATE + 2)
+        Pilferage += PilferageThresh03.Value
+      EndIf
+    EndIf
+    DoPayment()
+  EndFunction
+
   Event OnEndState()
     ; TODO: Once bag implemented, remove it here again
   EndEvent
 EndState
-
 Function TakePackage(bool abRemovePackage = true)
-  If(abRemovePackage)
-    PlayerRef.RemoveItem(PackageREF.GetReference())
-  EndIf
-  If(PremiumDeliveryDelay > 1)
-    Pilferage += (GoodsTotal / 5) * (PremiumDeliveryDelay - 1)
-  ElseIf(PremiumPackageStatus == 0)
-    Pilferage = 0.0
-  EndIf
-  DoPayment()
-EndFunction
-
-Function UpdatePackageStatus()
-  If(Pilferage < PackageStatusLightDmg)
-    PremiumPackageStatus = 0 ; No Damage
-  ElseIf(Pilferage < PackageStatusHeavyDmg)
-    PremiumPackageStatus = 1 ; Light Damage
-  ElseIf(Pilferage < PackageStatusSevereDmg)
-    PremiumPackageStatus = 2 ; Heavy Damage
-  Else  ; If(Pilferage >= PackageStatusSevereDmg)
-    Pilferage = GoodsTotal
-    PremiumPackageStatus = 3 ; Destroyed
-    If(PlayerRef.GetItemCount(PackageREF.GetReference()) > 0)
-      PackageDestroyedMsg.Show()
-      PlayerRef.RemoveItem(PackageREF.GetReference(), 1, true)
-    EndIf
-  EndIf
+  Debug.TraceStack("[SLUTS] Function call 'TakePackage' outside a valid State = " + GetState(), 2)
 EndFunction
 
 ; ======================================================
@@ -378,7 +364,7 @@ EndFunction
 
 Function Fail()
   MissionComplete = 1
-  pilferage = GoodsTotal + KartHealth
+  Pilferage = GoodsTotal + KartHealth
   DoPayment()
 EndFunction
 
@@ -390,10 +376,7 @@ Function GambleBlackmailFailure(Actor akBlackmailer, int aiAddChance = 0)
   int betrayalchance = 75
   int rel = akBlackmailer.GetRelationshipRank(PlayerRef) + aiAddChance
   If(rel >= 0)
-    If(rel > 4)
-      rel = 4
-    EndIf
-    betrayalchance = 50 - (rel * 12)
+    betrayalchance = 50 - (rel * 14)
   EndIf
   If(Utility.RandomInt(0, 99) < betrayalchance)
     Fail()
@@ -420,9 +403,7 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1)
   Payment.SetValue(GetBasePay(recip, next, 1.0))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment = " + Payment.GetValueInt())
-  Pilferage = 0.0
-  UpdatePackageStatus()
-  ; ChainScene.ForceStart()
+  Pilferage = 0.0 - PilferageReinforcement.Value
   Manifest.GetReference().Activate(PlayerRef)
   Utility.Wait(0.1)
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
@@ -454,10 +435,6 @@ Function Quit()
   EndIf
   Escrow.MoveTo(spawn)
   Escrow.Lock(false)
-
-  If(YK_Ignored)
-    PlayerRef.RemoveFromFaction(YK_Ignored)
-  EndIf
 EndFunction
 
 
@@ -481,8 +458,8 @@ float Function GetBasePay(ObjectReference akDisp, ObjectReference akRecip, float
     EndIf
   EndIf
   ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/14/#comment-3357294
-  ; V3: Hardcoding M = 2 | Division 10 -> 25
-  float ret = (Math.pow(Math.sqrt((0.5 * distance) / SkyrimDiameter), -1.0) * distance) / 25
+  float ret = Math.sqrt(distance * SkyrimDiameter * MCM.fPaymentArg) / 10
+  ; float ret = (Math.pow(Math.sqrt((Math.pow(MCM.fPaymentArg, -1.0) * distance) / SkyrimDiameter), -1.0) * distance) / 10
   return ret * mult
 EndFunction
 
@@ -491,12 +468,11 @@ float Function GetOvertimeBonus()
     return 0
   else
     ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/15/#comment-3360719
-    ; V3: Hardcoding M = 1
     float ret
     If(PerfectStreak < 15)
-      ret = Math.pow(1.4, (0.3 * PerfectStreak)) - 1
+      ret = MCM.fOvertimeArg * Math.pow(1.4, (0.3 * PerfectStreak)) - MCM.fOvertimeArg
     else
-      ret = 5 ; MCM.fOvertimeGrowth * 5
+      ret = MCM.fOvertimeArg * 5
     EndIf
     ; notify("Having agreed to " + streakPerfect + " hauls in a row your overtime bonus is now " + bonusPerCent + "%")
     Debug.Trace("Overtime Bonus: " + (ret * 100) + "%")
@@ -506,11 +482,12 @@ EndFunction
 
 Function DoPayment()
   Streak += 1
-  data.RunCompleted(Pilferage == 0)
+  bool perfectrun = Pilferage <= PilferageThresh00.GetValue()
+  data.RunCompleted(perfectrun)
   ; Finalize Payment, payout to Escrow Chest, get response type
   int crime = SlutsCrime.GetCrimeGold()
   int pay = Payment.GetValueInt()
-  If(Pilferage == 0)
+  If(perfectrun)
     overtimepay += pay
     PerfectStreak += 1
     If(crime == 0)
@@ -521,7 +498,8 @@ Function DoPayment()
       EvalResponse = Response_ReduceDebt1
     EndIf
   Else
-    float mult = (Pilferage / GoodsTotal) * 5
+    float difficulty = MCM.iPilferageLevel as float
+    float mult = (2.0 * (difficulty + 0.5) * Pilferage) / (PilferageThresh02.GetValue() * (difficulty + 1.0))
     pay -= Math.Floor(mult * pay)
     overtimepay = 0
     PerfectStreak = 0
@@ -579,26 +557,23 @@ endFunction
 ; ======================================================
 
 Function spontaneousFailure()
-  if (pilferage == 0 && Utility.RandomInt(1,100) <= mcm.iSpontFail)
-  	if mcm.bSpontFailRandom
-  		;Deliberately set the chance above the 120 maximum. Overwise max would only have a 1 in 120 chance of happening.
-  		pilferage = (Utility.RandomInt(825,2400))
-  		if pilferage > 1800
-  			pilferage = 1800
-  		endif
-  	else
-  		pilferage = 1800
-  	endif
-    string X = ""
-    if pilferage < 1500
-  		X = "some of your cargo appears to be missing"
-  	elseif pilferage < 1800
-  		X = "much of your cargo is missing"
-  	else
-  		X = "your cargo is completely gone"
-  	endif
-  	Debug.Messagebox("In a moment of absent mindedness you glance behind you, only to notice to your horror that " + X + "! You have no idea what happened and can only shudder in a cold sweat knowing you will still have to answer for it...")
+  If (Pilferage > 0 || Utility.RandomInt(0, 99) > MCM.iSpontFail)
+    return
+  EndIf
+  If (MCM.bSpontFailRandom)
+    Pilferage = Utility.RandomFloat(PilferageThresh01.GetValue(), GoodsTotal + KartHealth)
+  Else
+    Pilferage = GoodsTotal + KartHealth
+  EndIf
+  String X
+  if Pilferage <= PilferageThresh02.GetValue()
+    X = "some of your cargo appears to be missing"
+  elseif Pilferage <= PilferageThresh03.GetValue()
+    X = "much of your cargo is missing"
+  else
+    X = "your cargo is completely gone"
   endif
+  Debug.Messagebox("In a moment of absent mindedness you glance behind you, only to notice to your horror that " + X + "! You have no idea what happened and can only shudder in a cold sweat knowing you will still have to answer for it...")
 EndFunction
 
 

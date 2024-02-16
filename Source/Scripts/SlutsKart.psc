@@ -12,10 +12,12 @@ Message Property SeverePilferageMsg Auto			; Your cargo has been stolen and the 
 
 float PilferAway
 
+; Called when the cart is first spawned in
 Function SetUp()
 	PilferAway = 25.0
 EndFunction
 
+; Called when the cart is about to be deleted
 Function ShutDown()
 	If(GetState() == "Unloaded")
 		GoToState("")
@@ -23,12 +25,12 @@ Function ShutDown()
 EndFunction
 
 event onactivate(objectreference akActionRef)
-	If(akActionRef == none || akActionRef != Game.GetPlayer())
+	If(akActionRef != PlayerRef)
 		return
 	ElseIf(mission.GetStage() < 20 || mission.GetStage() >= 100)
 		return
 	EndIf
-	float p = mission.pilferage / mission.GoodsTotal
+	float p = mission.Pilferage / mission.GoodsTotal
 	if p == 0.0
 		NoPilferageMsg.Show()
 	elseif p < 0.3
