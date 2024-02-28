@@ -680,6 +680,9 @@ Event OnAnimStart(int tid, bool HasPlayer)
 EndEvent
 
 Event OnAnimEnd(int tid, bool HasPlayer)
+  If (!HasPlayer)
+    return
+  EndIf
   Actor[] positions = SlutsAnimation.GetSceneActors(tid)
   String[] hooks = SlutsAnimation.GetSceneHooks(tid)
   If(hooks.Find("SLUTS_Humil") > -1)
@@ -688,37 +691,38 @@ Event OnAnimEnd(int tid, bool HasPlayer)
     moveChestScene.Start()
     return
   ElseIf(hooks.Find("SLUTS_BlackMailSex") > -1)
+    Debug.Trace("[SLUTS] Blackmail Scene End")
     Actor[] copy = PapyrusUtil.RemoveActor(positions, PlayerRef)
     GambleBlackmailFailure(copy[0])
     SetStage(100)
-  ElseIf(!MCM.bCargoAssault || !SlutsAnimation.GetSceneVictim(tid) != PlayerRef || GetStage() != 20)
-    Debug.Trace("[SLUTS] Scene End Pilferage is disabled or Player is not Victim")
+    return
+  ElseIf(MCM.iPilferageLevel == MCM.DIFFICULTY_EASY || !IsActiveMission())
+    Debug.Trace("[SLUTS] Scene End but Pilferage is disabled or not on active haul")
     return
   EndIf
-  Debug.Trace("[SLUTS] Piferage at Scene End | Pre = " + Pilferage)
  
-  int type = 0
+  float arg = 0.0
   int i = 0
   While(i < positions.Length)
     Actor p = positions[i]
-    If(p.IsPlayerTeammate() || p.IsInFaction(DriverFaction))
-      return
-    ElseIf(p.IsInFaction(BanditFaction) || p.IsInFaction(ForswornFaction))
-      type = 1
-    ElseIf(p.GetActorValue("Morality") < 2)
-      type = 2 + p.GetActorValue("Morality") as int
+    If(p == PlayerRef || p.IsPlayerTeammate() || p.IsInFaction(DriverFaction))
+      ; Continue
+    Else
+      float m = p.GetActorValue("Morality")
+      If(p.IsInFaction(BanditFaction) || p.IsInFaction(ForswornFaction))
+        m -= 1.0
+      EndIf
+      arg + m
     EndIf
     i += 1
   EndWhile
-  If(type == 1 || type > 2 && Utility.RandomInt(0, 99) < 40 * (1 + Math.pow(type, -1)))
-    float robbed = Utility.RandomFloat(5 + positions.length, 15 + positions.length)
-    Pilferage += GoodsTotal * (robbed / 100)
-    If(Pilferage > GoodsTotal * 1.1)
-      Pilferage = GoodsTotal * 1.1
-    EndIf
-    ScenePilferageMsg.Show(Pilferage, GoodsTotal)
-  EndIf
-  Debug.Trace("[SLUTS] Piferage at Scene End | Post = " + Pilferage)
+  arg /= positions.Length as float
+  float mult = -0.03 * (arg - MCM.iPilferageLevel) + 0.05
+  float penalty = PilferageThresh03.GetValue() * mult
+  Debug.Trace("[SLUTS] OnAnimEnd() Radiant: Pilferage = " + Pilferage + " | Arg = " + mult + " | Penalty = " + penalty)
+
+  UpdatePilferage(Pilferage + penalty)
+  ScenePilferageMsg.Show(Pilferage, PilferageThresh03.GetValue())
 endEvent
 
 ; ======================================================
