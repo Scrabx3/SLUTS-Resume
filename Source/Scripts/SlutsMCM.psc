@@ -13,7 +13,6 @@ int Property DIFFICULTY_EASY  = 0 AutoReadOnly Hidden
 int Property DIFFICULTY_NORM  = 1 AutoReadOnly Hidden
 int Property DIFFICULTY_HARD  = 2 AutoReadOnly Hidden
 int Property DIFFICULTY_SLAVE = 3 AutoReadOnly Hidden
-int Property DIFFICULTY_TOTAL = 4 AutoReadOnly Hidden
 
 ; Payment
 float Property fPaymentArg = 2.0 Auto Hidden
@@ -41,9 +40,6 @@ EndProperty
 
 int Property iSpontFail = 0 Auto Hidden
 bool Property bSpontFailRandom = true Auto Hidden
-bool Property bCargoAssault = true Auto Hidden
-bool Property bCargoAttack = true Auto Hidden
-bool Property bCargoAway = true Auto Hidden
 
 ; Customisation
 bool property bUseThermal = false auto Hidden
@@ -117,9 +113,6 @@ Event OnPageReset(string Page)
 		AddHeaderOption("$SLUTS_HaulCargo")
 		AddSliderOptionST("SpontFail", "$SLUTS_SpontFail", iSpontFail, "{0}%")
 		AddToggleOptionST("SpontFailRandom", "$SLUTS_SpontFailRnd", bSpontFailRandom)
-		; AddToggleOptionST("cargoassault", "$SLUTS_CargoAssault", bCargoAssault)
-		; AddToggleOptionST("cargoattac", "$SLUTS_CargoAttack", bCargoAttack)
-		; AddToggleOptionST("cargoaway", "$SLUTS_CargoAway", bCargoAway)
 
 	ElseIf(Page == "$SLUTS_Customisation")
 		AddHeaderOption("$SLUTS_FillyGear")
