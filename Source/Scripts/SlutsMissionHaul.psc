@@ -32,8 +32,6 @@ ReferenceAlias Property PackageREF Auto   ; Prem Delivery Package
 ReferenceAlias Property KartREF Auto      ; Used for Dialogue Conditions
 Activator Property Kart_Form Auto         ; Carts Base Object
 
-GlobalVariable Property MissionType Auto  ; Currently active Mission Type
-GlobalVariable Property Payment Auto      ; Base Pay of the current Haul
 MiscObject Property FillyCoin Auto
 MiscObject Property Gold001 Auto
 Message Property DebitMsg Auto
@@ -41,6 +39,7 @@ Message Property AttemptUntetherMsg Auto
 Message Property DetachKartSureMsg Auto
 Message Property ScenePilferageMsg Auto
 Message Property PackageDestroyedMsg Auto
+Message Property CargoTetherFailure Auto
 Keyword Property ActorTypeNPC Auto
 
 Activator Property SummonFX Auto
@@ -87,19 +86,17 @@ float Property SkyrimDiameter = 311231.0 AutoReadOnly Hidden
 int ActivateKey
 
 ; Series Info
+GlobalVariable Property Payment Auto            ; Base Pay of the current Haul
 int Property Streak Auto Hidden Conditional     ; Number of Hauls the player did this series
 float Property TotalPay Auto Hidden Conditional ; Total amount of payment in this series. May be negative for loss making serieses
 float PerfectStreak                             ; Number of Perfect Hauls in a row, to calculate final overtime bonus
-float OvertimePay                               ; Accumulated payments over a series of perfect hauls. Will reset on non perfect haul
 
 ; Haul Info
 GlobalVariable Property PilferageThresh00 Auto          ; Threshholds which divide Pilferage damage into 4 segments:
 GlobalVariable Property PilferageThresh01 Auto          ; [...0] -> [1..T1] -> ... -> [(T3 + 1)...]
-GlobalVariable Property PilferageThresh02 Auto
+GlobalVariable Property PilferageThresh02 Auto          ; Thresh 3 evaluates to total cargo Health, exceeding means the cargo is lost entirely
 GlobalVariable Property PilferageThresh03 Auto
 GlobalVariable Property PilferageReinforcement Auto     ; State of the Seal (Bonus Hp) (May be increased through license buffs)
-float Property GoodsTotal = 1000.0 AutoReadOnly Hidden  ; Amount of goods total (Base Hp)
-float Property KartHealth = 100.0 AutoReadOnly Hidden   ; Additional damage on failure (Overkill Hp)
 float Property Pilferage Auto Hidden Conditional        ; Amount of damage to goods/seal (Damaged Hp)
 
 int Property PremiumDelivery_EARLY  = 0 AutoReadOnly Hidden
@@ -107,6 +104,7 @@ int Property PremiumDelivery_INTIME = 1 AutoReadOnly Hidden
 int Property PremiumDelivery_LATE   = 2 AutoReadOnly Hidden
 int Property PremiumDeliveryDelay Auto Hidden Conditional
 
+GlobalVariable Property MissionType Auto                ; Currently active Mission Type
 int Property MissionComplete Auto Hidden Conditional    ; To keep track of mission progress for multi objective missions
 int Property JobStage Auto Hidden                       ; The current Job Stage, for objective management
 int Property JOBSTAGE_BASE = 21 AutoReadOnly Hidden
@@ -236,12 +234,15 @@ Function SetupHaul()  ; Called during first setup only
   Pilferage = 0.0 - PilferageReinforcement.Value
   PerfectStreak = 0
   Streak = 0
-  OvertimePay = 0.0
   TotalPay = 0.0
 EndFunction
 Function SetupHaulImpl()  ; Called every time BEFORE a new job starts
   Debug.TraceStack("[SLUTS] Function call 'SetupHaulImpl' outside a valid State = " + GetState(), 2)
 EndFunction
+
+; ======================================================
+; =============================== ON HAUL
+; ======================================================
 
 State CartHaul
   Function SetupHaulImpl()
@@ -332,9 +333,26 @@ Function TakePackage(bool abRemovePackage = true)
   Debug.TraceStack("[SLUTS] Function call 'TakePackage' outside a valid State = " + GetState(), 2)
 EndFunction
 
+bool Function IsActiveMission(int aiMissionID = 0)
+  return MissionComplete != 0 - aiMissionID
+EndFunction
+bool Function IsActiveCartMission()
+  return IsActiveMission(MISSIONID_CART)
+EndFunction
+
 ; ======================================================
-; =============================== EVALUATION
+; =============================== PILFERAGE & EVALUATION
 ; ======================================================
+
+Function UpdatePilferage(float afValue)
+  float t3 = PilferageThresh03.GetValue()
+  If (afValue > t3)
+    afValue = t3
+  EndIf
+  Pilferage = afValue
+  float pct = afValue / (t3 + PilferageReinforcement.GetValue())
+  SendModEvent("SLUTS_InvokeFloat", ".main.setPct", 1 - pct)
+EndFunction
 
 Function HandleStage()
   If(MissionComplete < 1)
@@ -357,14 +375,14 @@ EndFunction
 
 Function CompleteJobStages()
   SetObjectiveCompleted(JobStage)
-  If(JobStage == 22)
+  If(JobStage == JOBSTAGE_BASE + MISSIONID_PACKAGE)
     SetObjectiveCompleted(100)
   EndIf
 EndFunction
 
 Function Fail()
   MissionComplete = 1
-  Pilferage = GoodsTotal + KartHealth
+  Pilferage = PilferageThresh03.GetValue() * 1.1
   DoPayment()
 EndFunction
 
@@ -422,8 +440,8 @@ Function Quit()
   Game.EnableFastTravel()
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
   ; Enable post haul Dialogue & place Escrow
-  If (overtimepay > 0)
-    int coins = Math.Floor(overtimepay * GetOvertimeBonus())
+  If (TotalPay > 0)
+    int coins = Math.Floor(TotalPay * GetOvertimeBonus())
     Escrow.AddItem(FillyCoin, coins)
   EndIf
   ObjectReference spawn
@@ -458,26 +476,26 @@ float Function GetBasePay(ObjectReference akDisp, ObjectReference akRecip, float
     EndIf
   EndIf
   ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/14/#comment-3357294
-  float ret = Math.sqrt(distance * SkyrimDiameter * MCM.fPaymentArg) / 10
-  ; float ret = (Math.pow(Math.sqrt((Math.pow(MCM.fPaymentArg, -1.0) * distance) / SkyrimDiameter), -1.0) * distance) / 10
+  ; V3: Reduced coin gain by factor 2,5 | V3.3: simplified function
+  float ret = Math.sqrt(distance * SkyrimDiameter * MCM.fPaymentArg) / 25
   return ret * mult
 EndFunction
 
 float Function GetOvertimeBonus()
-  If(SlutsCrime.GetCrimeGold() > 0 || PerfectStreak == 0)
+  If(SlutsCrime.GetCrimeGold() > 0 || PerfectStreak <= 1)
     return 0
+  Endif
+  ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/15/#comment-3360719
+  ; V3.3: Halfed Overtime Bonus
+  float ret
+  If(PerfectStreak < 15)
+    ret = MCM.fOvertimeArg * Math.pow(1.4, (0.3 * PerfectStreak)) - MCM.fOvertimeArg
   else
-    ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/15/#comment-3360719
-    float ret
-    If(PerfectStreak < 15)
-      ret = MCM.fOvertimeArg * Math.pow(1.4, (0.3 * PerfectStreak)) - MCM.fOvertimeArg
-    else
-      ret = MCM.fOvertimeArg * 5
-    EndIf
-    ; notify("Having agreed to " + streakPerfect + " hauls in a row your overtime bonus is now " + bonusPerCent + "%")
-    Debug.Trace("Overtime Bonus: " + (ret * 100) + "%")
-    return ret
+    ret = MCM.fOvertimeArg * 5
   EndIf
+  ret /= 2
+  Debug.Trace("[SLUTS] GetOvertimeBonus(): PerfectStreak = " + PerfectStreak + " | Overtime Bonus: " + (ret * 100) + "%")
+  return ret
 EndFunction
 
 Function DoPayment()
@@ -488,7 +506,6 @@ Function DoPayment()
   int crime = SlutsCrime.GetCrimeGold()
   int pay = Payment.GetValueInt()
   If(perfectrun)
-    overtimepay += pay
     PerfectStreak += 1
     If(crime == 0)
       EvalResponse = Response_Flawless
@@ -498,11 +515,20 @@ Function DoPayment()
       EvalResponse = Response_ReduceDebt1
     EndIf
   Else
-    float difficulty = MCM.iPilferageLevel as float
-    float mult = (2.0 * (difficulty + 0.5) * Pilferage) / (PilferageThresh02.GetValue() * (difficulty + 1.0))
-    pay -= Math.Floor(mult * pay)
-    overtimepay = 0
     PerfectStreak = 0
+    ; You will lose your entire payment after losing {Thresh02}-2/3rds cargo,
+    ; losing all cargo will result in approx. 2-3 times your payment as debt
+    float difficulty = MCM.iPilferageLevel as float
+    float mult
+    If (Pilferage <= PilferageThresh01.GetValue())
+      mult = PaymentSeg1()
+    ElseIf (Pilferage <= PilferageThresh02.GetValue())
+      mult = PaymentSeg2(Pilferage)
+    Else
+      mult = PaymentSeg3(Pilferage)
+    EndIf
+    Debug.Trace("[SLUTS] Pilferage = " + Pilferage + " | Reducing payment by a ratio of " + mult)
+    pay -= Math.Floor(mult * pay)
     If (crime == 0)
       If (mult < 1)
         EvalResponse = Response_Deduction
@@ -519,7 +545,6 @@ Function DoPayment()
       EndIf
     EndIf
   EndIf
-  Debug.Trace("[SLUTS] Eval Response = " + EvalResponse)
   If(pay > 0) ; Made profit
     If(crime > pay)
       SlutsCrime.ModCrimeGold(-pay)
@@ -532,9 +557,19 @@ Function DoPayment()
   ElseIf(pay < 0) ; Made losses
     SlutsCrime.ModCrimeGold(-pay)
   EndIf
-  Debug.Trace("[SLUTS] Post Eval => Payment = " + pay + " | Debt = " + SlutsCrime.GetCrimeGold() + " | Overtime Bonus = " + overtimepay)
   TotalPay += pay
-  ; Payment = {} | Debt = {} | Overtime Bonus = {}
+  Debug.Trace("[SLUTS] DoPayment(): Response = " + EvalResponse + " | Payment = " + pay + " | Debt = " + SlutsCrime.GetCrimeGold() + " | TotalPay = " + TotalPay)
+EndFunction
+
+float Function PaymentSeg1()
+  return PaymentSeg2(PilferageThresh01.GetValue())
+EndFunction
+float Function PaymentSeg2(float x)
+  float t2 = PilferageThresh02.GetValue()
+  return ((Pilferage - t2) / t2) + 1
+EndFunction
+float Function PaymentSeg3(float x)
+  return Math.pow(1.003, x - PilferageThresh02.GetValue())
 EndFunction
 
 ; ======================================================
@@ -560,10 +595,11 @@ Function spontaneousFailure()
   If (Pilferage > 0 || Utility.RandomInt(0, 99) > MCM.iSpontFail)
     return
   EndIf
+  float max = PilferageThresh03.GetValue() * 1.1
   If (MCM.bSpontFailRandom)
-    Pilferage = Utility.RandomFloat(PilferageThresh01.GetValue(), GoodsTotal + KartHealth)
+    Pilferage = Utility.RandomFloat(PilferageThresh01.GetValue(), max)
   Else
-    Pilferage = GoodsTotal + KartHealth
+    Pilferage = max
   EndIf
   String X
   if Pilferage <= PilferageThresh02.GetValue()
@@ -607,6 +643,9 @@ EndEvent
 
 Function Tether()
   If(!Kart || bIsThethered)
+    return
+  ElseIf (Pilferage > PilferageThresh03.GetValue())
+    CargoTetherFailure.Show() ; Kart is damaged and cannot retether
     return
   EndIf
   bIsThethered = true
@@ -673,7 +712,7 @@ endFunction
 ; ======================================================
 
 Event OnAnimStart(int tid, bool HasPlayer)
-  If(!HasPlayer || MissionComplete != (0 - MISSIONID_CART))
+  If(!HasPlayer || !IsActiveCartMission())
     return
   EndIf
   Untether()
@@ -731,15 +770,16 @@ endEvent
 
 ; HumilPick = 4
 Function debitRate()
-  If(TotalPay <= 0)
+  If(Payment.Value <= 0)
+    Debug.Trace("[SLUTS] debitRate(): Unable to deduct rate, no payment in previous run? " + Payment.Value)
     return
   EndIf
-  float mult = Utility.RandomFloat(0.05, 0.35)
-  int debit = Math.Floor(TotalPay * mult)
+  float pct = Utility.RandomFloat(0.05, 0.35)
+  int debit = Math.Floor(Payment.Value * pct)
   Escrow.RemoveItem(FillyCoin, debit)
-  float percent = mult * 100
-  DebitMsg.Show(percent)
-  Debug.Trace("[SLUTS] HumilPick4; Debit Rate " + percent as int)
+  TotalPay -= debit
+  DebitMsg.Show(pct * 100)
+  Debug.Trace("[SLUTS] debitRate(): Debit Rate = " + pct)
 EndFunction
 
 function fondle(Message msg=none, float increment=5.0)
