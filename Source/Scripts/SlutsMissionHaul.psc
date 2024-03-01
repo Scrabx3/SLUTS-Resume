@@ -40,6 +40,7 @@ Message Property DetachKartSureMsg Auto
 Message Property ScenePilferageMsg Auto
 Message Property PackageDestroyedMsg Auto
 Message Property CargoTetherFailure Auto
+Message Property CartTooFarAway Auto
 Keyword Property ActorTypeNPC Auto
 
 Activator Property SummonFX Auto
@@ -229,9 +230,10 @@ Function SetupHaul()  ; Called during first setup only
   PlayerRef.PlaceAtMe(SummonFX)
   StripPlayer()
   SetupHaulImpl()
+  SendModEvent("SLUTS_SetupPilferage")
   
   MissionComplete = 1 ; To not have HandleStage() fail on first call
-  Pilferage = 0.0 - PilferageReinforcement.Value
+  UpdatePilferage(0.0 - PilferageReinforcement.Value)
   PerfectStreak = 0
   Streak = 0
   TotalPay = 0.0
@@ -334,7 +336,7 @@ Function TakePackage(bool abRemovePackage = true)
 EndFunction
 
 bool Function IsActiveMission(int aiMissionID = 0)
-  return MissionComplete != 0 - aiMissionID
+  return MissionComplete == (0 - aiMissionID)
 EndFunction
 bool Function IsActiveCartMission()
   return IsActiveMission(MISSIONID_CART)
@@ -350,8 +352,9 @@ Function UpdatePilferage(float afValue)
     afValue = t3
   EndIf
   Pilferage = afValue
-  float pct = afValue / (t3 + PilferageReinforcement.GetValue())
-  SendModEvent("SLUTS_InvokeFloat", ".main.setPct", 1 - pct)
+  float tr = PilferageReinforcement.GetValue()
+  float pct = (afValue + tr) / (t3 + tr)
+  SendModEvent("SLUTS_InvokeFloat", ".setPct", 1 - pct)
 EndFunction
 
 Function HandleStage()
@@ -371,6 +374,7 @@ Function HandleStage()
     SetObjectiveCompleted(JobStage, false)
   EndIf
   SetObjectiveDisplayed(JobStage, true, true)
+  SendModEvent("SLUTS_InvokeFloat", ".show", 0.6)
 EndFunction
 
 Function CompleteJobStages()
@@ -421,7 +425,7 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1)
   Payment.SetValue(GetBasePay(recip, next, 1.0))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment = " + Payment.GetValueInt())
-  Pilferage = 0.0 - PilferageReinforcement.Value
+  UpdatePilferage(0.0 - PilferageReinforcement.Value)
   Manifest.GetReference().Activate(PlayerRef)
   Utility.Wait(0.1)
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
@@ -499,6 +503,7 @@ float Function GetOvertimeBonus()
 EndFunction
 
 Function DoPayment()
+  SendModEvent("SLUTS_InvokeFloat", ".hide", 0.0)
   Streak += 1
   bool perfectrun = Pilferage <= PilferageThresh00.GetValue()
   data.RunCompleted(perfectrun)
@@ -621,11 +626,15 @@ Event OnKeyDown(int KeyCode)
 		return
   EndIf
   bool Ctrl = Input.IsKeyPressed(29) || Input.IsKeyPressed(157)
-  If(!Ctrl || !Kart || PlayerRef.IsInInterior())
+  If (!Ctrl || !Kart || PlayerRef.IsInInterior())
     return
   EndIf
   If(KeyCode == ActivateKey)
     If(!bIsThethered)
+      If (Kart.GetDistance(PlayerRef) >= 1000)
+        CartTooFarAway.Show()
+        return
+      EndIf
       Tether()
       Bd.RemoveIdx(Bd.yokeIDX, true)
       Bd.EquipIdx(Bd.yokeIDX, true)
