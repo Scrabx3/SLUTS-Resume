@@ -69,19 +69,18 @@ State Active
 		If(akAggressor == PlayerRef || abBashAttack || abHitBlocked || mission.MCM.iPilferageLevel == mission.MCM.DIFFICULTY_EASY)
 			return
 		EndIf
-		float dmg = 0.0
 		Weapon srcW = akSource as Weapon
 		If(srcW)
-			dmg = srcW.GetBaseDamage()
+			float dmg = srcW.GetBaseDamage()
 			If (abPowerAttack)
 				dmg *= 2
 			EndIf
 			Pilferage += dmg * mission.MCM.iPilferageLevel as float
 			return
 		EndIf
-		float dmg = 0.0
 		Spell srcS = akSource as Spell
 		If (srcS && srcS.IsHostile())
+			float dmg = 0.0
 			int i = srcS.GetNumEffects()
 			While(i > 0)
 				MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
