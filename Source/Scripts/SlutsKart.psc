@@ -1,7 +1,6 @@
 Scriptname SlutsKart extends ObjectReference
 
-SlutsMissionHaul property mission auto
-keyword property slut_yoke auto
+SlutsMissionHaul Property mission Auto
 Actor Property PlayerRef Auto
 
 Message Property NoPilferageMsg Auto					; The cart is loaded and the seal is intact
@@ -10,116 +9,107 @@ Message Property NotablePilferageMsg Auto			; Several choice items are missing f
 Message Property SignificantPilferageMsg Auto	; Your compartment has been well and truly pillaged.
 Message Property SeverePilferageMsg Auto			; Your cargo has been stolen and the cart has been damaged
 
-float PilferAway
+float Property Pilferage
+	float Function Get()
+		return mission.Pilferage
+	EndFunction
+	Function Set(float afValue)
+		If (!mission.IsActiveCartMission())
+			return
+		EndIf
+		mission.UpdatePilferage(afValue)
+		If (afValue > mission.PilferageThresh03.GetValue())
+			UnregisterForUpdateGameTime()
+			mission.Untether()
+		EndIf
+	EndFunction
+EndProperty
 
 ; Called when the cart is first spawned in
 Function SetUp()
-	PilferAway = 25.0
+	GoToState("Active")
 EndFunction
 
 ; Called when the cart is about to be deleted
 Function ShutDown()
-	If(GetState() == "Unloaded")
-		GoToState("")
-	EndIf
+	GoToState("")
 EndFunction
 
-event onactivate(objectreference akActionRef)
-	If(akActionRef != PlayerRef)
-		return
-	ElseIf(mission.GetStage() < 20 || mission.GetStage() >= 100)
-		return
-	EndIf
-	float p = mission.Pilferage / mission.GoodsTotal
-	if p == 0.0
-		NoPilferageMsg.Show()
-	elseif p < 0.3
-		LittlePilferageMsg.Show()
-	elseif p < 0.6
-		NotablePilferageMsg.Show()
-	elseif p < 1
-		SignificantPilferageMsg.Show()
-	else
-		SeverePilferageMsg.Show()
-	endif
-endevent
-
-Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-	If(!mission.MCM.bCargoAttack || abBashAttack || akAggressor != Game.GetPlayer())
-		return
-	EndIf
-	Weapon wep = akSource as Weapon
-	If(!wep)
-		Spell spll = akSource as Spell
-		If(!spll || !spll.IsHostile())
-			return
-		EndIf
-		int i = spll.GetCostliestEffectIndex()
-		MagicEffect effect = spll.GetNthEffectMagicEffect(i)
-		If(effect.GetAssociatedSkill() == "Destruction")
-			mission.Pilferage += mission.GoodsTotal * 0.01
-		EndIf
-	Else
-		If(abPowerAttack)
-			mission.Pilferage += mission.GoodsTotal * 0.03
-		Else
-			mission.Pilferage += mission.GoodsTotal * 0.01
-		EndIf
-	EndIf
-	If(mission.Pilferage >= mission.GoodsTotal + mission.KartHealth)
-		mission.Pilferage = mission.GoodsTotal + mission.KartHealth
-		Disable()
-	EndIf
-EndEvent
-
-Event OnCellDetach()
-	Debug.Trace("[SLUTS] Kart OnCellDetach()")
-	mission.Untether()
-EndEvent
-
-Event OnUnload()
-	If(IsDisabled() || !mission.MCM.bCargoAway)
-		return
-	EndIf
-	GoToState("Unloaded")
-EndEvent
-
-State Unloaded
+float argUnload
+State Active
 	Event OnBeginState()
-		Debug.Trace("[SLUTS] Kart Unloaded")
-		RegisterForUpdate(10)
-		PilferAway()
+		argUnload = 0.0
 	EndEvent
 
-	Event OnUpdate()
-		PilferAway()
-	EndEvent
+	Event OnActivate(ObjectReference akActionRef)
+		If(akActionRef != PlayerRef || !mission.IsActiveCartMission())
+			return
+		ElseIf (Pilferage <= mission.PilferageThresh00.Value)
+			NoPilferageMsg.Show()
+		ElseIf (Pilferage <= mission.PilferageThresh01.Value)
+			LittlePilferageMsg.Show()
+		ElseIf (Pilferage <= mission.PilferageThresh02.Value)
+			NotablePilferageMsg.Show()
+		ElseIf (Pilferage <= mission.PilferageThresh03.Value)
+			SignificantPilferageMsg.Show()
+		Else
+			SeverePilferageMsg.Show()
+		EndIf
+	Endevent
 
-	Event OnCellAttach()
-		GoToState("")
-	EndEvent
-
-	Event OnEndState()
-		Debug.Trace("[SLUTS] Kart Loaded")
-		UnregisterForUpdate()
-	EndEvent
-EndState
-
-Function PilferAway()
-	If(mission.GetStage() < 20 || mission.GetStage() >= 100)
-		GoToState("")
-		return
-	EndIf
-	Debug.Trace("[SLUTS] PilferAway()")
-	If(Utility.RandomFloat(0, 99.5) < PilferAway)
-		mission.Pilferage += mission.GoodsTotal * 0.03 + mission.Pilferage * 0.01
-		If(mission.Pilferage >= mission.GoodsTotal + mission.KartHealth)
-			Debug.Trace("[SLUTS] Kart Destroyed")
-			mission.Pilferage = mission.GoodsTotal + mission.KartHealth
+	Event OnCellDetach()
+		If (Pilferage > mission.PilferageThresh03.GetValue())
 			Disable()
-			GoToState("")
+		Else
+			mission.Untether()
+		EndIf
+	EndEvent
+
+	Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
+		If(akAggressor == PlayerRef || abBashAttack || abHitBlocked || mission.MCM.iPilferageLevel == mission.MCM.DIFFICULTY_EASY)
 			return
 		EndIf
-	EndIf
-	PilferAway += 1.5
-EndFunction
+		float dmg = 0.0
+		Weapon srcW = akSource as Weapon
+		If(srcW)
+			dmg = srcW.GetBaseDamage()
+			If (abPowerAttack)
+				dmg *= 2
+			EndIf
+			Pilferage += dmg * mission.MCM.iPilferageLevel as float
+			return
+		EndIf
+		float dmg = 0.0
+		Spell srcS = akSource as Spell
+		If (srcS && srcS.IsHostile())
+			int i = srcS.GetNumEffects()
+			While(i > 0)
+				MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
+				If (effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
+					dmg += srcS.GetNthEffectMagnitude(i)
+				EndIf
+				i += 1
+			EndWhile
+			Pilferage += dmg * (mission.MCM.iPilferageLevel as float) * 0.5
+			return
+		EndIf
+	EndEvent
+	
+	Event OnUnload()
+		If(IsDisabled())
+			return
+		EndIf
+		RegisterForSingleUpdateGameTime(0.5)
+	EndEvent
+
+	Event OnUpdateGameTime()
+		If (Is3DLoaded())
+			argUnload = 0.0
+			return
+		EndIf
+		argUnload += 1
+		Pilferage += 0.003 * Math.pow(argUnload, 2)
+		RegisterForSingleUpdateGameTime(0.5)
+	EndEvent
+
+EndState
