@@ -49,6 +49,11 @@ bool bPonyAnims = true
 bool property bUseSlutsLivery = true auto Hidden Conditional
 bool property bUseSlutsColors = true auto Hidden Conditional
 int property iCustomLiveryColor = 0 auto Hidden
+
+float Property fHUDPosX = 0.01 Auto Hidden
+float Property fHUDPosY = 0.86 Auto Hidden
+float Property fHUDPosS = 100.0 Auto Hidden
+
 ; Debug
 bool Property bStruggle = true Auto Hidden
 string sTatRemove = "$SLUTS_Click"
@@ -116,17 +121,21 @@ Event OnPageReset(string Page)
 
 	ElseIf(Page == "$SLUTS_Customisation")
 		AddHeaderOption("$SLUTS_FillyGear")
+		AddToggleOptionST("PonyAnims", "$SLUTS_PonyAnims", bPonyAnims)
 		AddToggleOptionST("UseThermal", "$SLUTS_UseThermal", bUseThermal)
 		AddToggleOptionST("ThermalColor", "$SLUTS_ThermalColor", bThermalColor, getFlag(bUseThermal))
-		AddEmptyOption()
-		AddToggleOptionST("PonyAnims", "$SLUTS_PonyAnims", bPonyAnims)
-		; ============================
-		SetCursorPosition(1)
-		; ============================
 		AddHeaderOption("$SLUTS_SlaveTats")
 		AddToggleOptionST("UseSlutsLivery", "$SLUTS_UseSlutsLivery", bUseSlutsLivery)
 		AddToggleOptionST("UseSlutsColors", "$SLUTS_UseSlutsColors", bUseSlutsColors)
 		AddColorOptionST("CustomLiveryColor", "$SLUTS_CustomLiveryColor", iCustomLiveryColor)
+		; ============================
+		SetCursorPosition(1)
+		; ============================
+		AddHeaderOption("$SLUTS_Interface")
+		AddSliderOptionST("HUDPositionX", "$SLUTS_PositionX", fHUDPosX * 100, "{1}%")
+		AddSliderOptionST("HUDPositionY", "$SLUTS_PositionY", fHUDPosY * 100, "{1}%")
+		AddSliderOptionST("HUDPositionS", "$SLUTS_PositionS", fHUDPosS, "{0}%")
+		AddTextOptionST("ToggleMissionHUD", "$SLUTS_ToggleMissionHUD", "")
 
 	ElseIf(Page == "$SLUTS_Debug")
 		AddHeaderOption("$SLUTS_Hauls")
@@ -426,6 +435,81 @@ state CustomLiveryColor
 		SetInfoText("$SLUTS_CustomLiveryColorHighlight")
 	endEvent
 endState
+
+State HUDPositionX
+	Event OnSliderOpenST()
+		SetSliderDialogStartValue(fHUDPosX * 100)
+		SetSliderDialogDefaultValue(1)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(0.5)
+	EndEvent
+	Event OnSliderAcceptST(Float afValue)
+		fHUDPosX = afValue / 100
+		SetSliderOptionValueST(fHUDPosX * 100, "{1}%")
+		SendModEvent("SLUTS_UpdateLocation")
+	EndEvent
+	Event OnDefaultST()
+		fHUDPosX = 0.75
+		SetSliderOptionValueST(fHUDPosX * 100, "{1}%")
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_PositionXHighlight")
+	EndEvent
+EndState
+
+State HUDPositionY
+	Event OnSliderOpenST()
+		SetSliderDialogStartValue(fHUDPosY * 100)
+		SetSliderDialogDefaultValue(74)
+		SetSliderDialogRange(0, 100)
+		SetSliderDialogInterval(0.5)
+	EndEvent
+	Event OnSliderAcceptST(Float afValue)
+		fHUDPosY = afValue / 100
+		SetSliderOptionValueST(fHUDPosY * 100, "{1}%")
+		SendModEvent("SLUTS_UpdateLocation")
+	EndEvent
+	Event OnDefaultST()
+		fHUDPosY = 0.74
+		SetSliderOptionValueST(fHUDPosY * 100, "{1}%")
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_PositionYHighlight")
+	EndEvent
+EndState
+
+State HUDPositionS
+	Event OnSliderOpenST()
+		SetSliderDialogStartValue(fHUDPosS)
+		SetSliderDialogDefaultValue(100)
+		SetSliderDialogRange(50, 400)
+		SetSliderDialogInterval(10)
+	EndEvent
+	Event OnSliderAcceptST(Float afValue)
+		fHUDPosS = afValue
+		SetSliderOptionValueST(fHUDPosS, "{0}%")
+		SendModEvent("SLUTS_UpdateLocation")
+	EndEvent
+	Event OnDefaultST()
+		fHUDPosS = 100
+		SetSliderOptionValueST(fHUDPosS, "{0}%")
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_PositionSHighlight")
+	EndEvent
+EndState
+
+State ToggleMissionHUD
+	Event OnSelectST()
+		SendModEvent("SLUTS_InvokeFloat", ".toggleVisibility", 0)
+		SetOptionFlagsST(OPTION_FLAG_DISABLED)
+		Utility.WaitMenuMode(1.5)
+		SetOptionFlagsST(OPTION_FLAG_NONE)
+	EndEvent
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_ToggleMissionHUDHighlight")
+	EndEvent
+EndState
 
 ; ==================================
 ; 				States // Debug

@@ -38,6 +38,7 @@ EndFunction
 float argUnload
 State Active
 	Event OnBeginState()
+		Debug.Trace("[SLUTS] Kart Entering Active State")
 		argUnload = 0.0
 	EndEvent
 
@@ -111,4 +112,8 @@ State Active
 		RegisterForSingleUpdateGameTime(0.5)
 	EndEvent
 
+	Event OnEndState()
+		Debug.Trace("[SLUTS] Kart Leaving Active State")
+		argUnload = 0.0
+	EndEvent
 EndState
