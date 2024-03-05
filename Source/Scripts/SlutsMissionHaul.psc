@@ -311,8 +311,8 @@ State SpecialDelivery
   EndEvent
 
   ; Wrapper to remove package before doing payment (or leave it in inventory if not received)
-  Function TakePackage(bool abRemovePackage = true)
-    If(abRemovePackage)
+  Function TakePackage()
+    If(PlayerRef.GetItemCount(PackageREF.GetReference()) > 0)
       PlayerRef.RemoveItem(PackageREF.GetReference())
     EndIf
     If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM)
@@ -331,7 +331,7 @@ State SpecialDelivery
     ; TODO: Once bag implemented, remove it here again
   EndEvent
 EndState
-Function TakePackage(bool abRemovePackage = true)
+Function TakePackage()
   Debug.TraceStack("[SLUTS] Function call 'TakePackage' outside a valid State = " + GetState(), 2)
 EndFunction
 
@@ -403,7 +403,7 @@ Function GambleBlackmailFailure(Actor akBlackmailer, int aiAddChance = 0)
   If(Utility.RandomInt(0, 99) < betrayalchance)
     Fail()
   Else
-    TakePackage(false)
+    TakePackage()
   EndIf
 EndFunction
 
