@@ -50,7 +50,7 @@ bool property bUseSlutsLivery = true auto Hidden Conditional
 bool property bUseSlutsColors = true auto Hidden Conditional
 int property iCustomLiveryColor = 0 auto Hidden
 
-float Property fHUDPosX = 0.01 Auto Hidden
+float Property fHUDPosX = 0.055 Auto Hidden
 float Property fHUDPosY = 0.86 Auto Hidden
 float Property fHUDPosS = 100.0 Auto Hidden
 
