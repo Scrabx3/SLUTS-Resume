@@ -13,7 +13,7 @@
         <Variable Name="optional" Value=".\optional"/>
         <Variable Name="Rel" Value=".\.releases"/>
         <Variable Name="MO2" Value=".."/>
-        <Variable Name="Ver" Value="3.3"/>
+        <Variable Name="Ver" Value="3.4.0"/>
     </Variables>
     <Imports>
         <Import>@ThisProject\Source\Scripts</Import>
@@ -55,7 +55,7 @@
             <Include>textures</Include>
             <Include>LICENSE</Include>
         </ZipFile>
-        <ZipFile Name="@ModName @Ver LE" RootDir="@ThisProject" Compression="deflate">
+        <!-- <ZipFile Name="@ModName @Ver LE" RootDir="@ThisProject" Compression="deflate">
         	<Include>SLUTS.esp</Include>
             <Include Path="CalienteTools\BodySlide\ShapeData\SLUTS">CalienteToolsLE\BodySlide\ShapeData\SLUTS</Include>
             <Include Path="CalienteTools\BodySlide\ShapeData\SLUTS Harness">CalienteToolsLE\BodySlide\ShapeData\SLUTS Harness</Include>
@@ -74,7 +74,7 @@
             <Include>Source</Include>
             <Include>textures</Include>
             <Include>LICENSE</Include>
-        </ZipFile>
+        </ZipFile> -->
         <!-- Patches -->
         <ZipFile Name="@ModName 2.8 - CFTO" RootDir="@patches" Compression="deflate">
             <Include>CFTO</Include>

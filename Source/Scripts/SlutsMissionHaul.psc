@@ -350,6 +350,12 @@ Function UpdatePilferage(float afValue)
   float t3 = PilferageThresh03.GetValue()
   If (afValue > t3)
     afValue = t3
+    String s = GetState()
+    If (s == JobCart)
+		  Untether()
+    ElseIf (s == JobDelivery)
+      PlayerRef.RemoveItem(PackageREF.GetReference())
+    EndIf
   EndIf
   Pilferage = afValue
   float tr = PilferageReinforcement.GetValue()
@@ -571,7 +577,7 @@ float Function PaymentSeg1()
 EndFunction
 float Function PaymentSeg2(float x)
   float t2 = PilferageThresh02.GetValue()
-  return ((Pilferage - t2) / t2) + 1
+  return ((x - t2) / t2) + 1
 EndFunction
 float Function PaymentSeg3(float x)
   return Math.pow(1.003, x - PilferageThresh02.GetValue())
@@ -733,18 +739,21 @@ Event OnAnimEnd(int tid, bool HasPlayer)
   EndIf
   Actor[] positions = SlutsAnimation.GetSceneActors(tid)
   String[] hooks = SlutsAnimation.GetSceneHooks(tid)
-  If(hooks.Find("SLUTS_Humil") > -1)
+  If (hooks.Find("SLUTS_NoPenalty") > -1)
+    Debug.Trace("[SLUTS] Scene End on NoPenalty Scene")
+    return
+  ElseIf (hooks.Find("SLUTS_Humil") > -1)
     Debug.Trace("[SLUTS] Humiliation Scene End")
     Utility.Wait(0.2)
     moveChestScene.Start()
     return
-  ElseIf(hooks.Find("SLUTS_BlackMailSex") > -1)
+  ElseIf (hooks.Find("SLUTS_BlackMailSex") > -1)
     Debug.Trace("[SLUTS] Blackmail Scene End")
     Actor[] copy = PapyrusUtil.RemoveActor(positions, PlayerRef)
     GambleBlackmailFailure(copy[0])
     SetStage(100)
     return
-  ElseIf(MCM.iPilferageLevel == MCM.DIFFICULTY_EASY || !IsActiveMission())
+  ElseIf (MCM.iPilferageLevel == MCM.DIFFICULTY_EASY || !IsActiveMission())
     Debug.Trace("[SLUTS] Scene End but Pilferage is disabled or not on active haul")
     return
   EndIf

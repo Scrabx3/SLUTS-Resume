@@ -20,7 +20,6 @@ float Property Pilferage
 		mission.UpdatePilferage(afValue)
 		If (afValue > mission.PilferageThresh03.GetValue())
 			UnregisterForUpdateGameTime()
-			mission.Untether()
 		EndIf
 	EndFunction
 EndProperty
