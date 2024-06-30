@@ -1,7 +1,7 @@
 ScriptName SlutsAnimation Hidden
 
-bool Function SLThere() global
-  return Game.GetModByName("SexLab.esm") != 255
+bool Function StartQuick(Actor ak1, Actor ak2, Actor ak3 = none, Actor ak4 = none, Actor ak5 = none, Actor akV = none, String asTags = "", String asHook = "") global
+  return SexLabUtil.QuickStart(ak1, ak2, ak3, ak4, ak5, akV, asHook, asTags)
 EndFunction
 
 ; returns -1 if all Actors are valid for animating or 0+, reporting the first invalid Actor
