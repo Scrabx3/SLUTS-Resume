@@ -21,10 +21,6 @@ Event OnWidgetReset()
   RegisterForModEvent("SLUTS_InvokeFloat", "InvokeFloat")
   SetupPilferage("", "", 0.0, none)
   UpdateLocation("", "", 0.0, none)
-
-  If (MissionHaul.IsActiveMission())
-    MissionHaul.UpdatePilferage(MissionHaul.Pilferage)
-  EndIf
 EndEvent
 
 Event SetupPilferage(string asEventName, string asStringArg, float afNumArg, form akSender)
