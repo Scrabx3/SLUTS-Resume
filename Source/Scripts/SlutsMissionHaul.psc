@@ -378,7 +378,16 @@ Function TakePackage()
   Debug.TraceStack("[SLUTS] Function call 'TakePackage' outside a valid State = " + GetState(), 2)
 EndFunction
 
-bool Function IsActiveMission(int aiMissionID = 0)
+bool Function IsActiveMissionAny()
+  return MissionComplete < 1
+EndFunction
+int Function GetActiveMissionID()
+  If (!IsActiveMissionAny())
+    return -1
+  EndIf
+  return Math.Abs(MissionComplete) as int
+EndFunction
+bool Function IsActiveMission(int aiMissionID)
   return MissionComplete == (0 - aiMissionID)
 EndFunction
 bool Function IsActiveCartMission()
