@@ -18,16 +18,6 @@ float Property Pilferage
 	EndFunction
 	Function Set(float afValue)
 		Haul.UpdatePilferage(afValue)
-		If (afValue > Haul.PilferageThresh03.GetValue())
-      If (Haul.IsActiveMission(Haul.MISSIONID_PACKAGE))
-        ObjectReference packageref = Haul.PackageREF.GetReference()
-        int packagecount = GetReference().GetItemCount(packageref)
-        If (packagecount > 0)
-          GetReference().RemoveItem(packageref)
-          PackageDestroyed.Show()
-        EndIf
-      EndIf
-		EndIf
 	EndFunction
 EndProperty
 
@@ -53,41 +43,10 @@ Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemRefere
   EndIf
 EndEvent
 
-State CartHaul
-	Event OnPlayerLoadGame()
-    Haul.OnLoadTether()
-  EndEvent
-EndState
+Event OnPlayerLoadGame()
+  Haul.Maintenance()
+EndEvent
 
-State SpecialDelivery
-  
-	Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-		If(abBashAttack || abHitBlocked || Haul.MCM.iPilferageLevel == Haul.MCM.DIFFICULTY_EASY)
-			return
-		EndIf
-		Weapon srcW = akSource as Weapon
-		If(srcW)
-			float dmg = srcW.GetBaseDamage()
-			If (abPowerAttack)
-				dmg *= 2
-			EndIf
-			Pilferage += (dmg * Haul.MCM.iPilferageLevel as float) / 2
-			return
-		EndIf
-		Spell srcS = akSource as Spell
-		If (srcS && srcS.IsHostile())
-		  float dmg = 0.0
-			int i = srcS.GetNumEffects()
-			While(i > 0)
-				MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
-				If (effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
-					dmg += srcS.GetNthEffectMagnitude(i)
-				EndIf
-				i += 1
-			EndWhile
-			Pilferage += (dmg * Haul.MCM.iPilferageLevel as float) / 4
-			return
-		EndIf
-	EndEvent
-
-EndState
+Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
+	Haul.HandleOnHit(akAggressor, akSource, akProjectile, abPowerAttack, abSneakAttack, abBashAttack, abHitBlocked)
+EndEvent

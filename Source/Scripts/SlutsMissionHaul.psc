@@ -106,7 +106,7 @@ int Property PremiumDelivery_LATE   = 2 AutoReadOnly Hidden
 int Property PremiumDeliveryDelay Auto Hidden Conditional
 
 GlobalVariable Property MissionType Auto                ; Currently active Mission Type
-int Property MissionComplete Auto Hidden Conditional    ; To keep track of mission progress for multi objective missions
+int Property MissionComplete Auto Hidden Conditional    ; If the player is currently transporting a package (and what type of package it is)
 int Property JobStage Auto Hidden                       ; The current Job Stage, for objective management
 int Property JOBSTAGE_BASE = 21 AutoReadOnly Hidden
 int Property MISSIONID_CART = 0 AutoReadOnly Hidden
@@ -141,6 +141,7 @@ int Property EvalResponse Auto Hidden Conditional
 
 ; misc
 int Property INT_MAX = 2147483647 AutoReadOnly Hidden
+bool OnHitLock= false
 bool forced   ; Unused, idk what I should use this for tbh
 
 ; ======================================================
@@ -237,6 +238,7 @@ Function SetupHaul()  ; Called during first setup only
   PerfectStreak = 0
   Streak = 0
   TotalPay = 0.0
+  OnHitLock = false
 EndFunction
 Function SetupHaulImpl()  ; Called every time BEFORE a new job starts
   Debug.TraceStack("[SLUTS] Function call 'SetupHaulImpl' outside a valid State = " + GetState(), 2)
@@ -245,6 +247,46 @@ EndFunction
 ; ======================================================
 ; =============================== ON HAUL
 ; ======================================================
+
+Function Maintenance()
+  If (!IsActiveMissionAny())
+    return
+  EndIf
+  RegisterEvents()
+  SendModEvent("SLUTS_InvokeFloat", ".show", 0.6)
+  UpdatePilferage(Pilferage)
+EndFunction
+
+Function HandleOnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
+  If (!OnHitLock || !IsActiveMissionAny())
+    return
+  EndIf
+  OnHitLock = true
+  If(abBashAttack || abHitBlocked || MCM.iPilferageLevel == MCM.DIFFICULTY_EASY)
+		return
+  EndIf
+  Weapon srcW = akSource as Weapon
+  Spell srcS = akSource as Spell
+  float dmg = 0.0
+  If (srcW)
+    dmg = srcW.GetBaseDamage() * MCM.iPilferageLevel as float
+    If (!abPowerAttack)
+      dmg /= 2
+    EndIf
+  ElseIf (srcS && srcS.IsHostile())
+    int i = srcS.GetNumEffects()
+    While(i > 0)
+      MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
+      If (effect && effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
+        dmg += srcS.GetNthEffectMagnitude(i)
+      EndIf
+      i += 1
+    EndWhile
+    dmg = (dmg * MCM.iPilferageLevel as float) / 4
+  EndIf
+  UpdatePilferage(Pilferage + dmg)
+  OnHitLock = false
+EndFunction
 
 State CartHaul
   Function SetupHaulImpl()
@@ -328,6 +370,7 @@ State SpecialDelivery
   EndFunction
 
   Event OnEndState()
+    PlayerAlias.GoToState("")
     ; TODO: Once bag implemented, remove it here again
   EndEvent
 EndState

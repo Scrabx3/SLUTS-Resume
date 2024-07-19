@@ -14,13 +14,7 @@ float Property Pilferage
 		return mission.Pilferage
 	EndFunction
 	Function Set(float afValue)
-		If (!mission.IsActiveCartMission())
-			return
-		EndIf
 		mission.UpdatePilferage(afValue)
-		If (afValue > mission.PilferageThresh03.GetValue())
-			UnregisterForUpdateGameTime()
-		EndIf
 	EndFunction
 EndProperty
 
@@ -64,35 +58,6 @@ State Active
 			mission.Untether()
 		EndIf
 	EndEvent
-
-	Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-		If(akAggressor == PlayerRef || abBashAttack || abHitBlocked || mission.MCM.iPilferageLevel == mission.MCM.DIFFICULTY_EASY)
-			return
-		EndIf
-		Weapon srcW = akSource as Weapon
-		If(srcW)
-			float dmg = srcW.GetBaseDamage()
-			If (abPowerAttack)
-				dmg *= 2
-			EndIf
-			Pilferage += dmg * mission.MCM.iPilferageLevel as float
-			return
-		EndIf
-		Spell srcS = akSource as Spell
-		If (srcS && srcS.IsHostile())
-			float dmg = 0.0
-			int i = srcS.GetNumEffects()
-			While(i > 0)
-				MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
-				If (effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
-					dmg += srcS.GetNthEffectMagnitude(i)
-				EndIf
-				i += 1
-			EndWhile
-			Pilferage += dmg * (mission.MCM.iPilferageLevel as float) * 0.5
-			return
-		EndIf
-	EndEvent
 	
 	Event OnUnload()
 		If(IsDisabled())
@@ -104,6 +69,8 @@ State Active
 	Event OnUpdateGameTime()
 		If (Is3DLoaded())
 			argUnload = 0.0
+			return
+		ElseIf (!mission.IsActiveMission(mission.MISSIONID_CART))
 			return
 		EndIf
 		argUnload += 1
