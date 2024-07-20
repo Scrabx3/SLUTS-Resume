@@ -41,6 +41,7 @@ Message Property ScenePilferageMsg Auto
 Message Property PackageDestroyedMsg Auto
 Message Property CargoTetherFailure Auto
 Message Property CartTooFarAway Auto
+Message Property PremPackageDestroyed Auto
 Keyword Property ActorTypeNPC Auto
 
 Activator Property SummonFX Auto
@@ -80,7 +81,6 @@ ImageSpaceModifier Property FadeToBlackHoldImod Auto
 ; ---------------------------------- Variables
 String Property JobCart = "CartHaul" AutoReadOnly Hidden
 String Property JobDelivery = "SpecialDelivery" AutoReadOnly Hidden
-
 float Property SkyrimDiameter = 311231.0 AutoReadOnly Hidden
 
 ; Keybinds
@@ -98,6 +98,7 @@ GlobalVariable Property PilferageThresh01 Auto          ; [...0] -> [1..T1] -> .
 GlobalVariable Property PilferageThresh02 Auto          ; Thresh 3 evaluates to total cargo Health, exceeding means the cargo is lost entirely
 GlobalVariable Property PilferageThresh03 Auto
 GlobalVariable Property PilferageReinforcement Auto     ; State of the Seal (Bonus Hp) (May be increased through license buffs)
+float Property Reinforcement Auto Hidden Conditional 
 float Property Pilferage Auto Hidden Conditional        ; Amount of damage to goods/seal (Damaged Hp)
 
 int Property PremiumDelivery_EARLY  = 0 AutoReadOnly Hidden
@@ -399,24 +400,48 @@ EndFunction
 ; ======================================================
 
 Function UpdatePilferage(float afValue)
-  float t3 = PilferageThresh03.GetValue()
-  If (afValue > t3)
-    afValue = t3
-    String s = GetState()
-    If (s == JobCart)
-		  Untether()
-    ElseIf (s == JobDelivery)
-      PlayerRef.RemoveItem(PackageREF.GetReference())
+  int mission_id = GetActiveMissionID()
+  If (mission_id > -1)
+    float reinforce_max = PilferageReinforcement.GetValue()
+    If (afValue < 0)
+      Reinforcement = Math.abs(afValue)
+      afValue = 0
+      float pct = Reinforcement / reinforce_max
+      SendModEvent("SLUTS_InvokeFloat", ".setArmor", 1 - pct)
+    ElseIf (Reinforcement > 0 && afValue > Pilferage)
+      float damage = afValue - Pilferage
+      If (Reinforcement >= damage)
+        Reinforcement -= damage
+        float pct = Reinforcement / reinforce_max
+        SendModEvent("SLUTS_InvokeFloat", ".setArmor", 1 - pct)
+        return
+      Else ; Reinforcement < damage
+        afValue -= Reinforcement
+        Reinforcement = 0
+      EndIf
     EndIf
+    Debug.TraceConditional("[SLUTS] Ivalid Argument in UpdatePilferage, afValue: " + afValue, afValue < 0)
+    float t3 = PilferageThresh03.GetValue()
+    If (afValue > t3) ; Cargo destroyed
+      afValue = t3
+      If (mission_id == MISSIONID_CART)
+        Untether()
+      ElseIf (mission_id == MISSIONID_PACKAGE)
+        ObjectReference ref = PackageREF.GetReference()
+        If (PlayerRef.GetItemCount(ref) > 0)
+          PlayerRef.RemoveItem(PackageREF.GetReference())
+          PremPackageDestroyed.Show()
+        EndIf
+      EndIf
+    EndIf
+    float pct = afValue / t3
+    SendModEvent("SLUTS_InvokeFloat", ".setPct", 1 - pct)
   EndIf
   Pilferage = afValue
-  float tr = PilferageReinforcement.GetValue()
-  float pct = (afValue + tr) / (t3 + tr)
-  SendModEvent("SLUTS_InvokeFloat", ".setPct", 1 - pct)
 EndFunction
 
 Function HandleStage()
-  If(MissionComplete < 1)
+  If(!IsActiveMissionAny())
     return
   EndIf
   MissionComplete = 0 - MissionType.GetValueInt()
@@ -590,7 +615,7 @@ Function DoPayment()
     Else
       mult = PaymentSeg3(Pilferage)
     EndIf
-    Debug.Trace("[SLUTS] Pilferage = " + Pilferage + " | Reducing payment by a ratio of " + mult)
+    Debug.Trace("[SLUTS] Pilferage: " + Pilferage + " | Reducing payment by a ratio of " + mult)
     pay -= Math.Floor(mult * pay)
     If (crime == 0)
       If (mult < 1)
@@ -638,6 +663,7 @@ EndFunction
 ; ======================================================
 ; =============================== HAUL START0
 ; ======================================================
+
 Function TransferManifest()
   ObjectReference Paper = Manifest.GetReference()
   DispatcherRef.GetReference().RemoveItem(Paper, 1, true, PlayerRef)
@@ -679,6 +705,7 @@ EndFunction
 ; ======================================================
 ; =============================== KEYCODES
 ; ======================================================
+
 Event OnKeyDown(int KeyCode)
   If(Utility.IsInMenuMode())
 		return
@@ -717,7 +744,6 @@ Function Tether()
   EndIf
   bIsThethered = true
   Debug.Trace("[SLUTS] Attempting to tether..")
-
   If(Kart.GetDistance(PlayerRef) > 500)
     Kart.SetMotionType(Kart.Motion_Keyframed)
     Game.DisablePlayerControls()
@@ -731,7 +757,6 @@ Function Tether()
     Debug.SetGodMode(false)
     Game.EnablePlayerControls()
   EndIf
-
   Race r = PlayerRef.GetRace()
   PlayerRef.SetRace(DefaultRace)
   PlayerRef.SetRace(r)
@@ -741,7 +766,6 @@ Function Tether()
 EndFunction
 
 Function OnLoadTether()
-  RegisterEvents()
   If(!bIsThethered || !Kart || PlayerRef.IsInInterior())
     return
   EndIf
@@ -805,11 +829,10 @@ Event OnAnimEnd(int tid, bool HasPlayer)
     GambleBlackmailFailure(copy[0])
     SetStage(100)
     return
-  ElseIf (MCM.iPilferageLevel == MCM.DIFFICULTY_EASY || !IsActiveMission())
+  ElseIf (MCM.iPilferageLevel == MCM.DIFFICULTY_EASY || !IsActiveMissionAny())
     Debug.Trace("[SLUTS] Scene End but Pilferage is disabled or not on active haul")
     return
   EndIf
- 
   float arg = 0.0
   int i = 0
   While(i < positions.Length)
@@ -828,8 +851,7 @@ Event OnAnimEnd(int tid, bool HasPlayer)
   arg /= positions.Length as float
   float mult = -0.03 * (arg - MCM.iPilferageLevel) + 0.05
   float penalty = PilferageThresh03.GetValue() * mult
-  Debug.Trace("[SLUTS] OnAnimEnd() Radiant: Pilferage = " + Pilferage + " | Arg = " + mult + " | Penalty = " + penalty)
-
+  Debug.Trace("[SLUTS] OnAnimEnd() Radiant: Pilferage: " + Pilferage + " | Arg = " + mult + " | Penalty = " + penalty)
   UpdatePilferage(Pilferage + penalty)
   ScenePilferageMsg.Show(Pilferage, PilferageThresh03.GetValue())
 endEvent
