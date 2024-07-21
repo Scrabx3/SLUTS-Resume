@@ -277,11 +277,11 @@ Function HandleOnHit(ObjectReference akAggressor, Form akSource, Projectile akPr
   ElseIf (srcS && srcS.IsHostile())
     int i = srcS.GetNumEffects()
     While(i > 0)
+      i -= 1
       MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
-      If (effect && effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
+      If (effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
         dmg += srcS.GetNthEffectMagnitude(i)
       EndIf
-      i += 1
     EndWhile
     dmg = (dmg * MCM.iPilferageLevel as float) / 4
   EndIf
