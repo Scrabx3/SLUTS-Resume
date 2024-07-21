@@ -168,10 +168,12 @@ SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;END AUTOCAST
 ;BEGIN CODE
 ; Job Cycle starts here
+Debug.Trace("[Sluts] New Job Start, Updating Objectives and Resetting Pilferage")
 SendModEvent("SLUTS_MissionHaul", kmyQuest.GetState())
 SetObjectiveDisplayed(20)
 
 kmyQuest.HandleStage()
+kmyQuest.UpdatePilferage(0 - kmyQuest.PilferageReinforcement.Value)
 ;END CODE
 EndFunction
 ;END FRAGMENT

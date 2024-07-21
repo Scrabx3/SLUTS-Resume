@@ -15,12 +15,17 @@ EndEvent
 Event OnWidgetReset()
   {After each game load}
   Parent.OnWidgetReset()
+  Debug.Trace("[SLUTS] Widget Reset")
 
   RegisterForModEvent("SLUTS_SetupPilferage", "SetupPilferage")
   RegisterForModEvent("SLUTS_UpdateLocation", "UpdateLocation")
   RegisterForModEvent("SLUTS_InvokeFloat", "InvokeFloat")
   SetupPilferage("", "", 0.0, none)
   UpdateLocation("", "", 0.0, none)
+
+  If (MissionHaul.IsRunning())
+    MissionHaul.UpdatePilferage(MissionHaul.Pilferage)
+  EndIf
 EndEvent
 
 Event SetupPilferage(string asEventName, string asStringArg, float afNumArg, form akSender)

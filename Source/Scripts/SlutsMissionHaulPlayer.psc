@@ -12,15 +12,6 @@ Message Property ArrearsClear Auto
 Message Property ArrearsPay Auto
 Message Property PackageDestroyed Auto
 
-float Property Pilferage
-	float Function Get()
-		return Haul.Pilferage
-	EndFunction
-	Function Set(float afValue)
-		Haul.UpdatePilferage(afValue)
-	EndFunction
-EndProperty
-
 Event OnInit()
   AddInventoryEventFilter(Gold001)
 EndEvent

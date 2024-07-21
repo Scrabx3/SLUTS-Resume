@@ -142,7 +142,7 @@ int Property EvalResponse Auto Hidden Conditional
 
 ; misc
 int Property INT_MAX = 2147483647 AutoReadOnly Hidden
-bool OnHitLock= false
+bool OnHitLock = false
 bool forced   ; Unused, idk what I should use this for tbh
 
 ; ======================================================
@@ -160,6 +160,8 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
   ElseIf(!RecipientLocHOLD.GetLocation())
     RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
   EndIf
+  MissionComplete = 1
+  OnHitLock = false
 
   float p = 1 - (aiCustomLoc * 0.15) ; 15% Payment Deduction for Custom Loc Hauls
   Payment.SetValue(GetBasePay(akDispatcher, akRecipient, p))
@@ -233,13 +235,10 @@ Function SetupHaul()  ; Called during first setup only
   StripPlayer()
   SetupHaulImpl()
   SendModEvent("SLUTS_SetupPilferage")
-  
-  MissionComplete = 1 ; To not have HandleStage() fail on first call
-  UpdatePilferage(0.0 - PilferageReinforcement.Value)
+
   PerfectStreak = 0
   Streak = 0
   TotalPay = 0.0
-  OnHitLock = false
 EndFunction
 Function SetupHaulImpl()  ; Called every time BEFORE a new job starts
   Debug.TraceStack("[SLUTS] Function call 'SetupHaulImpl' outside a valid State = " + GetState(), 2)
@@ -250,22 +249,21 @@ EndFunction
 ; ======================================================
 
 Function Maintenance()
-  If (!IsActiveMissionAny())
-    return
+  Debug.Trace("[SLuts] Mission Haul Reload Maintenance")
+  int id = GetActiveMissionID()
+  If (id == MISSIONID_CART)
+    OnLoadTether()
   EndIf
   RegisterEvents()
-  SendModEvent("SLUTS_InvokeFloat", ".show", 0.6)
-  UpdatePilferage(Pilferage)
 EndFunction
 
 Function HandleOnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-  If (!OnHitLock || !IsActiveMissionAny())
+  If (OnHitLock || !IsActiveMissionAny() || IsActiveCartMission() && !bIsThethered)
     return
-  EndIf
-  OnHitLock = true
-  If(abBashAttack || abHitBlocked || MCM.iPilferageLevel == MCM.DIFFICULTY_EASY)
+  ElseIf(abBashAttack || abHitBlocked || MCM.iPilferageLevel == MCM.DIFFICULTY_EASY)
 		return
   EndIf
+  OnHitLock = true
   Weapon srcW = akSource as Weapon
   Spell srcS = akSource as Spell
   float dmg = 0.0
@@ -401,24 +399,21 @@ EndFunction
 
 Function UpdatePilferage(float afValue)
   int mission_id = GetActiveMissionID()
+  Debug.Trace("[Sluts] Update pilferage; Mission id: " + mission_id + " // MissionComplete: " + MissionComplete)
+  If (afValue < 0)
+    Reinforcement = Math.abs(afValue)
+    afValue = 0
+  EndIf
   If (mission_id > -1)
-    float reinforce_max = PilferageReinforcement.GetValue()
-    If (afValue < 0)
-      Reinforcement = Math.abs(afValue)
-      afValue = 0
-      float pct = Reinforcement / reinforce_max
-      SendModEvent("SLUTS_InvokeFloat", ".setArmor", 1 - pct)
-    ElseIf (Reinforcement > 0 && afValue > Pilferage)
+    If (Reinforcement > 0 && afValue > Pilferage)
       float damage = afValue - Pilferage
-      If (Reinforcement >= damage)
-        Reinforcement -= damage
-        float pct = Reinforcement / reinforce_max
-        SendModEvent("SLUTS_InvokeFloat", ".setArmor", 1 - pct)
-        return
-      Else ; Reinforcement < damage
-        afValue -= Reinforcement
+      Reinforcement -= damage
+      If (Reinforcement < 0)
         Reinforcement = 0
       EndIf
+      float pctArmor = Reinforcement / PilferageReinforcement.GetValue()
+      SendModEvent("SLUTS_InvokeFloat", ".setArmor", pctArmor)
+      return
     EndIf
     Debug.TraceConditional("[SLUTS] Ivalid Argument in UpdatePilferage, afValue: " + afValue, afValue < 0)
     float t3 = PilferageThresh03.GetValue()
@@ -441,14 +436,11 @@ Function UpdatePilferage(float afValue)
 EndFunction
 
 Function HandleStage()
-  If(!IsActiveMissionAny())
-    return
-  EndIf
   MissionComplete = 0 - MissionType.GetValueInt()
   int stage = JOBSTAGE_BASE + MissionType.GetValueInt()
-  If(stage != JobStage) ; Switching haul type, hide the previous objective
+  If(stage != JobStage) ; Switching haul type, hide the previous objective(s)
     SetObjectiveDisplayed(stage, false)
-    If(stage == JOBSTAGE_BASE + MISSIONID_PACKAGE) ; Prem Delivery also has Stage 100
+    If(stage == JOBSTAGE_BASE + MISSIONID_PACKAGE) ; Prem Delivery secondary objective
       SetObjectiveDisplayed(100, false)
     EndIf
   EndIf
@@ -457,7 +449,6 @@ Function HandleStage()
     SetObjectiveCompleted(JobStage, false)
   EndIf
   SetObjectiveDisplayed(JobStage, true, true)
-  SendModEvent("SLUTS_InvokeFloat", ".show", 0.6)
 EndFunction
 
 Function CompleteJobStages()
@@ -507,8 +498,7 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1)
   SetupHaulImpl()
   Payment.SetValue(GetBasePay(recip, next, 1.0))
   UpdateCurrentInstanceGlobal(Payment)
-  Debug.Trace("[SLUTS] ChainMission; Payment = " + Payment.GetValueInt())
-  UpdatePilferage(0.0 - PilferageReinforcement.Value)
+  Debug.Trace("[SLUTS] ChainMission; Payment: " + Payment.GetValueInt())
   Manifest.GetReference().Activate(PlayerRef)
   Utility.Wait(0.1)
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
