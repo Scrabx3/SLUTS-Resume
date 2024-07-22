@@ -215,16 +215,19 @@ Function Blackout()
 EndFunction
 
 Function StripPlayer()
-  Keyword SLSLicense = Keyword.GetKeyword("_SLS_LicenceDocument")
-  Form[] items = PlayerRef.GetContainerForms()
+  Form[] inventory = PlayerRef.GetContainerForms()
   int i = 0
-  While(i < items.Length)
-    Keyword[] kw = items[i].GetKeywords()
-    If (!kw.Length || kw.Find(bd.SlutsRestraints) == -1 && kw.Find(SLSLicense) == -1)
-      PlayerRef.RemoveItem(items[i], INT_MAX, true, Escrow)
+  While(i < inventory.Length)
+    Form it = inventory[i]
+    If (it.IsPlayable())
+      bool nostrip = PlayerRef.IsEquipped(it) && SexLabUtil.HasKeywordSub(it, "NoStrip")
+      If (!nostrip && !SexLabUtil.HasKeywordSub(it, "Licence"))
+        PlayerRef.RemoveItem(it, INT_MAX, true, Escrow)
+      EndIf
     EndIf
     i += 1
   EndWhile
+  PlayerRef.QueueNiNodeUpdate()
 EndFunction
 
 Function SetupHaul()  ; Called during first setup only
