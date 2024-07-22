@@ -19,11 +19,13 @@ EndFunction
 Function LockEscrow()
   Lock()
   SetLockLevel(255)
+  If (!Is3DLoaded() && IsEnabled())
+    Disable()
+  EndIf
 EndFunction
 
 Event OnActivate(ObjectReference akActionRef)
-  If(Haul.GetStage() < 100 || akActionRef != PlayerRef)
-    ; <=> Not at the end of a Haul Series
+  If(akActionRef != PlayerRef || IsLocked())
     return
   EndIf
   ;/If(data.hasFillyReward)
@@ -45,6 +47,12 @@ EndEvent
 
 Event OnCellAttach()
   Parent.MoveTo(myMarker)
+EndEvent
+
+Event OnCellDetach()
+  If(GetLockLevel() == 255)
+    Disable()
+  EndIf
 EndEvent
 
 ; event OnMenuClose(String menu)
