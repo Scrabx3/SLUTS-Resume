@@ -484,22 +484,25 @@ Function GambleBlackmailFailure(Actor akBlackmailer, int aiAddChance = 0)
   EndIf
 EndFunction
 
-Function CreateChainMission(bool abForced, int aiMissionID = -1)
-  Actor recip = RecipientREF.GetReference() as Actor
-  Actor next = Main.GetDestination(recip, DispatcherREF.GetActorReference())
-  Debug.Trace("[SLUTS] Attempting Chain Mission with new Dispatcher = " + recip + " | Recipient = " + next)
-  If (!SetLinks(recip, next))
+Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatch = none)
+  If (!akDispatch)
+    akDispatch = RecipientREF.GetReference() as Actor
+  EndIf
+  Actor next = Main.GetDestination(akDispatch, DispatcherREF.GetActorReference())
+  Debug.Trace("[SLUTS] Attempting Chain Mission with new Dispatcher = " + akDispatch + " | Recipient = " + next)
+  If (!SetLinks(akDispatch, next))
     Quit()
     return
   EndIf
+  Escrow.LockEscrow()
   forced = abForced
-  DispatcherREF.ForceRefTo(recip)
+  DispatcherREF.ForceRefTo(akDispatch)
   RecipientREF.ForceRefTo(next)
   RecipientLOC.ForceLocationTo(Main.myDestLocs[Main.myDrivers.Find(next)])
   RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
   SetMissionState(aiMissionID)
   SetupHaulImpl()
-  Payment.SetValue(GetBasePay(recip, next, 1.0))
+  Payment.SetValue(GetBasePay(akDispatch, next, 1.0))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment: " + Payment.GetValueInt())
   Manifest.GetReference().Activate(PlayerRef)
