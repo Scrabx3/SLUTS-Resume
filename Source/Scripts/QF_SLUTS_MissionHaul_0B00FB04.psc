@@ -208,8 +208,10 @@ SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;END AUTOCAST
 ;BEGIN CODE
 ; Slavery during Haul
+If (kmyQuest.IsActiveMissionAny())
 kmyQuest.Fail()
 kmyQuest.FailJobStages()
+EndIf
 
 kmyQuest.Blackout()
 kmyQuest.CreateChainMission(true)
