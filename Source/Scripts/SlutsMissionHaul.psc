@@ -443,13 +443,16 @@ Function HandleStage()
   int stage = JOBSTAGE_BASE + MissionType.GetValueInt()
   If(stage != JobStage) ; Switching haul type, hide the previous objective(s)
     SetObjectiveDisplayed(stage, false)
-    If(stage == JOBSTAGE_BASE + MISSIONID_PACKAGE) ; Prem Delivery secondary objective
-      SetObjectiveDisplayed(100, false)
-    EndIf
+    SetObjectiveDisplayed(100, false) ; Prem Delivery secondary objective
   EndIf
   JobStage = stage
-  If(IsObjectiveCompleted(JobStage))
+  If (IsObjectiveCompleted(JobStage))
     SetObjectiveCompleted(JobStage, false)
+    SetObjectiveCompleted(100, false)
+  EndIf
+  If (IsObjectiveFailed(JobStage))
+    SetObjectiveFailed(JobStage, false)
+    SetObjectiveFailed(100, false)
   EndIf
   SetObjectiveDisplayed(JobStage, true, true)
 EndFunction
@@ -458,6 +461,13 @@ Function CompleteJobStages()
   SetObjectiveCompleted(JobStage)
   If(JobStage == JOBSTAGE_BASE + MISSIONID_PACKAGE)
     SetObjectiveCompleted(100)
+  EndIf
+EndFunction
+
+Function FailJobStages()
+  SetObjectiveFailed(JobStage)
+  If(JobStage == JOBSTAGE_BASE + MISSIONID_PACKAGE)
+    SetObjectiveFailed(100)
   EndIf
 EndFunction
 
