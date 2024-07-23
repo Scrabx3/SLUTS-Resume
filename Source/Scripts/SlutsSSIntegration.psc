@@ -2,6 +2,7 @@ Scriptname SlutsSSIntegration extends Quest Conditional
 
 SlutsMCM property MCM auto
 SlutsMain Property Main Auto
+SlutsMissionHaul Property Haul Auto
 
 ReferenceAlias Property CarterRef Auto ; Filled as akRef1 in Script Event
 Keyword Property PlayerCarriageWait Auto
@@ -36,8 +37,12 @@ Function StartHaul()
 	EndIf
 	SetStage(10)
 	DebtMsg.Show(slutsCrime.GetCrimeGold())
-	If(!Main.StartHaul(CarterRef.GetReference() as Actor, forced = 1))
-		Game.SetPlayerAIDriven(false)
+	If (Haul.IsRunning())
+		Haul.CreateChainMission(true, -1, CarterRef.GetActorReference())
+	Else
+		If(!Main.StartHaul(CarterRef.GetActorReference(), forced = 1))
+			Game.SetPlayerAIDriven(false)
+		EndIf
 	EndIf
 	Stop()
 EndFunction

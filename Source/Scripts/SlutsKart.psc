@@ -70,7 +70,7 @@ State Active
 		If (Is3DLoaded())
 			argUnload = 0.0
 			return
-		ElseIf (!mission.IsActiveMission(mission.MISSIONID_CART))
+		ElseIf (!mission.IsActiveCartMission())
 			return
 		EndIf
 		argUnload += 1
