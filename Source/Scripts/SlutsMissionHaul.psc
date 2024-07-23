@@ -57,6 +57,7 @@ Faction Property PlayerFollowerFaction Auto
 Faction Property BanditFaction Auto
 Faction property ForswornFaction Auto
 Faction[] Property FriendFactions Auto
+GlobalVariable Property TimeScale Auto
 
 ; Worldspaces
 Worldspace Property Tamriel Auto
@@ -100,18 +101,17 @@ GlobalVariable Property PilferageThresh03 Auto
 GlobalVariable Property PilferageReinforcement Auto     ; State of the Seal (Bonus Hp) (May be increased through license buffs)
 float Property Reinforcement Auto Hidden Conditional 
 float Property Pilferage Auto Hidden Conditional        ; Amount of damage to goods/seal (Damaged Hp)
+float PilferageMax
 
-int Property PremiumDelivery_EARLY  = 0 AutoReadOnly Hidden
-int Property PremiumDelivery_INTIME = 1 AutoReadOnly Hidden
-int Property PremiumDelivery_LATE   = 2 AutoReadOnly Hidden
-int Property PremiumDeliveryDelay Auto Hidden Conditional
+GlobalVariable Property ExpectedDelay Auto Hidden
+int Property DelayCounter Auto Hidden Conditional
 
 GlobalVariable Property MissionType Auto                ; Currently active Mission Type
+GlobalVariable Property MissionTypeCart Auto
+GlobalVariable Property MissionTypePremium Auto
 int Property MissionComplete Auto Hidden Conditional    ; If the player is currently transporting a package (and what type of package it is)
 int Property JobStage Auto Hidden                       ; The current Job Stage, for objective management
 int Property JOBSTAGE_BASE = 21 AutoReadOnly Hidden
-int Property MISSIONID_CART = 0 AutoReadOnly Hidden
-int Property MISSIONID_PACKAGE = 1 AutoReadOnly Hidden
 
 ; Humiliation System
 bool Property HumiliatedOnce = false Auto Hidden Conditional    ; Set after 1st Humiliation. Dialogue flag for future missions
@@ -160,6 +160,7 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
   ElseIf(!RecipientLocHOLD.GetLocation())
     RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
   EndIf
+  PilferageMax = PilferageThresh03.Value * 1.1
   MissionComplete = 1
   OnHitLock = false
 
@@ -191,9 +192,9 @@ EndFunction
 
 Function SetMissionState(int missionID = -1)
   String[] missions = new String[2]
-  missions[MISSIONID_CART] = JobCart
-  missions[MISSIONID_PACKAGE] = JobDelivery
-  If (missionID < 0)
+  missions[MissionTypeCart.GetValueInt()] = JobCart
+  missions[MissionTypePremium.GetValueInt()] = JobDelivery
+  If (missionID < 0 || missionID >= missions.Length)
     missionID = SlutsData.Distribute(MCM.HaulWeights) - 1
   EndIf
   If(missions[missionID] != GetState())
@@ -253,8 +254,7 @@ EndFunction
 
 Function Maintenance()
   Debug.Trace("[SLuts] Mission Haul Reload Maintenance")
-  int id = GetActiveMissionID()
-  If (id == MISSIONID_CART)
+  If (IsActiveCartMission())
     OnLoadTether()
   EndIf
   RegisterEvents()
@@ -307,7 +307,7 @@ State CartHaul
     Tether()
     Kart.SetUp()
     Bd.DressUpPony(PlayerRef)
-    PlayerAlias.GoToState(JobCart)
+    CreateTimer()
   EndFunction
 
   Event OnEndState()
@@ -330,7 +330,7 @@ State SpecialDelivery
     EndIf
     If(!DeliverySelectorQst.Start())
       Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + JobCart)
-      SetMissionState(MISSIONID_CART)
+      SetMissionState(MissionTypeCart.GetValueInt())
       return
     EndIf
     ReferenceAlias target = DeliverySelectorQst.GetAliasById(3) as ReferenceAlias
@@ -341,44 +341,49 @@ State SpecialDelivery
     ; TODO: Look for artist for some kinda bag equipping
     Bd.DressUpPony(PlayerRef, false)
     PlayerRef.AddItem(PackageREF.GetReference())
-    PlayerAlias.GoToState(JobDelivery)
     DeliverySelectorQst.Stop()
-    ; Expecting an average speed of 10k distance every minute
-    PremiumDeliveryDelay = PremiumDelivery_EARLY
-    float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference())
-    int segments = Math.Ceiling(d / 10000)
-    RegisterForUpdate(segments * 40)
+    CreateTimer()
   EndFunction
-
-  Event OnUpdate()
-    PremiumDeliveryDelay += 1
-  EndEvent
-
   ; Wrapper to remove package before doing payment (or leave it in inventory if not received)
   Function TakePackage()
     If(PlayerRef.GetItemCount(PackageREF.GetReference()) > 0)
       PlayerRef.RemoveItem(PackageREF.GetReference())
     EndIf
-    If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM)
-      If (PremiumDeliveryDelay == PremiumDelivery_LATE)
-        Pilferage += PilferageThresh01.Value
-      ElseIf (PremiumDeliveryDelay == PremiumDelivery_LATE + 1)
-        Pilferage += PilferageThresh02.Value
-      ElseIf (PremiumDeliveryDelay >= PremiumDelivery_LATE + 2)
-        Pilferage += PilferageThresh03.Value
-      EndIf
-    EndIf
     DoPayment()
   EndFunction
 
   Event OnEndState()
-    PlayerAlias.GoToState("")
     ; TODO: Once bag implemented, remove it here again
   EndEvent
 EndState
 Function TakePackage()
   Debug.TraceStack("[SLUTS] Function call 'TakePackage' outside a valid State = " + GetState(), 2)
 EndFunction
+
+Function CreateTimer()
+  DelayCounter = 0
+  ; https://en.uesp.net/wiki/Skyrim:Transport
+  float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference()) 
+  float interval_seconds = (d / 370.0) + 0.5
+  RegisterForUpdate(interval_seconds)
+  float expected_delivery_time = interval_seconds * 2
+  float edt_game = expected_delivery_time * TimeScale.Value
+  float edt_gamedays = Math.Ceiling(edt_game / (60 * 60 * 24))
+  RegisterForUpdateGameTime(edt_gamedays * 2)
+EndFunction
+Event OnUpdate()
+  DelayCounter += 1
+  If (!IsActiveMissionAny())
+    UnregisterForUpdate()
+  EndIf
+EndEvent
+Event OnUpdateGameTime()
+  If (!IsActiveMissionAny())
+    return
+  EndIf
+  ; IDEA: mark haul as failed and disable the quest. Some custom dialogue for sluts
+  ; workers to get the player out of gear when they wear job equipment while this quest is not running
+EndEvent
 
 bool Function IsActiveMissionAny()
   return MissionComplete < 1
@@ -393,7 +398,7 @@ bool Function IsActiveMission(int aiMissionID)
   return MissionComplete == (0 - aiMissionID)
 EndFunction
 bool Function IsActiveCartMission()
-  return IsActiveMission(MISSIONID_CART)
+  return IsActiveMission(MissionTypeCart.GetValueInt())
 EndFunction
 
 ; ======================================================
@@ -422,9 +427,9 @@ Function UpdatePilferage(float afValue)
     float t3 = PilferageThresh03.GetValue()
     If (afValue > t3) ; Cargo destroyed
       afValue = t3
-      If (mission_id == MISSIONID_CART)
+      If (mission_id == MissionTypeCart.Value)
         Untether()
-      ElseIf (mission_id == MISSIONID_PACKAGE)
+      ElseIf (mission_id == MissionTypePremium.Value)
         ObjectReference ref = PackageREF.GetReference()
         If (PlayerRef.GetItemCount(ref) > 0)
           PlayerRef.RemoveItem(PackageREF.GetReference())
@@ -459,21 +464,21 @@ EndFunction
 
 Function CompleteJobStages()
   SetObjectiveCompleted(JobStage)
-  If(JobStage == JOBSTAGE_BASE + MISSIONID_PACKAGE)
+  If(JobStage == JOBSTAGE_BASE + MissionTypePremium.Value)
     SetObjectiveCompleted(100)
   EndIf
 EndFunction
 
 Function FailJobStages()
   SetObjectiveFailed(JobStage)
-  If(JobStage == JOBSTAGE_BASE + MISSIONID_PACKAGE)
+  If(JobStage == JOBSTAGE_BASE + MissionTypePremium.Value)
     SetObjectiveFailed(100)
   EndIf
 EndFunction
 
 Function Fail()
   MissionComplete = 1
-  Pilferage = PilferageThresh03.GetValue() * 1.1
+  Pilferage = PilferageMax
   DoPayment()
 EndFunction
 
@@ -594,6 +599,13 @@ EndFunction
 Function DoPayment()
   SendModEvent("SLUTS_InvokeFloat", ".hide", 0.0)
   Streak += 1
+  If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM && DelayCounter > ExpectedDelay.GetValueInt())
+    float penalty = DelayCounter - ExpectedDelay.Value
+    Pilferage += PilferageThresh03.Value / (0.25 * penalty)
+    If (Pilferage > PilferageMax)
+      Pilferage = PilferageMax
+    EndIf
+  EndIf
   bool perfectrun = Pilferage <= PilferageThresh00.GetValue()
   data.RunCompleted(perfectrun)
   ; Finalize Payment, payout to Escrow Chest, get response type
@@ -610,8 +622,6 @@ Function DoPayment()
     EndIf
   Else
     PerfectStreak = 0
-    ; You will lose your entire payment after losing {Thresh02}-2/3rds cargo,
-    ; losing all cargo will result in approx. 2-3 times your payment as debt
     float difficulty = MCM.iPilferageLevel as float
     float mult
     If (Pilferage <= PilferageThresh01.GetValue())
@@ -690,11 +700,10 @@ Function spontaneousFailure()
   If (Pilferage > 0 || Utility.RandomInt(0, 99) > MCM.iSpontFail)
     return
   EndIf
-  float max = PilferageThresh03.GetValue() * 1.1
   If (MCM.bSpontFailRandom)
-    Pilferage = Utility.RandomFloat(PilferageThresh01.GetValue(), max)
+    Pilferage = Utility.RandomFloat(PilferageThresh01.GetValue(), PilferageMax)
   Else
-    Pilferage = max
+    Pilferage = PilferageMax
   EndIf
   String X
   if Pilferage <= PilferageThresh02.GetValue()
