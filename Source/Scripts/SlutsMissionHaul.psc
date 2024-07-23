@@ -260,35 +260,9 @@ Function Maintenance()
   RegisterEvents()
 EndFunction
 
-Function HandleOnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-  If (OnHitLock || !IsActiveMissionAny() || IsActiveCartMission() && !bIsThethered)
-    return
-  ElseIf(abBashAttack || abHitBlocked || MCM.iPilferageLevel == MCM.DIFFICULTY_EASY)
-		return
-  EndIf
-  OnHitLock = true
-  Weapon srcW = akSource as Weapon
-  Spell srcS = akSource as Spell
-  float dmg = 0.0
-  If (srcW)
-    dmg = srcW.GetBaseDamage() * MCM.iPilferageLevel as float
-    If (!abPowerAttack)
-      dmg /= 2
-    EndIf
-  ElseIf (srcS && srcS.IsHostile())
-    int i = srcS.GetNumEffects()
-    While(i > 0)
-      i -= 1
-      MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
-      If (effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
-        dmg += srcS.GetNthEffectMagnitude(i)
-      EndIf
-    EndWhile
-    dmg = (dmg * MCM.iPilferageLevel as float) / 4
-  EndIf
-  UpdatePilferage(Pilferage + dmg)
-  OnHitLock = false
-EndFunction
+bool Function ShouldProcessOnHit()
+  return MCM.iPilferageLevel > MCM.DIFFICULTY_EASY && IsActiveMissionAny() && (bIsThethered || !IsActiveCartMission())
+EndIf
 
 State CartHaul
   Function SetupHaulImpl()
@@ -368,8 +342,8 @@ Function CreateTimer()
   RegisterForUpdate(interval_seconds)
   float expected_delivery_time = interval_seconds * 2
   float edt_game = expected_delivery_time * TimeScale.Value
-  float edt_gamedays = Math.Ceiling(edt_game / (60 * 60 * 24))
-  RegisterForUpdateGameTime(edt_gamedays * 2)
+  float edt_gamedays = Math.Ceiling(edt_game / (60 * 60 * 24)) + 1
+  RegisterForUpdateGameTime(edt_gamedays)
 EndFunction
 Event OnUpdate()
   DelayCounter += 1

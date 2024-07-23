@@ -2,17 +2,6 @@
 ;NEXT FRAGMENT INDEX 19
 Scriptname SF_SlutsHaul_SetUp_0A06AEA3 Extends Scene Hidden
 
-;BEGIN FRAGMENT Fragment_1
-Function Fragment_1()
-;BEGIN CODE
-SendModEvent("dhlp-Resume")
-game.setplayeraidriven(false)
-GetOwningQuest().SetStage(20)
-Haul.Unfriend()
-;END CODE
-EndFunction
-;END FRAGMENT
-
 ;BEGIN FRAGMENT Fragment_5
 Function Fragment_5()
 ;BEGIN CODE
@@ -21,10 +10,18 @@ Game.SetPlayerAIDriven(false)
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_14
-Function Fragment_14(ReferenceAlias akAlias)
+;BEGIN FRAGMENT Fragment_18
+Function Fragment_18()
 ;BEGIN CODE
-Haul.FadeToBlackImod.PopTo(Haul.FadeToBlackHoldImod)
+Haul.ShowManifest(true)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_16
+Function Fragment_16()
+;BEGIN CODE
+Haul.SetupHaul()
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -34,6 +31,14 @@ Function Fragment_3()
 ;BEGIN CODE
 Haul.FadeToBlackHoldImod.PopTo(Haul.FadeToBlackBackImod)
 Haul.TransferManifest()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_14
+Function Fragment_14(ReferenceAlias akAlias)
+;BEGIN CODE
+Haul.FadeToBlackImod.PopTo(Haul.FadeToBlackHoldImod)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -57,18 +62,13 @@ Haul.FadeToBlackImod.Apply()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_18
-Function Fragment_18()
+;BEGIN FRAGMENT Fragment_1
+Function Fragment_1()
 ;BEGIN CODE
-Haul.ShowManifest(true)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_16
-Function Fragment_16()
-;BEGIN CODE
-Haul.SetupHaul()
+SendModEvent("dhlp-Resume")
+game.setplayeraidriven(false)
+GetOwningQuest().SetStage(20)
+Haul.Unfriend()
 ;END CODE
 EndFunction
 ;END FRAGMENT

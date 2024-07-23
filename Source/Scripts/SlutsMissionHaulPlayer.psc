@@ -14,6 +14,7 @@ Message Property PackageDestroyed Auto
 
 Event OnInit()
   AddInventoryEventFilter(Gold001)
+  OnHitLock = false
 EndEvent
 
 Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akSourceContainer)
@@ -38,6 +39,31 @@ Event OnPlayerLoadGame()
   Haul.Maintenance()
 EndEvent
 
+bool OnHitLock = false
 Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile, bool abPowerAttack, bool abSneakAttack, bool abBashAttack, bool abHitBlocked)
-	Haul.HandleOnHit(akAggressor, akSource, akProjectile, abPowerAttack, abSneakAttack, abBashAttack, abHitBlocked)
+  If (OnHitLock || abBashAttack || abHitBlocked || !haul.ShouldProcessOnHit())
+    return
+  EndIf
+  OnHitLock = true
+  Weapon srcW = akSource as Weapon
+  Spell srcS = akSource as Spell
+  float dmg = 0.0
+  If (srcW)
+    dmg = srcW.GetBaseDamage() * haul.MCM.iPilferageLevel as float
+    If (!abPowerAttack)
+      dmg /= 2
+    EndIf
+  ElseIf (srcS && srcS.IsHostile())
+    int i = srcS.GetNumEffects()
+    While(i > 0)
+      i -= 1
+      MagicEffect effect = srcS.GetNthEffectMagicEffect(i)
+      If (effect.IsEffectFlagSet(0x1 + 0x4) && !effect.IsEffectFlagSet(0x2))
+        dmg += srcS.GetNthEffectMagnitude(i)
+      EndIf
+    EndWhile
+    dmg = (dmg * haul.MCM.iPilferageLevel as float) / 4
+  EndIf
+  haul.UpdatePilferage(haul.Pilferage + dmg)
+  OnHitLock = false
 EndEvent
