@@ -15,7 +15,7 @@ While(Count)
 	PlayerRef.EquipItem(myFood, abSilent = true)
 endWhile
 /;
-PlayerRef.EquipItem(Rations, abSilent = true)
+PlayerRef.EquipItemEx(Rations, equipSound = false)
 ;END CODE
 EndFunction
 ;END FRAGMENT

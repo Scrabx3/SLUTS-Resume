@@ -1,25 +1,15 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-;NEXT FRAGMENT INDEX 22
+;NEXT FRAGMENT INDEX 24
 Scriptname QF_SLUTS_MissionHaul_0B00FB04 Extends Quest Hidden
+
+;BEGIN ALIAS PROPERTY SceneRecipient
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SceneRecipient Auto
+;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY EscrowChestRef
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_EscrowChestRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY StartHold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_StartHold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DestHold
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_DestHold Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY PackageSpawn
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_PackageSpawn Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY Manifest
@@ -27,44 +17,9 @@ ReferenceAlias Property Alias_PackageSpawn Auto
 ReferenceAlias Property Alias_Manifest Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY RecipientRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_RecipientRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY DestHoldCap
-;ALIAS PROPERTY TYPE LocationAlias
-LocationAlias Property Alias_DestHoldCap Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SceneRecipient
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SceneRecipient Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY TargetRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_TargetRef Auto
-;END ALIAS PROPERTY
-
 ;BEGIN ALIAS PROPERTY PackageRef
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_PackageRef Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY Player
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Player Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY SceneSpell
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_SceneSpell Auto
-;END ALIAS PROPERTY
-
-;BEGIN ALIAS PROPERTY HumiliChestRef
-;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_HumiliChestRef Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY DispatcherRef
@@ -72,9 +27,34 @@ ReferenceAlias Property Alias_HumiliChestRef Auto
 ReferenceAlias Property Alias_DispatcherRef Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY KartRef
+;BEGIN ALIAS PROPERTY RecipientRef
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_KartRef Auto
+ReferenceAlias Property Alias_RecipientRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY StartHold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_StartHold Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY TargetRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_TargetRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY DestHold
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_DestHold Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Player
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Player Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY PackageSpawn
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_PackageSpawn Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN ALIAS PROPERTY ScenePlayer
@@ -82,42 +62,30 @@ ReferenceAlias Property Alias_KartRef Auto
 ReferenceAlias Property Alias_ScenePlayer Auto
 ;END ALIAS PROPERTY
 
-;BEGIN FRAGMENT Fragment_18
-Function Fragment_18()
+;BEGIN ALIAS PROPERTY DestHoldCap
+;ALIAS PROPERTY TYPE LocationAlias
+LocationAlias Property Alias_DestHoldCap Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY SceneSpell
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_SceneSpell Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY KartRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_KartRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY HumiliChestRef
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_HumiliChestRef Auto
+;END ALIAS PROPERTY
+
+;BEGIN FRAGMENT Fragment_9
+Function Fragment_9()
 ;BEGIN CODE
-; Player read Manifest, job properly starts now
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_11
-Function Fragment_11()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
-;BEGIN CODE
-; Job Cycle starts here
-Debug.Trace("[Sluts] New Job Start, Updating Objectives and Resetting Pilferage")
-SendModEvent("SLUTS_MissionHaul", kmyQuest.GetState())
-SetObjectiveDisplayed(20)
-
-kmyQuest.HandleStage()
-kmyQuest.UpdatePilferage(0 - kmyQuest.PilferageReinforcement.Value)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_15
-Function Fragment_15()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
-;BEGIN CODE
-kmyQuest.data.UpdateGlobals()
-
-SendModEvent("SLUTS_MissionEnd")
+; Setup completed
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -126,42 +94,6 @@ EndFunction
 Function Fragment_16()
 ;BEGIN CODE
 SendModEvent("SLUTS_MissionStart")
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_17
-Function Fragment_17()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
-;BEGIN CODE
-; Helper stage for Special Delivery Job
-kmyQuest.UnregisterForUpdate()
-kmyQuest.MissionComplete = 1
-SetObjectiveCompleted(22)
-
-If(IsObjectiveCompleted(100))
-  SetObjectiveCompleted(100, false)
-EndIf
-SetObjectiveDisplayed(100, true, true)
-;END CODE
-EndFunction
-;END FRAGMENT
-
-;BEGIN FRAGMENT Fragment_13
-Function Fragment_13()
-;BEGIN AUTOCAST TYPE SlutsMissionHaul
-Quest __temp = self as Quest
-SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
-;END AUTOCAST
-;BEGIN CODE
-; Voluntarely doing another haul
-kmyQuest.CompleteJobStages()
-
-kmyQuest.Blackout()
-kmyQuest.CreateChainMission(false)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -184,18 +116,72 @@ kmyQuest.Quit()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_12
-Function Fragment_12()
+;BEGIN FRAGMENT Fragment_15
+Function Fragment_15()
 ;BEGIN AUTOCAST TYPE SlutsMissionHaul
 Quest __temp = self as Quest
 SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
 ;END AUTOCAST
 ;BEGIN CODE
-; Forced into another Haul
-kmyQuest.CompleteJobStages()
+kmyQuest.data.UpdateGlobals()
+CompleteAllObjectives()
 
-kmyQuest.Blackout()
-kmyQuest.CreateChainMission(true)
+SendModEvent("SLUTS_MissionEnd")
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_22
+Function Fragment_22()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Deadline outcome
+kmyQuest.IsMissing = true
+kmyQuest.FailJobStages()
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_18
+Function Fragment_18()
+;BEGIN CODE
+; Player read Manifest, job properly starts now
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_13
+Function Fragment_13()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Voluntarely doing another haul
+kmyQuest.CompleteJobStages()
+kmyQuest.CreateChainMission(false)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_11
+Function Fragment_11()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Job Cycle starts here
+Debug.Trace("[Sluts] New Job Start, Updating Objectives and Resetting Pilferage")
+SendModEvent("SLUTS_MissionHaul", kmyQuest.GetState())
+SetObjectiveDisplayed(20)
+
+kmyQuest.IsMissing = false
+kmyQuest.HandleStage()
+kmyQuest.UpdatePilferage(0 - kmyQuest.PilferageReinforcement.Value)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -212,9 +198,6 @@ If (kmyQuest.IsActiveMissionAny())
 kmyQuest.Fail()
 kmyQuest.FailJobStages()
 EndIf
-
-kmyQuest.Blackout()
-kmyQuest.CreateChainMission(true)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -229,10 +212,49 @@ Stop()
 EndFunction
 ;END FRAGMENT
 
-;BEGIN FRAGMENT Fragment_9
-Function Fragment_9()
+;BEGIN FRAGMENT Fragment_12
+Function Fragment_12()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
 ;BEGIN CODE
-; Setup completed
+; Forced into another Haul
+kmyQuest.CompleteJobStages()
+kmyQuest.CreateChainMission(true)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_17
+Function Fragment_17()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Helper stage for Special Delivery Job
+If (!kmyQuest.IsActiveMissionAny())
+kmyQuest.MissionComplete = 1
+SetObjectiveCompleted(22)
+EndIf
+
+SetObjectiveCompleted(100, false)
+SetObjectiveDisplayed(100, true, true)
+;END CODE
+EndFunction
+;END FRAGMENT
+
+;BEGIN FRAGMENT Fragment_23
+Function Fragment_23()
+;BEGIN AUTOCAST TYPE SlutsMissionHaul
+Quest __temp = self as Quest
+SlutsMissionHaul kmyQuest = __temp as SlutsMissionHaul
+;END AUTOCAST
+;BEGIN CODE
+; Player lost their uniform and returned to dispatch
+kmyQuest.ClarPlayerStatus(true)
+kmyQuest.Fail()
 ;END CODE
 EndFunction
 ;END FRAGMENT
