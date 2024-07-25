@@ -64,6 +64,7 @@ Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile,
     EndWhile
     dmg = (dmg * haul.MCM.iPilferageLevel as float) / 4
   EndIf
+  Debug.Trace("[Sluts] OnHit during Haul, damage: " + dmg)
   haul.UpdatePilferage(haul.Pilferage + dmg)
   OnHitLock = false
 EndEvent

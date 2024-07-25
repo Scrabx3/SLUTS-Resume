@@ -29,7 +29,7 @@ Keyword Property SpellCastLoc Auto        ; Root to Spellcast Marker
 Keyword Property CarriageDriver Auto      ; Root to Driver Wait Marker
 ; ===
 ReferenceAlias Property PackageREF Auto   ; Prem Delivery Package
-ReferenceAlias Property KartREF Auto      ; Used for Dialogue Conditions
+SlutsKart Property KartREF Auto      ; Used for Dialogue Conditions
 Activator Property Kart_Form Auto         ; Carts Base Object
 
 MiscObject Property FillyCoin Auto
@@ -50,6 +50,8 @@ Race Property DefaultRace Auto
 Quest Property DeliverySelectorQst Auto ; Pick a random NPC from the current Hold
 Scene Property moveChestScene Auto      ; Post Humiliation reward
 
+GlobalVariable Property TimeScale Auto
+GlobalVariable Property GameDaysPassed Auto
 Faction Property SlutsCrime Auto        ; Sluts Crime Faction
 Faction Property DriverFaction Auto     ; All Drivers
 Faction Property DirtyFaction Auto      ; For Dirt Tats
@@ -57,7 +59,6 @@ Faction Property PlayerFollowerFaction Auto
 Faction Property BanditFaction Auto
 Faction property ForswornFaction Auto
 Faction[] Property FriendFactions Auto
-GlobalVariable Property TimeScale Auto
 
 ; Worldspaces
 Worldspace Property Tamriel Auto
@@ -103,8 +104,11 @@ float Property Reinforcement Auto Hidden Conditional
 float Property Pilferage Auto Hidden Conditional        ; Amount of damage to goods/seal (Damaged Hp)
 float PilferageMax
 
-GlobalVariable Property ExpectedDelay Auto Hidden
+GlobalVariable Property ExpectedDelay Auto
+GlobalVariable Property DeliveryTime Auto
+GlobalVariable Property DelayDeadline Auto
 int Property DelayCounter Auto Hidden Conditional
+bool Property IsMissing Auto Hidden Conditional
 
 GlobalVariable Property MissionType Auto                ; Currently active Mission Type
 GlobalVariable Property MissionTypeCart Auto
@@ -129,7 +133,6 @@ int Property HumilPick Auto Hidden Conditional
 
 ; Tether System
 bool Property bIsThethered Auto Hidden Conditional
-SlutsKart Property Kart Auto Hidden
 
 int Property Response_Flawless      = 0 AutoReadOnly Hidden   ; 0 Pilferage + No Debt
 int Property Response_Deduction     = 1 AutoReadOnly Hidden   ; X Pilferage + No Debt
@@ -142,7 +145,6 @@ int Property EvalResponse Auto Hidden Conditional
 
 ; misc
 int Property INT_MAX = 2147483647 AutoReadOnly Hidden
-bool OnHitLock = false
 bool forced   ; Unused, idk what I should use this for tbh
 
 ; ======================================================
@@ -162,7 +164,6 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
   EndIf
   PilferageMax = PilferageThresh03.Value * 1.1
   MissionComplete = 1
-  OnHitLock = false
 
   float p = 1 - (aiCustomLoc * 0.15) ; 15% Payment Deduction for Custom Loc Hauls
   Payment.SetValue(GetBasePay(akDispatcher, akRecipient, p))
@@ -263,15 +264,16 @@ EndFunction
 
 bool Function ShouldProcessOnHit()
   return MCM.iPilferageLevel > MCM.DIFFICULTY_EASY && IsActiveMissionAny() && (bIsThethered || !IsActiveCartMission())
-EndIf
+EndFunction
 
 State CartHaul
   Function SetupHaulImpl()
     Debug.Trace("[SLUTS] Setting up CartHaul")
     TargetREF.ForceRefTo(RecipientREF.GetReference())
-    If(!Kart)
-      Kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form) as SlutsKart
-      KartRef.ForceRefTo(Kart)
+    ObjectReference kart = KartREF.GetReference()
+    If(!kart)
+      kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form)
+      KartRef.ForceRefTo(kart)
       Utility.Wait(0.5)
     Else ; Chain Haul, make sure the Kart can actually be moved
       Kart.SetMotionType(Kart.Motion_Dynamic)
@@ -280,19 +282,14 @@ State CartHaul
       EndIf
     EndIf
     Tether()
-    Kart.SetUp()
     Bd.DressUpPony(PlayerRef)
     CreateTimer()
   EndFunction
 
   Event OnEndState()
-    If(Kart)
+    If(KartREF.GetReference())
       Untether()
-      Kart.ShutDown()
       KartRef.Clear()
-      Kart.Disable()
-      Kart.Delete()
-      Kart = none
     EndIf
   EndEvent
 EndState
@@ -328,6 +325,9 @@ State SpecialDelivery
   EndFunction
 
   Event OnEndState()
+    If(PlayerRef.GetItemCount(PackageREF.GetReference()) > 0)
+      PlayerRef.RemoveItem(PackageREF.GetReference())
+    EndIf
     ; TODO: Once bag implemented, remove it here again
   EndEvent
 EndState
@@ -461,7 +461,11 @@ Function FailJobStages()
 EndFunction
 
 Function Fail()
+  If(!IsActiveMissionAny())
+    return
+  EndIf
   MissionComplete = 1
+  FailJobStages()
   Pilferage = PilferageMax
   DoPayment()
 EndFunction
@@ -493,6 +497,7 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatc
     Quit()
     return
   EndIf
+  Blackout()
   Escrow.LockEscrow()
   forced = abForced
   DispatcherREF.ForceRefTo(akDispatch)
@@ -588,7 +593,7 @@ Function DoPayment()
   Streak += 1
   If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM && DelayCounter > ExpectedDelay.GetValueInt())
     float penalty = DelayCounter - ExpectedDelay.Value
-    Pilferage += PilferageThresh03.Value / (0.25 * penalty)
+    Pilferage += PilferageThresh03.Value * (0.2 * penalty)
     If (Pilferage > PilferageMax)
       Pilferage = PilferageMax
     EndIf
@@ -713,12 +718,13 @@ Event OnKeyDown(int KeyCode)
 		return
   EndIf
   bool Ctrl = Input.IsKeyPressed(29) || Input.IsKeyPressed(157)
-  If (!Ctrl || !Kart || PlayerRef.IsInInterior())
+  ObjectReference kart = KartREF.GetReference()
+  If (!Ctrl || !kart || PlayerRef.IsInInterior())
     return
   EndIf
   If(KeyCode == ActivateKey)
     If(!bIsThethered)
-      If (Kart.GetDistance(PlayerRef) >= 1000)
+      If (kart.GetDistance(PlayerRef) >= 1000)
         CartTooFarAway.Show()
         return
       EndIf
@@ -738,6 +744,7 @@ EndEvent
 ; ======================================================
 
 Function Tether()
+  ObjectReference Kart = KartREF.GetReference()
   If(!Kart || bIsThethered)
     return
   ElseIf (Pilferage > PilferageThresh03.GetValue())
@@ -768,7 +775,7 @@ Function Tether()
 EndFunction
 
 Function OnLoadTether()
-  If(!bIsThethered || !Kart || PlayerRef.IsInInterior())
+  If(!bIsThethered || !KartREF.GetReference() || PlayerRef.IsInInterior())
     return
   EndIf
   ; Tether will always come loose when reloading
@@ -779,7 +786,9 @@ EndFunction
 Function Untether()
   If(!bIsThethered)
     return
-  ElseIf(Kart.Is3DLoaded())
+  EndIf
+  ObjectReference kart = KartREF.GetReference()
+  If(kart && kart.Is3DLoaded())
     Kart.Disable()
     Utility.Wait(0.1)
     Kart.Enable()
