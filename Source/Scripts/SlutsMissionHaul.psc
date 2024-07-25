@@ -239,12 +239,13 @@ Function SetupHaul()  ; Called during first setup only
   PlayerRef.MoveTo(ScenePlayer.GetReference())
   PlayerRef.PlaceAtMe(SummonFX)
   StripPlayer()
-  SetupHaulImpl()
   SendModEvent("SLUTS_SetupPilferage")
 
   PerfectStreak = 0
   Streak = 0
   TotalPay = 0.0
+  Pilferage = 0.0
+  SetupHaulImpl()
 EndFunction
 Function SetupHaulImpl()  ; Called every time BEFORE a new job starts
   Debug.TraceStack("[SLUTS] Function call 'SetupHaulImpl' outside a valid State = " + GetState(), 2)
@@ -283,10 +284,12 @@ State CartHaul
     EndIf
     Tether()
     Bd.DressUpPony(PlayerRef)
+    Bd.EquipIdx(Bd.yokeIDX, true)
     CreateTimer()
   EndFunction
 
   Event OnEndState()
+    Bd.RemoveIdx(Bd.yokeIDX, true)
     If(KartREF.GetReference())
       Untether()
       KartRef.Clear()
@@ -311,7 +314,7 @@ State SpecialDelivery
     TargetREF.ForceRefTo(tref)
     RecipientLOC.ForceLocationTo(tref.GetCurrentLocation())
     ; TODO: Look for artist for some kinda bag equipping
-    Bd.DressUpPony(PlayerRef, false)
+    Bd.DressUpPony(PlayerRef)
     PlayerRef.AddItem(PackageREF.GetReference())
     DeliverySelectorQst.Stop()
     CreateTimer()
@@ -340,8 +343,8 @@ Function CreateTimer()
   ; https://en.uesp.net/wiki/Skyrim:Transport
   float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference())
   float interval_seconds = (d / 370.0) + 0.5
-  RegisterForUpdate(interval_seconds)
   float interval_gthours = (interval_seconds / (60 * 60)) * TimeScale.Value
+  PlayerAlias.CreateIntervalTimer(interval_gthours)
   DeliveryTime.Value = Math.Ceiling(interval_gthours * (ExpectedDelay.Value + 0.5))
   float expected_time_end_days = (interval_gthours * (ExpectedDelay.Value + 1) / 24)
   float end_gdpassed = GameDaysPassed.Value + expected_time_end_days
@@ -356,12 +359,6 @@ Function CreateTimer()
   UpdateCurrentInstanceGlobal(DeliveryTime)
   UpdateCurrentInstanceGlobal(DelayDeadline)
 EndFunction
-Event OnUpdate()
-  If (!IsActiveMissionAny())
-    UnregisterForUpdate()
-  EndIf
-  DelayCounter += 1
-EndEvent
 Event OnUpdateGameTime()
   If (!IsActiveMissionAny())
     return
@@ -498,14 +495,16 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatc
     return
   EndIf
   Blackout()
-  Escrow.LockEscrow()
+  Pilferage = 0.0
   forced = abForced
+  Escrow.LockEscrow()
   DispatcherREF.ForceRefTo(akDispatch)
   RecipientREF.ForceRefTo(next)
   RecipientLOC.ForceLocationTo(Main.myDestLocs[Main.myDrivers.Find(next)])
   RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
   SetMissionState(aiMissionID)
   SetupHaulImpl()
+  Bd.Regag()
   Payment.SetValue(GetBasePay(akDispatch, next, 1.0))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment: " + Payment.GetValueInt())
@@ -541,9 +540,8 @@ EndFunction
 
 Function ClarPlayerStatus(bool abRemoveTats)
   PlayerRef.RemoveItem(Manifest.GetReference(), abSilent = true)
-  Bd.UndressPony(PlayerRef, abRemoveTats)
   GoToState("")
-  Game.EnableFastTravel()
+  Bd.UndressPony(PlayerRef, abRemoveTats)
 EndFunction
 
 ; ======================================================
@@ -591,6 +589,7 @@ EndFunction
 Function DoPayment()
   SendModEvent("SLUTS_InvokeFloat", ".hide", 0.0)
   Streak += 1
+  Debug.Trace("[SLUTS] DoPayment -> Streak: " + Streak + ", Delay: " + DelayCounter)
   If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM && DelayCounter > ExpectedDelay.GetValueInt())
     float penalty = DelayCounter - ExpectedDelay.Value
     Pilferage += PilferageThresh03.Value * (0.2 * penalty)
@@ -623,7 +622,7 @@ Function DoPayment()
     Else
       mult = PaymentSeg3(Pilferage)
     EndIf
-    Debug.Trace("[SLUTS] Pilferage: " + Pilferage + " | Reducing payment by a ratio of " + mult)
+    Debug.Trace("[SLUTS] DoPayment -> Pilferage: " + Pilferage + " | Reducing payment by a ratio of " + mult)
     pay -= Math.Floor(mult * pay)
     If (crime == 0)
       If (mult < 1)
@@ -654,7 +653,7 @@ Function DoPayment()
     SlutsCrime.ModCrimeGold(-pay)
   EndIf
   TotalPay += pay
-  Debug.Trace("[SLUTS] DoPayment(): Response = " + EvalResponse + " | Payment = " + pay + " | Debt = " + SlutsCrime.GetCrimeGold() + " | TotalPay = " + TotalPay)
+  Debug.Trace("[SLUTS] DoPayment -> Response: " + EvalResponse + ", Payment: " + pay + ", Debt: " + SlutsCrime.GetCrimeGold() + ", TotalPay: " + TotalPay)
 EndFunction
 
 float Function PaymentSeg1()
@@ -771,7 +770,6 @@ Function Tether()
   PlayerRef.SetRace(r)
   Utility.Wait(0.5)
   Kart.TetherToHorse(PlayerRef)
-  Game.EnableFastTravel(false)
 EndFunction
 
 Function OnLoadTether()
@@ -795,7 +793,6 @@ Function Untether()
   EndIf
   Debug.Trace("[SLUTS] Untethered Kart")
   bIsThethered = false
-  Game.EnableFastTravel(true)
 endFunction
 
 Function Unhitch()
@@ -808,6 +805,18 @@ Function Unhitch()
   EndIf
   Untether()
 endFunction
+
+Function TryForceReTether()
+  If(!bIsThethered)
+    return
+  EndIf
+  Untether()
+  If (Pilferage > PilferageThresh03.GetValue())
+    return
+  EndIf
+  KartREF.TryToMoveTo(PlayerRef)
+  Tether()
+EndFunction
 
 ; ======================================================
 ; =============================== Extern

@@ -112,9 +112,7 @@ function RemoveIdx(int idx, bool QuestItm = false)
 	If(QuestItm)
 		; This should ideally only be called by UndressPony() after a Haul
 		armor dev_r = Lib0.GetRenderedDevice(dev_I)
-		Lib0.RemoveQuestDevice(PlayerRef, dev_i, dev_r, kw, SlutsRestraints)
-		Utility.Wait(0.1)
-		PlayerRef.RemoveItem(dev_i, 1, true)
+		Lib0.RemoveQuestDevice(PlayerRef, dev_i, dev_r, kw, SlutsRestraints, true)
 	else
 		Lib0.UnlockDevice(PlayerRef, dev_i, none, kw, true) ; dev_r, kw, true)
 	EndIf
@@ -160,28 +158,32 @@ Function setThermal(int index)
 	EndIf
 EndFunction
 
-; /;
-
 ; ============================== FIT + REMOVE GILLY GEAR ===========
-Function DressUpPony(Actor target, bool yoke = true)
+Function DressUpPony(Actor target)
 	If(target == PlayerRef)
 		If(MCM.bUseThermal)
 			equipIdx(harnessIDX, true)
+			Utility.Wait(0.1)
 		EndIf
 		EquipIdx(collarIDX, true)
+		Utility.Wait(0.1)
 		EquipIdx(legCuffIDX, true)
+		Utility.Wait(0.1)
 		EquipIdx(glovesIDX, true)
+		Utility.Wait(0.1)
 		EquipIdx(bootsIDX, true)
+		Utility.Wait(0.1)
 		EquipIdx(tailIDX, true)
+		Utility.Wait(0.1)
 		EquipIdx(armCuffIDX, true)
-		If(yoke)
-			EquipIdx(yokeIDX, true)
-		EndIf
+		Utility.Wait(0.1)
 		If(data.useBlindfold)
 			EquipIdx(blindfoldIDX, true)
+			Utility.Wait(0.1)
 		EndIf
 		If(data.useChastity)
 			EquipIdx(chastityIDX, true)
+			Utility.Wait(0.1)
 		EndIf
 	Else
 		; TODO: NPC Dressup
@@ -259,7 +261,7 @@ Function RemoveConflictingDevice(int idx)
 endFunction
 
 Function Regag(Actor target = none)
-	equipIdx(gagIDX)
+	equipIdx(gagIDX, true)
 endfunction
 
 Function Ungag(Actor target = none)
