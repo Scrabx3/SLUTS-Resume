@@ -221,8 +221,6 @@ EndFunction
 Function Fragment_7()
 ;BEGIN CODE
 ; Select bad end outcome here..
-; TODO: KidNap needs MissionHaul to have a Simple Slavery intercom
-; !IMPORTANT might be useful to implement ^ independent of this outcome for general stability
 Actor bossref = Alias_Boss.GetActorRef()
 bossref.EvaluatePackage()
 
@@ -230,7 +228,11 @@ FadeToBlackImod.Apply()
 Utility.Wait(2.0)
 FadeToBlackImod.PopTo(FadeToBlackHoldImod)
 Utility.Wait(0.4)
-int r = Utility.RandomInt(0, 1)
+int max = 1
+If (Game.GetModByName("SimpleSlavery.esp") != 255)
+  max += 1
+EndIf
+int r = Utility.RandomInt(0, max)
 If (r == 0)
   MsgPlunder.Show()
   float FLT_MAX = 3.4 * Math.pow(10, 38)
@@ -240,7 +242,7 @@ If (r == 0)
   Alias_Bandit1.TryToDisableNoWait()
   Stop()
   Utility.Wait(1.0)
-Else
+ElseIf (r == 1)
   MsgAssault.Show()
   Actor pl = Game.GetPlayer()
   int s = Utility.RandomInt(0, 2)
@@ -261,6 +263,10 @@ Else
     SetStage(250)
   EndIf
   Utility.Wait(0.1)
+Else
+  MsgKidnap.Show()
+  SendModEvent("SSLV Entry")
+  Stop()
 EndIf
 FadeToBlackHoldImod.PopTo(FadeToBlackbackImod)
 ;END CODE
