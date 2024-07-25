@@ -337,26 +337,35 @@ EndFunction
 Function CreateTimer()
   DelayCounter = 0
   ; https://en.uesp.net/wiki/Skyrim:Transport
-  float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference()) 
+  float d = DispatcherREF.GetReference().GetDistance(RecipientREF.GetReference())
   float interval_seconds = (d / 370.0) + 0.5
   RegisterForUpdate(interval_seconds)
-  float expected_delivery_time = interval_seconds * 2
-  float edt_game = expected_delivery_time * TimeScale.Value
-  float edt_gamedays = Math.Ceiling(edt_game / (60 * 60 * 24)) + 1
-  RegisterForUpdateGameTime(edt_gamedays)
+  float interval_gthours = (interval_seconds / (60 * 60)) * TimeScale.Value
+  DeliveryTime.Value = Math.Ceiling(interval_gthours * (ExpectedDelay.Value + 0.5))
+  float expected_time_end_days = (interval_gthours * (ExpectedDelay.Value + 1) / 24)
+  float end_gdpassed = GameDaysPassed.Value + expected_time_end_days
+  float deadline_whole = end_gdpassed as int
+  float deadline_fract = end_gdpassed - deadline_whole
+  float remaining_hours = 24 * (1 - deadline_fract)
+  If (remaining_hours < 6.0)
+    deadline_whole += 1
+  EndIf
+  DelayDeadline.Value = deadline_whole + 1
+  RegisterForSingleUpdateGameTime(GameDaysPassed.Value - DelayDeadline.Value)
+  UpdateCurrentInstanceGlobal(DeliveryTime)
+  UpdateCurrentInstanceGlobal(DelayDeadline)
 EndFunction
 Event OnUpdate()
-  DelayCounter += 1
   If (!IsActiveMissionAny())
     UnregisterForUpdate()
   EndIf
+  DelayCounter += 1
 EndEvent
 Event OnUpdateGameTime()
   If (!IsActiveMissionAny())
     return
   EndIf
-  ; IDEA: mark haul as failed and disable the quest. Some custom dialogue for sluts
-  ; workers to get the player out of gear when they wear job equipment while this quest is not running
+  SetStage(250)
 EndEvent
 
 bool Function IsActiveMissionAny()
