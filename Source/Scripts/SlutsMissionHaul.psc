@@ -564,8 +564,8 @@ float Function GetBasePay(ObjectReference akDisp, ObjectReference akRecip, float
     EndIf
   EndIf
   ; Explanation: https://www.loverslab.com/topic/146751-sluts-resume/page/14/#comment-3357294
-  ; V3: Reduced coin gain by factor 2,5 | V3.3: simplified function
-  float ret = Math.sqrt(distance * SkyrimDiameter * MCM.fPaymentArg) / 25
+  ; V3: Reduced coin gain by factor 2,5 | V3.3: simplified function | V3.5: partially reverted V3
+  float ret = Math.sqrt(distance * SkyrimDiameter * MCM.fPaymentArg) / 12
   return ret * mult
 EndFunction
 
@@ -590,7 +590,8 @@ Function DoPayment()
   SendModEvent("SLUTS_InvokeFloat", ".hide", 0.0)
   Streak += 1
   Debug.Trace("[SLUTS] DoPayment -> Streak: " + Streak + ", Delay: " + DelayCounter)
-  If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM && DelayCounter > ExpectedDelay.GetValueInt())
+  bool ontime = DelayCounter <= ExpectedDelay.GetValueInt()
+  If (MCM.iPilferageLevel > MCM.DIFFICULTY_NORM && !ontime)
     float penalty = DelayCounter - ExpectedDelay.Value
     Pilferage += PilferageThresh03.Value * (0.2 * penalty)
     If (Pilferage > PilferageMax)
@@ -598,12 +599,16 @@ Function DoPayment()
     EndIf
   EndIf
   bool perfectrun = Pilferage <= PilferageThresh00.GetValue()
-  data.RunCompleted(perfectrun)
+  data.RunCompleted(perfectrun && ontime)
   ; Finalize Payment, payout to Escrow Chest, get response type
   int crime = SlutsCrime.GetCrimeGold()
   int pay = Payment.GetValueInt()
-  If(perfectrun)
+  If (perfectrun && ontime)
     PerfectStreak += 1
+  Else
+    PerfectStreak = 0
+  EndIf
+  If(perfectrun)
     If(crime == 0)
       EvalResponse = Response_Flawless
     ElseIf(crime <= pay)
@@ -612,7 +617,6 @@ Function DoPayment()
       EvalResponse = Response_ReduceDebt1
     EndIf
   Else
-    PerfectStreak = 0
     float difficulty = MCM.iPilferageLevel as float
     float mult
     If (Pilferage <= PilferageThresh01.GetValue())
