@@ -12,9 +12,21 @@ Message Property ArrearsClear Auto
 Message Property ArrearsPay Auto
 Message Property PackageDestroyed Auto
 
+bool Property handlingFastTravel Auto Hidden
+float _intervalTimer
+
 Event OnInit()
   AddInventoryEventFilter(Gold001)
   OnHitLock = false
+EndEvent
+
+Event OnPlayerFastTravelEnd(float afTravelGameTimeHours)
+  handlingFastTravel = true
+  Haul.DelayCounter += Math.Ceiling(afTravelGameTimeHours / _intervalTimer)
+  If (Haul.IsActiveCartMission())
+    Haul.TryForceReTether()
+  EndIf
+  handlingFastTravel = false
 EndEvent
 
 Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akSourceContainer)
@@ -50,8 +62,8 @@ Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile,
   float dmg = 0.0
   If (srcW)
     dmg = srcW.GetBaseDamage() * haul.MCM.iPilferageLevel as float
-    If (!abPowerAttack)
-      dmg /= 2
+    If (abPowerAttack)
+      dmg *= 2
     EndIf
   ElseIf (srcS && srcS.IsHostile())
     int i = srcS.GetNumEffects()
@@ -62,9 +74,21 @@ Event OnHit(ObjectReference akAggressor, Form akSource, Projectile akProjectile,
         dmg += srcS.GetNthEffectMagnitude(i)
       EndIf
     EndWhile
-    dmg = (dmg * haul.MCM.iPilferageLevel as float) / 4
+    dmg = (dmg * haul.MCM.iPilferageLevel as float) / 2
   EndIf
   Debug.Trace("[Sluts] OnHit during Haul, damage: " + dmg)
   haul.UpdatePilferage(haul.Pilferage + dmg)
   OnHitLock = false
+EndEvent
+
+Function CreateIntervalTimer(float afTimer)
+  _intervalTimer = afTimer
+  RegisterForSingleUpdateGameTime(afTimer)
+EndFunction
+Event OnUpdateGameTime()
+  If (!Haul.IsActiveMissionAny())
+    return
+  EndIf
+  Haul.DelayCounter += 1
+  RegisterForSingleUpdateGameTime(_intervalTimer)
 EndEvent

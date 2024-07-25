@@ -37,7 +37,10 @@ Event OnActivate(ObjectReference akActionRef)
 Endevent
 
 Event OnCellDetach()
-	If (Haul.Pilferage > Haul.PilferageThresh03.GetValue())
+	Utility.Wait(0.05)	; Wait potential loading screen
+	If (Haul.PlayerAlias.handlingFastTravel)
+		return
+	ElseIf (Haul.Pilferage > Haul.PilferageThresh03.GetValue())
 		GetReference().Disable()
 	Else
 		Haul.Untether()
