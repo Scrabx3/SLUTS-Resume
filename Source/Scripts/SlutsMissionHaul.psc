@@ -207,6 +207,7 @@ Function RegisterEvents()
   RegisterForKey(ActivateKey)
   RegisterForModEvent("HookAnimationStart", "OnAnimStart")
 	RegisterForModEvent("HookAnimationEnd", "OnAnimEnd")
+  RegisterForModEvent("SSLV Entry", "SimpleSlaveryStart")
 endFunction
 
 Function Blackout()
@@ -513,12 +514,9 @@ EndFunction
 ; Assume there to be a Blackout right here
 Function Quit()
   data.SeriesCompleted()
-  PlayerRef.RemoveItem(Manifest.GetReference(), abSilent = true)
   ; Clear State & get Player out of gear
   PlayerRef.PlaceAtMe(SummonFX)
-  GoToState("")
-  Bd.UndressPony(PlayerRef, false)
-  Game.EnableFastTravel()
+  ClarPlayerStatus(false)
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
   ; Enable post haul Dialogue & place Escrow
   If (TotalPay > 0)
@@ -536,6 +534,12 @@ Function Quit()
   Escrow.Lock(false)
 EndFunction
 
+Function ClarPlayerStatus(bool abRemoveTats)
+  PlayerRef.RemoveItem(Manifest.GetReference(), abSilent = true)
+  Bd.UndressPony(PlayerRef, abRemoveTats)
+  GoToState("")
+  Game.EnableFastTravel()
+EndFunction
 
 ; ======================================================
 ; =============================== PAYMENT
@@ -797,8 +801,15 @@ Function Unhitch()
 endFunction
 
 ; ======================================================
-; =============================== SEXLAB
+; =============================== Extern
 ; ======================================================
+
+Event SimpleSlaveryStart(string asEventName, string asStringArg, float afNumArg, form akSender)
+  If (!IsActiveMissionAny())
+    return
+  EndIf
+  SetStage(260)
+EndEvent
 
 Event OnAnimStart(int tid, bool HasPlayer)
   If(!HasPlayer || !IsActiveCartMission())
