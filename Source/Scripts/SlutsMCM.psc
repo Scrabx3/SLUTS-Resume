@@ -45,6 +45,7 @@ bool Property bSpontFailRandom = true Auto Hidden
 bool property bUseThermal = false auto Hidden
 bool property bThermalColor = true Auto Hidden
 bool bPonyAnims = true
+bool Property bKartVariant = false Auto Hidden
 
 bool property bUseSlutsLivery = true auto Hidden Conditional
 bool property bUseSlutsColors = true auto Hidden Conditional
@@ -124,6 +125,7 @@ Event OnPageReset(string Page)
 		AddToggleOptionST("PonyAnims", "$SLUTS_PonyAnims", bPonyAnims)
 		AddToggleOptionST("UseThermal", "$SLUTS_UseThermal", bUseThermal)
 		AddToggleOptionST("ThermalColor", "$SLUTS_ThermalColor", bThermalColor, getFlag(bUseThermal))
+		AddToggleOptionST("KartVariant", "$SLUTS_KartVariant", bKartVariant)
 		AddHeaderOption("$SLUTS_SlaveTats")
 		AddToggleOptionST("UseSlutsLivery", "$SLUTS_UseSlutsLivery", bUseSlutsLivery)
 		AddToggleOptionST("UseSlutsColors", "$SLUTS_UseSlutsColors", bUseSlutsColors)
@@ -168,7 +170,6 @@ Event OnConfigClose()
 		missionSc.Tether()
 		sReturnCart = "$SLUTS_Click"
 	EndIf
-
 EndEvent
 
 ; ==================================
@@ -508,6 +509,22 @@ State ToggleMissionHUD
 	EndEvent
 	Event OnHighlightST()
 		SetInfoText("$SLUTS_ToggleMissionHUDHighlight")
+	EndEvent
+EndState
+
+State KartVariant
+	Event OnSelectST()
+		bKartVariant = !bKartVariant
+		SetToggleOptionValueST(bKartVariant)
+	EndEvent
+
+	Event OnDefaultST()
+		bKartVariant = false
+		SetToggleOptionValueST(bKartVariant)
+	EndEvent
+
+	Event OnHighlightST()
+		SetInfoText("$SLUTS_KartVariantHighlight")
 	EndEvent
 EndState
 

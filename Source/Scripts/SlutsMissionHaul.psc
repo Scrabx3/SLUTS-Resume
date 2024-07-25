@@ -28,9 +28,9 @@ Keyword Property KartSpawnLoc Auto        ; Root to Kart Marker
 Keyword Property SpellCastLoc Auto        ; Root to Spellcast Marker
 Keyword Property CarriageDriver Auto      ; Root to Driver Wait Marker
 ; ===
-ReferenceAlias Property PackageREF Auto   ; Prem Delivery Package
-SlutsKart Property KartREF Auto      ; Used for Dialogue Conditions
-Activator Property Kart_Form Auto         ; Carts Base Object
+ReferenceAlias Property PackageREF Auto ; Prem Delivery Package
+SlutsKart Property KartREF Auto         ; Used for Dialogue Conditions
+Activator[] Property KartForms Auto     ; Carts Base Object
 
 MiscObject Property FillyCoin Auto
 MiscObject Property Gold001 Auto
@@ -272,7 +272,7 @@ State CartHaul
     TargetREF.ForceRefTo(RecipientREF.GetReference())
     ObjectReference kart = KartREF.GetReference()
     If(!kart)
-      kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(Kart_Form)
+      kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(KartForms[MCM.bKartVariant as int])
       KartRef.ForceRefTo(kart)
       Utility.Wait(0.5)
     Else ; Chain Haul, make sure the Kart can actually be moved
