@@ -355,7 +355,7 @@ Function CreateTimer()
     deadline_whole += 1
   EndIf
   DelayDeadline.Value = deadline_whole + 1
-  RegisterForSingleUpdateGameTime(GameDaysPassed.Value - DelayDeadline.Value)
+  RegisterForSingleUpdateGameTime(DelayDeadline.Value - GameDaysPassed.Value)
   UpdateCurrentInstanceGlobal(DeliveryTime)
   UpdateCurrentInstanceGlobal(DelayDeadline)
 EndFunction
