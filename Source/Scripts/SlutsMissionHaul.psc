@@ -428,7 +428,7 @@ Function HandleStage()
   MissionComplete = 0 - MissionType.GetValueInt()
   int stage = JOBSTAGE_BASE + MissionType.GetValueInt()
   If(stage != JobStage) ; Switching haul type, hide the previous objective(s)
-    SetObjectiveDisplayed(stage, false)
+    SetObjectiveDisplayed(JobStage, false)
     SetObjectiveDisplayed(100, false) ; Prem Delivery secondary objective
   EndIf
   JobStage = stage
