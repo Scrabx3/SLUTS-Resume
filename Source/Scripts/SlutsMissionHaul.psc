@@ -603,7 +603,7 @@ Function DoPayment()
   ; Finalize Payment, payout to Escrow Chest, get response type
   int crime = SlutsCrime.GetCrimeGold()
   int pay = Payment.GetValueInt()
-  If (perfectrun && ontime)
+  If (perfectrun && ontime && crime <= pay)
     PerfectStreak += 1
   Else
     PerfectStreak = 0
