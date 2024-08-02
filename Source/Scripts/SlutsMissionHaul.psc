@@ -302,6 +302,8 @@ State SpecialDelivery
     Debug.Trace("[SLUTS] Setting up SpecialDelivery")
     If(Main.myDrivers.Find(RecipientREF.GetActorReference()) == 9)
       RecipientREF.ForceRefTo(Main.myDrivers[4])
+      SetLinks(DispatcherREF.GetReference(), Main.myDrivers[4])
+      RecipientREF.TryToEvaluatePackage()
     EndIf
     If(!DeliverySelectorQst.Start())
       Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + JobCart)
@@ -497,6 +499,10 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatc
   Blackout()
   Pilferage = 0.0
   forced = abForced
+  If(PlayerRef.GetItemCount(PackageREF.GetReference()) > 0)
+    PlayerRef.RemoveItem(PackageREF.GetReference())
+  EndIf
+  RemoveManifest()
   Escrow.LockEscrow()
   DispatcherREF.ForceRefTo(akDispatch)
   RecipientREF.ForceRefTo(next)
@@ -508,7 +514,7 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatc
   Payment.SetValue(GetBasePay(akDispatch, next, 1.0))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment: " + Payment.GetValueInt())
-  Manifest.GetReference().Activate(PlayerRef)
+  ShowManifest(false)
   Utility.Wait(0.1)
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
   Game.SetPlayerAIDriven(false) ; Unsure why this is needed, zz
@@ -539,7 +545,7 @@ Function Quit()
 EndFunction
 
 Function ClarPlayerStatus(bool abRemoveTats)
-  PlayerRef.RemoveItem(Manifest.GetReference(), abSilent = true)
+  RemoveManifest()
   GoToState("")
   Bd.UndressPony(PlayerRef, abRemoveTats)
 EndFunction
@@ -681,11 +687,20 @@ Function TransferManifest()
 EndFunction
 
 Function ShowManifest(bool abEquipGag)
-  Manifest.GetReference().Activate(PlayerRef)
+  ObjectReference manifestREF = Manifest.GetReference()
+  If (PlayerRef.GetItemCount(manifestREF) == 0)
+    PlayerRef.AddItem(manifestREF)
+  EndIf
+  manifestREF.Activate(PlayerRef)
   If(abEquipGag)
     Bd.EquipIdx(Bd.gagIDX)
   EndIf
 endFunction
+
+Function RemoveManifest()
+  Form manifestform = Manifest.GetReference().GetBaseObject()
+  PlayerRef.RemoveItem(manifestform, INT_MAX, abSilent = true)
+EndFunction
 
 ; ======================================================
 ; =============================== PAYMENT
