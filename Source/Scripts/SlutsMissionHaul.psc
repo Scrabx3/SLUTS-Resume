@@ -686,12 +686,17 @@ Function TransferManifest()
   DispatcherRef.GetReference().RemoveItem(Paper, 1, true, PlayerRef)
 EndFunction
 
-Function ShowManifest(bool abEquipGag)
+Function ShowManifest(bool abEquipGag = false)
   ObjectReference manifestREF = Manifest.GetReference()
-  If (PlayerRef.GetItemCount(manifestREF) == 0)
-    PlayerRef.AddItem(manifestREF)
-  EndIf
   manifestREF.Activate(PlayerRef)
+  Form manifestform = manifestREF.GetBaseObject()
+  Utility.Wait(0.1)
+  int count = PlayerRef.GetItemCount(manifestform)
+  If (count == 0)
+    PlayerRef.AddItem(manifestREF)
+  ElseIf (count > 1)
+    PlayerRef.RemoveItem(manifestform, count - 1, abSilent = true)
+  EndIf
   If(abEquipGag)
     Bd.EquipIdx(Bd.gagIDX)
   EndIf
