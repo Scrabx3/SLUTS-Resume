@@ -6,7 +6,7 @@ Scriptname SF_haulRecip01_0B60AA85 Extends Scene Hidden
 Function Fragment_0()
 ;BEGIN CODE
 SendModEvent("dhlp-Suspend")
-Haul.Kart.SetMotionType(Haul.Kart.Motion_Keyframed)
+Haul.KartREF.GetRef().SetMotionType(Haul.KartRef.GetRef().Motion_Keyframed)
 Haul.MissionComplete = 1
 Haul.Befriend()
 Game.GetPlayer().StopCombatAlarm()
