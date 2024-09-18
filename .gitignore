@@ -1,3 +1,5 @@
 .releases
 .vscode
 *.code-workspace
+*.swf
+*.pex
