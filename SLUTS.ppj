@@ -75,10 +75,6 @@
             <Include>textures</Include>
             <Include>LICENSE</Include>
         </ZipFile> -->
-        <!-- Patches -->
-        <ZipFile Name="@ModName 2.8 - CFTO" RootDir="@patches" Compression="deflate">
-            <Include>CFTO</Include>
-        </ZipFile>
         <!-- Optional -->
         <ZipFile Name="@ModName UNP SlaveTats" RootDir="@optional" Compression="deflate">
             <Include>UNP SlaveTats</Include>
