@@ -97,35 +97,11 @@ MiscObject Property FillyCoins Auto
 FormList Property DummyList Auto
 
 bool _Initialized = false
-
-float[] Function BuildUpdateData()
-  Actor Player = Game.GetPlayer()
-  float[] data = new float[3]
-  data[0] = 42.0  ; Player.GetActorValue("Encumberance")    ; TODO: find correct AV names for these
-  data[1] = 300.0 ; Player.GetActorValue("EncumberanceMax") ; TODO: find correct AV names for these
-  data[2] = Player.GetItemCount(FillyCoins)
-  return data
-EndFunction
-
-String[] Function BuildExtraData(Form[] akForms)
-  String[] ret = Utility.CreateStringArray(akForms.Length)
-  int i = 0
-  While (i < akForms.Length)
-    ret[i] = StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "t") + ";" + \
-            StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "s") + ";" + \
-            StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "r") + ";" + \
-            StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "v") + ";" + \
-            akForms[i].GetName()
-    i += 1
-  EndWhile
-  return ret
-EndFunction
-
 Function OpenShop()
-  ; If(!_Initialized)
-  ;   _Initialized = true
+  If(!_Initialized)
+    _Initialized = true
     BuildShop()
-  ; EndIf
+  EndIf
 
   float[] playerdata = Utility.ResizeFloatArray(BuildUpdateData(), 6)
   playerdata[3] = FillyRank.GetValue()
@@ -151,7 +127,9 @@ Function OpenShop()
   UI.InvokeStringA("CustomMenu", "_root.main.AddExtraData", extra)
   UI.Invoke("CustomMenu", "_root.main.PopulateShop")
 
-  Utility.Wait(0.1)
+  While (Utility.IsInMenuMode())
+    Utility.Wait(0.1)
+  EndWhile
   UI.SetBool("HUD Menu", "_root.HUDMovieBaseInstance._visible", visible)
 EndFunction
 
@@ -182,8 +160,6 @@ String Function ShopStorageKey() global
 EndFunction
 
 MiscObject Property Gold001 Auto
-MiscObject Property SLUTS_Titanium Auto
-
 Key Property zadRestraintsKey Auto
 Key Property zadChastityKey Auto
 Key Property zadPiercingRemovalKey Auto
@@ -192,11 +168,33 @@ Key Property SLUTS_RestraintsKey Auto
 
 Function BuildShop()
   AddItem(Gold001, 1)
-  AddItem(SLUTS_Titanium, 1000, aiRequiredRank = 3)
 
   AddItem(zadRestraintsKey, 200)
   AddItem(zadChastityKey, 300)
   AddItem(zadPiercingRemovalKey, 250)
-  AddItem(SLUTS_FurnitureKey, 300)
-  AddItem(SLUTS_RestraintsKey, 225)
+  ; AddItem(SLUTS_FurnitureKey, 300)
+  ; AddItem(SLUTS_RestraintsKey, 225)
+EndFunction
+
+float[] Function BuildUpdateData()
+  Actor Player = Game.GetPlayer()
+  float[] data = new float[3]
+  data[0] = Player.GetActorValue("InventoryWeight")
+  data[1] = Player.GetActorValue("CarryWeight")
+  data[2] = Player.GetItemCount(FillyCoins)
+  return data
+EndFunction
+
+String[] Function BuildExtraData(Form[] akForms)
+  String[] ret = Utility.CreateStringArray(akForms.Length)
+  int i = 0
+  While (i < akForms.Length)
+    ret[i] = StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "t") + ";" + \
+            StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "s") + ";" + \
+            StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "r") + ";" + \
+            StorageUtil.GetIntValue(akForms[i], ShopStorageKey() + "v") + ";" + \
+            akForms[i].GetName()
+    i += 1
+  EndWhile
+  return ret
 EndFunction
