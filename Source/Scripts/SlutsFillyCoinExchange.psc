@@ -12,7 +12,7 @@ EndEvent
 ; --- Params
 ; akItem            - The item to be added
 ; aiValue           - The price of the item, in Gold/Septims
-; aiType            - The items category; 0 - Unspecified | 1 - Gear | 2 - Licenses | 3 - Upgrades | 4 - Customizations/Extras
+; aiType            - The items category; 0 - Unspecified/Misc | 1 - Gear | 2 - Potions
 ; aiAvailableStock  - The amount of items that can be sold. -1 implies infinite stock
 ; aiRequiredRank    - The required filly rank to purchase this item. Recommended to leave at 0
 bool Function AddItem(Form akItem, int aiValue, int aiType = 0, int aiAvailableStock = -1, int aiRequiredRank = 0) global
