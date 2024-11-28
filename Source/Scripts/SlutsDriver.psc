@@ -57,11 +57,7 @@ EndFunction
 ObjectReference originalRef = none
 
 Event OnInit()
-  Debug.MessageBox("Driver Registration")
   ObjectReference ref = GetReference()
-  If (!ref)
-    return
-  EndIf
   If (AlternateSourceMod != "" && Game.GetModByName(AlternateSourceMod) != 255)
     ObjectReference obj = Game.GetFormFromFile(AlternateSourceID, AlternateSourceMod) as ObjectReference
     If (obj)
@@ -76,6 +72,7 @@ Event OnInit()
   Main.RegisterDriver(self)
 EndEvent
 
+; Called on every load to ensure the driver is properly set up
 Function Maintenance()
   If (AlternateSourceMod != "" && Game.GetModByName(AlternateSourceMod) == 255)
     ObjectReference obj = Game.GetFormFromFile(AlternateSourceID, AlternateSourceMod) as ObjectReference
