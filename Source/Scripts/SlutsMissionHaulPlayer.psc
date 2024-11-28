@@ -43,7 +43,7 @@ Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemRefere
     int paid = SlutsData.GetCoinFromGold(aiItemCount)
     GetReference().RemoveItem(akBaseItem, aiItemCount, true)
     CrimeFaction.ModCrimeGold(-paid)
-    ArrearsPay.Show(paid)
+    ArrearsPay.Show(CrimeFaction.GetCrimeGold())
   EndIf
 EndEvent
 
