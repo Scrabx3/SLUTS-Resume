@@ -2,14 +2,59 @@
 ;NEXT FRAGMENT INDEX 4
 Scriptname QF_SLUTS_Main_0A005900 Extends Quest Hidden
 
+;BEGIN ALIAS PROPERTY Velasco
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Velasco Auto
+;END ALIAS PROPERTY
+
 ;BEGIN ALIAS PROPERTY Player
 ;ALIAS PROPERTY TYPE ReferenceAlias
 ReferenceAlias Property Alias_Player Auto
 ;END ALIAS PROPERTY
 
-;BEGIN ALIAS PROPERTY Vaslaco
+;BEGIN ALIAS PROPERTY Windhelm
 ;ALIAS PROPERTY TYPE ReferenceAlias
-ReferenceAlias Property Alias_Vaslaco Auto
+ReferenceAlias Property Alias_Windhelm Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Falkreath
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Falkreath Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Morthal
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Morthal Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Solitude
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Solitude Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Markarth
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Markarth Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Riften
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Riften Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Dawnstar
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Dawnstar Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Winterhold
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Winterhold Auto
+;END ALIAS PROPERTY
+
+;BEGIN ALIAS PROPERTY Whiterun
+;ALIAS PROPERTY TYPE ReferenceAlias
+ReferenceAlias Property Alias_Whiterun Auto
 ;END ALIAS PROPERTY
 
 ;BEGIN FRAGMENT Fragment_2

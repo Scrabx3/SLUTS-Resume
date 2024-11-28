@@ -22,11 +22,6 @@ ReferenceAlias Property SceneHumilChest Auto  ; Recipient Escrow Position
 LocationAlias Property RecipientLOC Auto
 LocationAlias Property RecipientLOCHold Auto
 
-Keyword Property EscrowLink Auto          ; Root to Escrow
-Keyword Property PlayerWaitLoc Auto       ; Root to Player Marker
-Keyword Property KartSpawnLoc Auto        ; Root to Kart Marker
-Keyword Property SpellCastLoc Auto        ; Root to Spellcast Marker
-Keyword Property CarriageDriver Auto      ; Root to Driver Wait Marker
 ; ===
 ReferenceAlias Property PackageREF Auto ; Prem Delivery Package
 SlutsKart Property KartREF Auto         ; Used for Dialogue Conditions
@@ -177,25 +172,36 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
   SetStage(5)
 EndEvent
 bool Function SetLinks(ObjectReference akDispatcher, ObjectReference akRecipient)
-  ObjectReference root0 = StorageUtil.GetFormValue(akDispatcher, "SLUTS_ROOT") as ObjectReference
-  ObjectReference root1 = StorageUtil.GetFormValue(akRecipient, "SLUTS_ROOT") as ObjectReference
-  If(!root0 || !root1)
-    Debug.TraceStack("[SLUTS] Missing Root | " + root0 + " | " + root1, 2)
+  SlutsDriver d1 = Main.DriverFromActor(akDispatcher)
+  SlutsDriver d2 = Main.DriverFromActor(akRecipient)
+  If(!d1 || !d2)
+    Debug.TraceStack("[SLUTS] Dispatch is not a valid driver? | " + akDispatcher + " -> " + d1 + " | " + akRecipient + " -> " + d2, 2)
     Debug.MessageBox("Unable to create Haul. Root Object is missing.")
     return false
   EndIf
-  ScenePlayer.ForceRefTo(root0.GetLinkedRef(PlayerWaitLoc))
-  SceneSpell.ForceRefTo(root0.GetLinkedRef(SpellCastLoc))
-  SceneRecipient.ForceRefTo(root1.GetLinkedRef(CarriageDriver))
-  SceneHumilChest.ForceRefTo(root1.GetLinkedRef(EscrowLink))
+  ScenePlayer.ForceRefTo(d1.PlayerWaitMarker)
+  SceneSpell.ForceRefTo(d1.DriverCastMarker)
+  SceneRecipient.ForceRefTo(d2.DriverWaitMarker)
+  SceneHumilChest.ForceRefTo(d2.EscrowSpawnMarker)
   return true
 EndFunction
 
 Function SetMissionState(int missionID = -1)
+  int cartID = MissionTypeCart.GetValueInt()
+  int premID = MissionTypePremium.GetValueInt()
   String[] missions = new String[2]
-  missions[MissionTypeCart.GetValueInt()] = JobCart
-  missions[MissionTypePremium.GetValueInt()] = JobDelivery
+  missions[cartID] = JobCart
+  missions[premID] = JobDelivery
   If (missionID < 0 || missionID >= missions.Length)
+    int[] types = PapyrusUtil.RemoveInt(MCM.HaulWeights, 2147483647)
+    SlutsDriver recip = Main.DriverFromActor(RecipientREF.GetReference())
+    int i = 0
+    While(i < types.Length)
+      If (!recip.IsHaulTypeAllowed(i))
+        types[i] = 0
+      EndIf
+      i += 1
+    EndWhile
     missionID = SlutsData.Distribute(MCM.HaulWeights) - 1
   EndIf
   If(missions[missionID] != GetState())
@@ -273,7 +279,8 @@ State CartHaul
     TargetREF.ForceRefTo(RecipientREF.GetReference())
     ObjectReference kart = KartREF.GetReference()
     If(!kart)
-      kart = SlutsMain.GetLink(DispatcherREF.GetReference(), KartSpawnLoc).PlaceAtMe(KartForms[MCM.bKartVariant as int])
+      SlutsDriver dispatch = Main.DriverFromActor(DispatcherREF.GetReference())
+      kart = dispatch.KartSpawnMarker.PlaceAtMe(KartForms[MCM.bKartVariant as int])
       KartRef.ForceRefTo(kart)
       Utility.Wait(0.5)
     Else ; Chain Haul, make sure the Kart can actually be moved
@@ -300,11 +307,6 @@ EndState
 State SpecialDelivery
   Function SetupHaulImpl()
     Debug.Trace("[SLUTS] Setting up SpecialDelivery")
-    If(Main.myDrivers.Find(RecipientREF.GetActorReference()) == 9)
-      RecipientREF.ForceRefTo(Main.myDrivers[4])
-      SetLinks(DispatcherREF.GetReference(), Main.myDrivers[4])
-      RecipientREF.TryToEvaluatePackage()
-    EndIf
     If(!DeliverySelectorQst.Start())
       Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + JobCart)
       SetMissionState(MissionTypeCart.GetValueInt())
@@ -491,9 +493,11 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatc
   If (!akDispatch)
     akDispatch = RecipientREF.GetReference() as Actor
   EndIf
-  Actor next = Main.GetDestination(akDispatch, DispatcherREF.GetActorReference())
-  Debug.Trace("[SLUTS] Attempting Chain Mission with new Dispatcher = " + akDispatch + " | Recipient = " + next)
-  If (!SetLinks(akDispatch, next))
+  SlutsDriver prevDisp = Main.DriverFromActor(DispatcherREF.GetReference())
+  SlutsDriver prevRecip = Main.DriverFromActor(akDispatch)
+  SlutsDriver next = Main.GetDispatchTarget(prevDisp, prevRecip)
+  Debug.Trace("[SLUTS] Attempting Chain Mission with new Dispatcher = " + akDispatch + " | Recipient = " + next.GetReference())
+  If (!SetLinks(akDispatch, next.GetReference()))
     Quit()
     return
   EndIf
@@ -506,13 +510,13 @@ Function CreateChainMission(bool abForced, int aiMissionID = -1, Actor akDispatc
   RemoveManifest()
   Escrow.LockEscrow()
   DispatcherREF.ForceRefTo(akDispatch)
-  RecipientREF.ForceRefTo(next)
-  RecipientLOC.ForceLocationTo(Main.myDestLocs[Main.myDrivers.Find(next)])
+  RecipientREF.ForceRefTo(next.GetReference())
+  RecipientLOC.ForceLocationTo(next.DriverLoc)
   RecipientLOCHold.ForceLocationTo(GetHold(RecipientLOC))
   SetMissionState(aiMissionID)
   SetupHaulImpl()
   Bd.Regag()
-  Payment.SetValue(GetBasePay(akDispatch, next, 1.0))
+  Payment.SetValue(GetBasePay(akDispatch, next.GetReference(), 1.0))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] ChainMission; Payment: " + Payment.GetValueInt())
   ShowManifest(false)
@@ -534,14 +538,14 @@ Function Quit()
     int coins = Math.Floor(TotalPay * GetOvertimeBonus())
     Escrow.AddItem(FillyCoin, coins)
   EndIf
-  ObjectReference spawn
+  SlutsDriver driver
   If (data.licenseEscrowPort > 0)
-    spawn = SlutsMain.GetLink(RecipientREF.GetReference(), EscrowLink)
+    driver = Main.DriverFromActor(RecipientREF.GetReference())
     data.licenseEscrowPort -= 1
   Else
-    spawn = SlutsMain.GetLink(DispatcherREF.GetReference(), EscrowLink)
+    driver = Main.DriverFromActor(DispatcherREF.GetReference())
   EndIf
-  Escrow.MoveTo(spawn)
+  Escrow.MoveTo(driver.EscrowSpawnMarker)
   Escrow.Lock(false)
 EndFunction
 
