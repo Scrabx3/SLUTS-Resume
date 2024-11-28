@@ -7,7 +7,7 @@ Function Fragment_0(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
 ;BEGIN CODE
 Actor PlayerRef = Game.GetPlayer()
-Game.FindClosestReferenceOfTypeFromRef(HayPile, PlayerRef, 2500).Activate(PlayerRef)
+Bed.Activate(PlayerRef)
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -15,3 +15,5 @@ EndFunction
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 Furniture Property HayPile  Auto  
+
+ObjectReference Property Bed  Auto  

@@ -54,19 +54,3 @@ Event OnCellDetach()
     Disable()
   EndIf
 EndEvent
-
-; event OnMenuClose(String menu)
-;   If(!meOpened)
-;     return
-;   EndIf
-;   UnregisterForMenu("ContainerMenu")
-;   meOpened = false
-;   Haul.gear_reclaimed()
-;   If(!PlayerRef.HasMagicEffect(AdSpell))
-;     haul.TatLib.Scrub(PlayerRef)
-;   EndIf
-;   Utility.Wait(15)
-;   Lock()
-;   SetLockLevel(255)
-;   Disable()
-; endEvent
