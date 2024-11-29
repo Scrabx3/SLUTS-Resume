@@ -54,13 +54,19 @@ EndFunction
 ; ------------------------------------------------------------------------------------------------
 ; OnInit
 
+bool registered = false
 ObjectReference originalRef = none
 
 Event OnInit()
+  RegisterForModEvent("Sluts_RegistrationOpen", "OnRegister")
+EndEvent
+
+Event OnRegister(string asEventName, string asStringArg, float afNumArg, form akSender)
   ObjectReference ref = GetReference()
   If (AlternateSourceMod != "" && Game.GetModByName(AlternateSourceMod) != 255)
     ObjectReference obj = Game.GetFormFromFile(AlternateSourceID, AlternateSourceMod) as ObjectReference
     If (obj)
+      Debug.Trace("[Sluts] Found alternate reference for " + self + " using underlying driver: " + obj)
       If (ref)
         originalRef = ref
         ref.Disable()
@@ -69,7 +75,9 @@ Event OnInit()
       ForceRefTo(obj)
     EndIf
   EndIf
-  Main.RegisterDriver(self)
+  If (ref && Main.RegisterDriver(self))
+    UnregisterForModEvent("Sluts_RegistrationOpen")
+  EndIf
 EndEvent
 
 ; Called on every load to ensure the driver is properly set up

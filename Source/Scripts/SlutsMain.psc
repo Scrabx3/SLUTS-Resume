@@ -30,26 +30,29 @@ SlutsDriver Function DriverFromActor(ObjectReference akDriver)
 	return none
 EndFunction
 
-Function RegisterDriver(SlutsDriver akDriver)
+bool Function RegisterDriver(SlutsDriver akDriver)
 	If (!Drivers.Length)
 		Drivers = new SlutsDriver[128]
-	ElseIf (Drivers[127] != none)
+	EndIf
+	Debug.Trace("[Sluts] Attempting to register " + akDriver)
+	If (Drivers[127] != none)
 		String msg = "Unable to register Driver " + akDriver + ". Maximum number of dispatches reached"
 		Debug.MessageBox("[Sluts]\n\n" + msg)
 		Debug.Trace("[Sluts] " + msg)
-		return
+		return false
 	ElseIf (akDriver.GetReference() == none)
 		String msg = "Unable to register Driver " + akDriver + ". Reference is empty"
 		Debug.MessageBox("[Sluts]\n\n" + msg)
 		Debug.Trace("[Sluts] " + msg)
-		return
+		return false
 	ElseIf (Drivers.Find(akDriver) > -1)
 		Debug.Trace("[Sluts] Driver " + akDriver + " has already been initialized.")
-		return
+		return false
 	EndIf
 	int where = Drivers.Find(none)
 	Drivers[where] = akDriver
-	Debug.Trace("[Sluts] Registered Driver " + akDriver + " | Underlying Actor: " + akDriver.GetReference())
+	Debug.Trace("[Sluts] Registered Driver " + akDriver + " at " + where + " | Underlying Actor: " + akDriver.GetReference())
+	return true
 EndFunction
 
 ; ------------------------------------------------------------------------------------------------
@@ -58,7 +61,7 @@ EndFunction
 bool Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 	SlutsDriver driver = DriverFromActor(Dispatcher)
 	If (!driver)
-		Debug.MessageBox("[Sluts]\n\nThe actor " + Dispatcher.GetName() + " is not a valid SLUTS Driver")
+		Debug.MessageBox("[Sluts]\n\nThe actor " + Dispatcher.GetName() + " is not a valid SLUTS Driver.\nIf you just started a new game, try to reload once.")
 		Debug.Trace("[Sluts] Actor " + Dispatcher + " is not a valid driver but has been chosen as dispatch")
 		return false
 	EndIf
@@ -91,7 +94,7 @@ SlutsDriver Function GetDispatchTarget(SlutsDriver akExclude, SlutsDriver akExcl
 	While(i < Drivers.Length && Drivers[i])
 		SlutsDriver it = Drivers[i]
 		bool sameHold = it.DriverLoc.HasCommonParent(akExclude.DriverLoc, LocTypeHold)
-		bool sameHold2 = it.DriverLoc.HasCommonParent(akExclude2.DriverLoc, LocTypeHold)
+		bool sameHold2 = akExclude2 && it.DriverLoc.HasCommonParent(akExclude2.DriverLoc, LocTypeHold)
 		If (!it.Disabled && !sameHold && !sameHold2)
 			idx[i] = i
 		EndIf
@@ -211,4 +214,5 @@ Function Maintenance()
 	RegisterForModEvent("S.L.U.T.S. Enslavement", "OnEnslavement")
 	RegisterForModEvent("S.L.U.T.S. Blackmail", "OnBlackmail")
 	RegisterForModEvent("S.L.U.T.S. Rehab", "OnRehab")
+	SendModEvent("Sluts_RegistrationOpen", "", 0.0)
 EndFunction
