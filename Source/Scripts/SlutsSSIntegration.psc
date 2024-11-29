@@ -16,10 +16,9 @@ GlobalVariable Property TimesEnslaved Auto
 
 Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akRef1, ObjectReference akRef2, int aiValue1, int aiValue2)
 	Debug.Trace("[SLUTS] Simple Slavery Start")
-	ObjectReference playerWaitLoc = SlutsMain.GetLink(akRef1, PlayerCarriageWait)
-	ObjectReference driverWaitLoc = SlutsMain.GetLink(akRef1, DriverCarriageWait)
-	Game.GetPlayer().MoveTo(playerWaitLoc)
-	akRef1.MoveTo(driverWaitLoc)
+	SlutsDriver driver = Main.DriverFromActor(akRef1)
+	Game.GetPlayer().MoveTo(driver.PlayerSpawnMarker)
+	akRef1.MoveTo(driver.DriverWaitMarker)
 	Utility.Wait(0.5)	; Wait for loading Screen
 	IntroMsg.Show()
 	SetStage(5)	; Allow scene to progress to forcegreet
