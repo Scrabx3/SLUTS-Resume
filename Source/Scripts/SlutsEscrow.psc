@@ -1,11 +1,7 @@
 Scriptname SlutsEscrow extends ObjectReference
 
 ; ---------------------------------- Property
-SlutsData Property data Auto
-SlutsMissionHaul Property Haul Auto
-SlutsTats Property TatLib Auto
 Actor Property PlayerRef Auto
-MagicEffect Property AdSpell Auto
 Activator Property summonFX Auto
 ObjectReference myMarker ; Where we are currently standing & facing
 ; ---------------------------------- Code
@@ -24,25 +20,17 @@ Function LockEscrow()
   EndIf
 EndFunction
 
-Event OnActivate(ObjectReference akActionRef)
-  If(akActionRef != PlayerRef || IsLocked())
-    return
-  EndIf
-  ;/If(data.hasFillyReward)
-    ;set of restraints, along with a <- TODO: Add this to v when Filly Reward reworked!!
-    Debug.MessageBox("While reclaiming your stuff you also find a pay bonus of " + data.FillyGold + " and a letter of commendation inside the escrow chest. (To qualify for this reward again, complete " + data.fillyrank + " voluntary, flawless runs in a row.)")
-    ;Debug.Notification("To collect another Filly Wear bonus you must now complete " + q.data.fillyrank + " willing runs in a row.")
-    data.hasFillyReward = false
-  EndIf/;
-  Utility.Wait(0.5) ; Wait for Container to close
-  If(!PlayerRef.HasMagicEffect(AdSpell))
-    TatLib.Scrub(PlayerRef)
-  EndIf
-  LockEscrow()
-  Haul.SetStage(500)
-  Utility.Wait(15)
+Function Despawn()
   PlaceAtMe(summonFX)
   Disable()
+EndFUnction
+
+Event OnOpen(ObjectReference akActionRef)
+  If(akActionRef != PlayerRef)
+    return
+  EndIf
+  Utility.Wait(0.5) ; Wait for Container to close
+  SendModEvent("Sluts_EscrowChestOpened")
 EndEvent
 
 Event OnCellAttach()

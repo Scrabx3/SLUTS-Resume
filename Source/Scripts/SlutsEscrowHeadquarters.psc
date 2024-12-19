@@ -1,7 +1,6 @@
-Scriptname SlutsEscrowHeadquarters extends ObjectReference  
+Scriptname SlutsEscrowHeadquarters extends SlutsEscrow  
 
-ObjectReference Property EscrowChest  Auto  
-
+ObjectReference Property EscrowChest Auto
 
 Event OnCellAttach()
   Debug.Trace("[Sluts] Moving Escrow Contents into HQ Chest")

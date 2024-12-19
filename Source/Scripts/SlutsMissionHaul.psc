@@ -5,6 +5,7 @@ SlutsMain Property Main Auto
 SlutsMCM Property MCM Auto
 SlutsData Property data Auto
 SlutsBondage Property Bd Auto
+SlutsTats Property TatLib Auto
 SlutsEscrow Property Escrow Auto
 
 Actor Property PlayerRef Auto
@@ -39,6 +40,7 @@ Message Property CartTooFarAway Auto
 Message Property PremPackageDestroyed Auto
 Keyword Property ActorTypeNPC Auto
 
+MagicEffect Property AdSpell Auto
 Activator Property SummonFX Auto
 Race Property DefaultRace Auto
 
@@ -529,11 +531,21 @@ EndFunction
 ; Assume there to be a Blackout right here
 Function Quit()
   data.SeriesCompleted()
-  ; Clear State & get Player out of gear
   PlayerRef.PlaceAtMe(SummonFX)
   ClarPlayerStatus(false)
   FadeToBlackHoldImod.PopTo(FadeToBlackBackImod)
-  ; Enable post haul Dialogue & place Escrow
+  PrepareEscrowRewards()
+EndFunction
+
+Function PrepareEscrowRewards()
+  RegisterForModEvent("Sluts_EscrowChestOpened", "EscrowChestOpened")
+  ; TODO: Re-implement this
+  ;/If(data.hasFillyReward)
+    ;set of restraints, along with a <- TODO: Add this to v when Filly Reward reworked!!
+    Debug.MessageBox("While reclaiming your stuff you also find a pay bonus of " + data.FillyGold + " and a letter of commendation inside the escrow chest. (To qualify for this reward again, complete " + data.fillyrank + " voluntary, flawless runs in a row.)")
+    ;Debug.Notification("To collect another Filly Wear bonus you must now complete " + q.data.fillyrank + " willing runs in a row.")
+    data.hasFillyReward = false
+  EndIf/;
   If (TotalPay > 0)
     int coins = Math.Floor(TotalPay * GetOvertimeBonus())
     Escrow.AddItem(FillyCoin, coins)
@@ -554,6 +566,18 @@ Function ClarPlayerStatus(bool abRemoveTats)
   GoToState("")
   Bd.UndressPony(PlayerRef, abRemoveTats)
 EndFunction
+
+Event EscrowChestOpened(string asEventName, string asStringArg, float afNumArg, form akSender)
+  UnregisterForModEvent("Sluts_EscrowChestOpened")
+  ; TODO: If this is the first time Filly Rewards have been awarded, give a small notice to inform about their usage
+  If(!PlayerRef.HasMagicEffect(AdSpell))
+    TatLib.Scrub(PlayerRef)
+  EndIf
+  SetStage(500)
+  Escrow.LockEscrow()
+  Utility.Wait(15)
+  Escrow.Despawn()
+EndEvent
 
 ; ======================================================
 ; =============================== PAYMENT
