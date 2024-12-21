@@ -311,7 +311,9 @@ State SpecialDelivery
   Function SetupHaulImpl()
     Debug.Trace("[SLUTS] Setting up SpecialDelivery")
     If(!DeliverySelectorQst.Start())
-      Debug.Trace("[SLUTS] Failed to find Target. Fallback to " + JobCart)
+      String msg = "[Sluts] Unable to find Delivery Target. Falling back to " + JobCart
+      Debug.Notification(msg)
+      Debug.Trace(msg)
       SetMissionState(MissionTypeCart.GetValueInt())
       return
     EndIf
