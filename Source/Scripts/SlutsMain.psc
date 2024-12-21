@@ -17,6 +17,12 @@ Keyword Property rehab_kw Auto
 Keyword Property blackmail_kw Auto
 
 ; ------------------------------------------------------------------------------------------------
+; Flags
+
+int Property iForcedFlag = 1 AutoReadOnly Hidden
+int Property iCustomLocFlag = 2 AutoReadOnly Hidden
+
+; ------------------------------------------------------------------------------------------------
 ; Drivers
 
 SlutsDriver Function DriverFromActor(ObjectReference akDriver)
@@ -66,13 +72,15 @@ bool Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 		return false
 	EndIf
 	SlutsDriver target
-	int customLoc
+	int flags = 0
+	If (forced)
+		flags += iForcedFlag
+	EndIf
 	If(RecipientID >= 0  && RecipientID < DefaultDrivers.Length)
 		target = DefaultDrivers[RecipientID]
-		customLoc = 1
+		flags += iCustomLocFlag
 	Else
 		target = GetDispatchTarget(driver)
-		customLoc = 0
 	EndIf
 	If (!target)
 		Debug.MessageBox("[Sluts]\n\nUnable to choose a destination. No valid driver found for dispatcher " + Dispatcher.GetName())
@@ -83,9 +91,9 @@ bool Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 	; Loc => Destination
 	; Ref1 => Dispatcher (Starting Hold)
 	; Ref2 => Recipent (Destination Hold)
-	; aiValue1 => Desination: 1 => Custom, 0 => random
-	; aiValue2 => Forced: 1 => True, 0 => False
-	return sluts_mission_Kw.SendStoryEventAndWait(target.DriverLoc, Dispatcher, target.GetActorRef(), customLoc, forced)
+	; aiValue1 => Flags
+	; aiValue2 => Unused
+	return sluts_mission_Kw.SendStoryEventAndWait(target.DriverLoc, Dispatcher, target.GetActorRef(), flags, 0)
 EndFunction
 
 SlutsDriver Function GetDispatchTarget(SlutsDriver akExclude, SlutsDriver akExclude2 = none)

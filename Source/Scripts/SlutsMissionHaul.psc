@@ -148,11 +148,11 @@ bool forced   ; Unused, idk what I should use this for tbh
 ; =============================== NEW HAUL
 ; ======================================================
 
-Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDispatcher, ObjectReference akRecipient, int aiCustomLoc, int aiForced)
+Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDispatcher, ObjectReference akRecipient, int aiInfoFlags, int aiValue2)
   Debug.Trace("[SLUTS] Started new Haul")
   Escrow.lockEscrow()
   SetMissionState()
-  forced = aiForced
+  forced = Math.LogicalAND(aiInfoFlags, Main.iForcedFlag) == 1
   If (!SetLinks(akDispatcher, akRecipient))
     Stop()
     return
@@ -162,7 +162,8 @@ Event OnStoryScript(Keyword akKeyword, Location akLocation, ObjectReference akDi
   PilferageMax = PilferageThresh03.Value * 1.1
   MissionComplete = 1
 
-  float p = 1 - (aiCustomLoc * 0.15) ; 15% Payment Deduction for Custom Loc Hauls
+  int customLoc = Math.LogicalAND(aiInfoFlags, Main.iCustomLocFlag)
+  float p = 1 - (customLoc * 0.15) ; 15% Payment Deduction for Custom Loc Hauls
   Payment.SetValue(GetBasePay(akDispatcher, akRecipient, p))
   UpdateCurrentInstanceGlobal(Payment)
   Debug.Trace("[SLUTS] Payment = " + Payment.GetValueInt())
