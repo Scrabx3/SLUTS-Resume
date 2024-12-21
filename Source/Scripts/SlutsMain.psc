@@ -97,14 +97,33 @@ bool Function StartHaul(Actor Dispatcher, int RecipientID = -1, int forced = 0)
 EndFunction
 
 SlutsDriver Function GetDispatchTarget(SlutsDriver akExclude, SlutsDriver akExclude2 = none)
+	int[] haulTypes = MCM.HaulWeights
+	int k = 0
+	While (k < haulTypes.Length)
+		If (haulTypes[k] > 0)
+			haulTypes[k] = -1
+		Else
+			haulTypes[k] = i
+		EndIf
+		k += 1
+	EndWhile
+	haulTypes = PapyrusUtil.RemoveInt(haulTypes, -1)
 	int[] idx = Utility.CreateIntArray(Drivers.Length, -1)
 	int i = 0
 	While(i < Drivers.Length && Drivers[i])
 		SlutsDriver it = Drivers[i]
 		bool sameHold = it.DriverLoc.HasCommonParent(akExclude.DriverLoc, LocTypeHold)
 		bool sameHold2 = akExclude2 && it.DriverLoc.HasCommonParent(akExclude2.DriverLoc, LocTypeHold)
-		If (!it.Disabled && !sameHold && !sameHold2)
-			idx[i] = i
+		If (!sameHold && !sameHold2)
+			int n = 0
+			While (n < haulTypes.Length)
+				If (it.IsHaulTypeAllowed(haulTypes[n]))
+					idx[i] = i
+					n = haulTypes.Length
+				Else
+					n += 1
+				EndIf
+			EndWhile
 		EndIf
 		i += 1
 	EndWhile

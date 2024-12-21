@@ -33,58 +33,61 @@ String Property AlternateSourceMod = "" Auto
 int Property AlternateSourceID = 0 Auto
 {In case a different replaces this driver with another one, this is the id of the driver in that mod. Mainly used for CFTO}
 
-bool Property CartHaulAllowed = true Auto
-{If this driver can start Cart type hauling quests}
-
-bool Property PackageDeliveryAllowed = true Auto
-{If this driver can start Package/Premium Delivery type hauling quests}
+bool[] Property AllowedHauls Auto
+{
+  Missing values are considered false
+  0: CartHaulAllowed
+  1: PackageDeliveryAllowed
+}
 
 ; ------------------------------------------------------------------------------------------------
 ; Disabled Status
 
-bool Property Disabled = false Auto Hidden
+bool[] Property AllowedCustom Auto Hidden
 
 bool Function IsHaulTypeAllowed(int aiHaulType)
-  bool[] haulTypes = new bool[2]
-  haulTypes[0] = CartHaulAllowed
-  haulTypes[1] = PackageDeliveryAllowed
-  return haulTypes[aiHaulType]
+  If (aiHaulType < 0 || aiHaulType >= AllowedHauls.Length)
+    return false
+  EndIf
+  return AllowedHauls[aiHaulType] && AllowedCustom[aiHaulType]
 EndFunction
 
 ; ------------------------------------------------------------------------------------------------
 ; OnInit
 
-bool registered = false
 ObjectReference originalRef = none
 
 Event OnInit()
   RegisterForModEvent("Sluts_RegistrationOpen", "OnRegister")
 EndEvent
-
 Event OnRegister(string asEventName, string asStringArg, float afNumArg, form akSender)
   ObjectReference ref = GetReference()
   If (AlternateSourceMod != "" && Game.GetModByName(AlternateSourceMod) != 255)
     ObjectReference obj = Game.GetFormFromFile(AlternateSourceID, AlternateSourceMod) as ObjectReference
-    If (obj)
-      Debug.Trace("[Sluts] Found alternate reference for " + self + " using underlying driver: " + obj)
-      If (ref)
-        originalRef = ref
-        ref.Disable()
-      EndIf
-      ref = obj
-      ForceRefTo(obj)
-    EndIf
+    ref = obj
   EndIf
   If (ref && Main.RegisterDriver(self))
     UnregisterForModEvent("Sluts_RegistrationOpen")
+    AllowedCustom = Utility.CreateBoolArray(AllowedHauls.Length)
   EndIf
 EndEvent
 
 ; Called on every load to ensure the driver is properly set up
 Function Maintenance()
-  If (AlternateSourceMod != "" && Game.GetModByName(AlternateSourceMod) == 255)
-    ObjectReference obj = Game.GetFormFromFile(AlternateSourceID, AlternateSourceMod) as ObjectReference
-    If (!obj && originalRef)
+  If (AlternateSourceMod != "")
+    If (Game.GetModByName(AlternateSourceMod) != 255)
+      ObjectReference obj = Game.GetFormFromFile(AlternateSourceID, AlternateSourceMod) as ObjectReference
+      If (obj)
+        If (!originalRef)
+          Debug.Trace("[Sluts] " + self + " Alternate reference " + obj)
+          originalRef = GetReference()
+          ForceRefTo(obj)
+        EndIf
+        return
+      EndIf
+    EndIf
+    If (originalRef)
+      Debug.Trace("[Sluts] " + self + " Alternate reference no longer valid, returning to original reference " + originalRef)
       ForceRefTo(originalRef)
       originalRef = none
     EndIf
