@@ -101,9 +101,9 @@ SlutsDriver Function GetDispatchTarget(SlutsDriver akExclude, SlutsDriver akExcl
 	int k = 0
 	While (k < haulTypes.Length)
 		If (haulTypes[k] > 0)
-			haulTypes[k] = -1
+			haulTypes[k] = k
 		Else
-			haulTypes[k] = i
+			haulTypes[k] = -1
 		EndIf
 		k += 1
 	EndWhile
