@@ -69,6 +69,11 @@ Event OnRegister(string asEventName, string asStringArg, float afNumArg, form ak
   If (ref && Main.RegisterDriver(self))
     UnregisterForModEvent("Sluts_RegistrationOpen")
     AllowedCustom = Utility.CreateBoolArray(AllowedHauls.Length)
+    int i = 0
+    While (i < AllowedHauls.Length)
+      AllowedCustom[i] = AllowedHauls[i]
+      i += 1
+    EndWhile
   EndIf
 EndEvent
 
