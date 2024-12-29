@@ -179,7 +179,7 @@ bool Function SetLinks(ObjectReference akDispatcher, ObjectReference akRecipient
   SlutsDriver d2 = Main.DriverFromActor(akRecipient)
   If(!d1 || !d2)
     Debug.TraceStack("[SLUTS] Dispatch is not a valid driver? | " + akDispatcher + " -> " + d1 + " | " + akRecipient + " -> " + d2, 2)
-    Debug.MessageBox("Unable to create Haul. Root Object is missing.")
+    Debug.MessageBox("Unable to create Haul. One or more drivers are invalid. Did you disable too many stations?")
     return false
   EndIf
   ScenePlayer.ForceRefTo(d1.PlayerWaitMarker)
