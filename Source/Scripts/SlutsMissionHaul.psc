@@ -190,14 +190,12 @@ bool Function SetLinks(ObjectReference akDispatcher, ObjectReference akRecipient
 EndFunction
 
 Function SetMissionState(int missionID = -1)
-  int cartID = MissionTypeCart.GetValueInt()
-  int premID = MissionTypePremium.GetValueInt()
   String[] missions = new String[2]
-  missions[cartID] = JobCart
-  missions[premID] = JobDelivery
+  missions[MissionTypeCart.GetValueInt()] = JobCart
+  missions[MissionTypePremium.GetValueInt()] = JobDelivery
   If (missionID < 0 || missionID >= missions.Length)
-    int[] types = PapyrusUtil.RemoveInt(MCM.HaulWeights, 2147483647)
     SlutsDriver recip = Main.DriverFromActor(RecipientREF.GetReference())
+    int[] types = MCM.HaulWeights
     int i = 0
     While(i < types.Length)
       If (!recip.IsHaulTypeAllowed(i))
